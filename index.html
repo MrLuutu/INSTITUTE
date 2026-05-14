@@ -1,1197 +1,1871 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
-<title>Lanforte Institute of Public Health</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-
+<title>Lanforte Institute — Evidence Systems for Africa</title>
+<meta name="description" content="An independent Ugandan research institution building public health evidence systems, applied intelligence infrastructure, and institutional research capacity for Africa."/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
 <style>
 
-:root{
-  --forest:#123528;
-  --forest-2:#0b241a;
-  --cream:#f5f4ef;
-  --sage:#e6efe8;
-  --terra:#d6a98e;
-  --white:#ffffff;
-  --muted:#718078;
-  --line:#d9e0db;
+/* ══ TOKENS — LOCKED ════════════════════════════════════════ */
+:root {
+  --f:   #0d2618;
+  --f2:  #071810;
+  --f3:  #163322;
+  --cr:  #f5f2ec;
+  --sg:  #e4ede6;
+  --tr:  #c0522a;
+  --tr2: #d4693f;
+  --wh:  #ffffff;
+  --mu:  #5e6e63;
+  --ln:  #d0d9d2;
+  --gold:#a07830;
+  --ink: #0d1a10;
+
+  /* FONT SYSTEM — Space Grotesk (cold corners) + Fraunces (editorial) + DM Mono */
+  --fd: 'Space Grotesk', sans-serif;
+  --fe: 'Fraunces', Georgia, serif;
+  --fm: 'DM Mono', monospace;
+
+  --wrap: 1280px;
+  --pad:  3rem;
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--cr);
+  color: var(--ink);
+  font-family: var(--fe);
+  line-height: 1.7;
+  overflow-x: hidden;
+  /* CRITICAL: never justify — causes word stretching */
+  text-align: left;
 }
 
-html{
-  scroll-behavior:smooth;
+/* ── LAYOUT ─────────────────────────────────────────────── */
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--pad);
 }
 
-body{
-  background:var(--cream);
-  color:#101712;
-  font-family:'Inter',sans-serif;
-  overflow-x:hidden;
-  line-height:1.8;
+/* ── ATOMS ──────────────────────────────────────────────── */
+.sec-tag {
+  font-family: var(--fm);
+  font-size: .6rem;
+  letter-spacing: .24em;
+  text-transform: uppercase;
+  color: var(--tr);
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1.2rem;
 }
-
-/* NAV */
-
-nav{
-  position:fixed;
-  top:0;
-  left:0;
-  right:0;
-  z-index:1000;
-
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-
-  padding:1rem 3rem;
-
-  background:rgba(245,244,239,.92);
-  backdrop-filter:blur(12px);
-
-  border-bottom:1px solid var(--line);
+.sec-tag::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: var(--tr);
+  flex-shrink: 0;
 }
+.sec-tag--lt { color: rgba(192,82,42,.8); }
+.sec-tag--lt::before { background: rgba(192,82,42,.8); }
 
-.brand{
-  text-decoration:none;
+/* Headlines — Space Grotesk, no stretching */
+.sec-h {
+  font-family: var(--fd);
+  font-size: clamp(1.9rem, 2.8vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  color: var(--f);
+  /* prevent line-break stretching */
+  word-break: normal;
+  overflow-wrap: break-word;
+  hyphens: none;
 }
+.sec-h--lt { color: var(--wh); }
 
-.brand-main{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:1rem;
-  font-weight:700;
-  color:var(--forest);
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity .7s ease, transform .7s ease;
 }
+.reveal.in { opacity: 1; transform: none; }
 
-.brand-sub{
-  margin-top:.15rem;
+a { text-decoration: none; color: inherit; }
 
-  font-size:.62rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-
-  color:var(--muted);
+/* ── NOTICE BAR ─────────────────────────────────────────── */
+.notice-bar {
+  background: var(--f);
+  padding: .6rem var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
 }
-
-.nav-links{
-  display:flex;
-  list-style:none;
-  gap:2rem;
+.nb-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--tr);
+  flex-shrink: 0;
+  animation: blink 2.5s infinite;
 }
-
-.nav-links a{
-  text-decoration:none;
-
-  font-size:.72rem;
-  font-weight:600;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-
-  color:var(--muted);
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+.nb-text {
+  font-family: var(--fm);
+  font-size: .58rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.5);
 }
+.nb-text strong { color: rgba(255,255,255,.85); font-weight: 500; }
 
-.nav-links a:hover{
-  color:var(--forest);
+/* ── NAV ────────────────────────────────────────────────── */
+nav {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 200;
+  background: rgba(245,242,236,.96);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--ln);
 }
+.nav-inner {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 1rem var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.nav-brand { display: flex; flex-direction: column; gap: .1rem; }
+.nav-brand-a {
+  font-family: var(--fd);
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--f);
+  letter-spacing: -.02em;
+}
+.nav-brand-b {
+  font-family: var(--fm);
+  font-size: .54rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--mu);
+}
+.nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+.nav-links a {
+  font-family: var(--fm);
+  font-size: .62rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mu);
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--f); }
+.nav-cta {
+  background: var(--f);
+  color: var(--cr) !important;
+  padding: .45rem 1.1rem;
+  transition: background .2s !important;
+}
+.nav-cta:hover { background: var(--tr) !important; color: var(--wh) !important; }
 
-/* HERO */
-
-#hero{
-  min-height:100vh;
-
+/* ── HERO ───────────────────────────────────────────────── */
+#hero {
+  background: var(--f);
+  position: relative;
+  overflow: hidden;
+  padding-top: 95px;
+}
+#hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
   background:
-  radial-gradient(circle at top right, rgba(214,169,142,.12), transparent 28%),
-  linear-gradient(180deg,var(--forest),var(--forest-2));
-
-  position:relative;
-  overflow:hidden;
-
-  padding:8rem 3rem 0;
+    repeating-linear-gradient(0deg,   transparent, transparent 79px, rgba(255,255,255,.022) 80px),
+    repeating-linear-gradient(90deg,  transparent, transparent 79px, rgba(255,255,255,.022) 80px);
+  pointer-events: none;
+}
+#hero::after {
+  content: '';
+  position: absolute;
+  right: -15%; top: -20%;
+  width: 55vw; height: 55vw;
+  max-width: 750px; max-height: 750px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(192,82,42,.13) 0%, transparent 65%);
+  pointer-events: none;
 }
 
-#hero::before{
-  content:'';
-  position:absolute;
-  inset:0;
-
-  background:
-  repeating-linear-gradient(
-    90deg,
-    transparent,
-    transparent 90px,
-    rgba(255,255,255,.02) 91px
-  );
+.hero-wrap {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+  position: relative;
+  z-index: 2;
 }
 
-.hero-grid{
-  position:relative;
-  z-index:2;
-
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:5rem;
-
-  align-items:center;
-
-  min-height:82vh;
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.25fr .75fr;
+  gap: 5rem;
+  align-items: center;
+  padding: 5rem 0 4rem;
 }
 
-.hero-left{
-  max-width:760px;
+.hero-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp .9s .1s forwards;
+}
+.he-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--tr); flex-shrink: 0; }
+.he-text {
+  font-family: var(--fm);
+  font-size: .58rem;
+  letter-spacing: .22em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.38);
 }
 
-.hero-eyebrow{
-  font-size:.68rem;
-  letter-spacing:.24em;
-  text-transform:uppercase;
+/* HERO HEADLINE — fixed sizes, no word stretching */
+.hero-h {
+  font-family: var(--fd);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -.04em;
+  color: var(--wh);
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeUp .9s .25s forwards;
+  /* do NOT use clamp here — it causes viewport-based stretching */
+  font-size: 5.5rem;
+  word-break: keep-all;
+  hyphens: none;
+}
+@media (max-width: 1200px) { .hero-h { font-size: 4.5rem; } }
+@media (max-width: 900px)  { .hero-h { font-size: 3.5rem; } }
+@media (max-width: 600px)  { .hero-h { font-size: 2.8rem; } }
 
-  color:rgba(255,255,255,.55);
-
-  margin-bottom:2rem;
+.hero-h .line-dim {
+  display: block;
+  color: rgba(255,255,255,.22);
+  font-weight: 300;
+}
+.hero-h .line-accent {
+  display: block;
+  font-family: var(--fe);
+  font-style: italic;
+  font-weight: 300;
+  font-size: .72em;
+  letter-spacing: -.01em;
+  color: var(--tr);
+  margin-top: .15rem;
 }
 
-.hero-title{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(3rem,7vw,6.4rem);
-  line-height:.94;
-  letter-spacing:-0.06em;
-  font-weight:700;
-
-  color:white;
-
-  margin-bottom:2rem;
+.hero-desc {
+  font-size: 1rem;
+  color: rgba(255,255,255,.48);
+  max-width: 48ch;
+  margin-bottom: 2.8rem;
+  line-height: 1.8;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp .9s .4s forwards;
+  word-break: normal;
 }
 
-.hero-title span{
-  color:var(--terra);
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp .9s .55s forwards;
 }
 
-.hero-text{
-  max-width:62ch;
-
-  color:rgba(255,255,255,.74);
-
-  font-size:1.05rem;
-
-  margin-bottom:3rem;
+.btn-solid {
+  display: inline-block;
+  background: var(--tr);
+  color: var(--wh);
+  padding: .8rem 1.7rem;
+  font-family: var(--fm);
+  font-size: .62rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: background .2s, transform .2s;
+  white-space: nowrap;
 }
+.btn-solid:hover { background: var(--tr2); transform: translateY(-1px); }
 
-.hero-actions{
-  display:flex;
-  gap:1rem;
-  flex-wrap:wrap;
+.btn-outline {
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,.15);
+  color: rgba(255,255,255,.58);
+  padding: .8rem 1.7rem;
+  font-family: var(--fm);
+  font-size: .62rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: border-color .2s, color .2s;
+  white-space: nowrap;
 }
+.btn-outline:hover { border-color: rgba(255,255,255,.4); color: var(--wh); }
 
-.btn-primary{
-  background:var(--terra);
-  color:#0f1512;
-
-  text-decoration:none;
-
-  padding:1rem 1.7rem;
-
-  font-size:.72rem;
-  font-weight:700;
-  letter-spacing:.16em;
-  text-transform:uppercase;
+/* HERO PANEL */
+.hero-panel-wrap {
+  opacity: 0;
+  animation: fadeUp .9s .5s forwards;
 }
-
-.btn-secondary{
-  border:1px solid rgba(255,255,255,.12);
-
-  color:rgba(255,255,255,.82);
-
-  text-decoration:none;
-
-  padding:1rem 1.7rem;
-
-  font-size:.72rem;
-  font-weight:700;
-  letter-spacing:.16em;
-  text-transform:uppercase;
+.hero-panel {
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  backdrop-filter: blur(20px);
+  padding: 2.2rem;
 }
-
-/* HERO RIGHT */
-
-.hero-right{
-  display:flex;
-  justify-content:center;
+.panel-head {
+  font-family: var(--fm);
+  font-size: .56rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.28);
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid rgba(255,255,255,.07);
 }
-
-.hero-panel{
-  width:100%;
-  max-width:520px;
-
-  background:rgba(255,255,255,.04);
-
-  border:1px solid rgba(255,255,255,.08);
-
-  backdrop-filter:blur(16px);
-
-  border-radius:28px;
-
-  padding:2.5rem;
+.panel-item {
+  padding: 1.2rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.06);
 }
-
-.panel-label{
-  font-size:.62rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-
-  color:rgba(255,255,255,.45);
-
-  margin-bottom:1rem;
+.panel-item:last-child { border-bottom: none; }
+.pi-ph {
+  font-family: var(--fd);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--wh);
+  letter-spacing: -.03em;
+  line-height: 1;
+  margin-bottom: .3rem;
 }
-
-.panel-title{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:3rem;
-  line-height:.95;
-  letter-spacing:-0.05em;
-  font-weight:700;
-
-  color:white;
-}
-
-.panel-divider{
-  height:1px;
-
-  background:rgba(255,255,255,.08);
-
-  margin:2rem 0;
-}
-
-.hero-stat{
-  padding:1.2rem 0;
-
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.hero-stat:last-child{
-  border-bottom:none;
-}
-
-.hero-stat-number{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:2.8rem;
-  font-weight:700;
-
-  color:white;
-
-  margin-bottom:.4rem;
-}
-
-.hero-stat-text{
-  font-size:.68rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-
-  color:rgba(255,255,255,.45);
+.pi-ph span { font-size: 1.1rem; color: var(--tr); }
+.pi-lbl {
+  font-family: var(--fm);
+  font-size: .56rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.28);
 }
 
 /* HERO STRIP */
+.hero-strip {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid rgba(255,255,255,.08);
+}
+.hero-strip-inner {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+.hs {
+  padding: 1.5rem 2rem 1.5rem 0;
+  border-right: 1px solid rgba(255,255,255,.08);
+  opacity: 0;
+  animation: fadeUp .7s forwards;
+}
+.hs + .hs { padding-left: 2rem; }
+.hs:last-child { border-right: none; }
+.hs:nth-child(1){animation-delay:.62s}
+.hs:nth-child(2){animation-delay:.74s}
+.hs:nth-child(3){animation-delay:.86s}
+.hs:nth-child(4){animation-delay:.98s}
 
-.hero-strip{
-  position:relative;
-  z-index:2;
-
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-
-  margin-top:3rem;
-
-  border-top:1px solid rgba(255,255,255,.08);
+.hs-l {
+  font-family: var(--fm);
+  font-size: .54rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.26);
+  margin-bottom: .4rem;
+}
+.hs-v {
+  font-family: var(--fe);
+  font-size: .92rem;
+  font-weight: 400;
+  color: rgba(255,255,255,.72);
+  line-height: 1.4;
+  word-break: normal;
 }
 
-.strip{
-  padding:1.5rem 2rem;
-
-  border-right:1px solid rgba(255,255,255,.08);
+/* ── NUMBERS ────────────────────────────────────────────── */
+#numbers {
+  background: var(--f3);
+  border-top: 1px solid rgba(255,255,255,.05);
+  border-bottom: 1px solid rgba(255,255,255,.05);
+}
+.numbers-inner {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 0 var(--pad);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+}
+.num-item {
+  padding: 2.2rem 2rem 2.2rem 0;
+  border-right: 1px solid rgba(255,255,255,.07);
+}
+.num-item + .num-item { padding-left: 2rem; }
+.num-item:last-child { border-right: none; }
+.num-n {
+  font-family: var(--fd);
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: var(--wh);
+  letter-spacing: -.04em;
+  line-height: 1;
+  margin-bottom: .4rem;
+}
+.num-n span { font-size: 1.2rem; color: var(--tr); }
+.num-l {
+  font-family: var(--fm);
+  font-size: .56rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.3);
+  line-height: 1.5;
 }
 
-.strip:last-child{
-  border-right:none;
+/* ── THESIS ─────────────────────────────────────────────── */
+#thesis { padding: 7rem 0; }
+.thesis-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 6rem;
+  align-items: start;
+}
+.thesis-left { position: sticky; top: 5.5rem; }
+.thesis-quote {
+  font-family: var(--fe);
+  font-size: 1.9rem;
+  font-weight: 400;
+  line-height: 1.35;
+  color: var(--f);
+  word-break: normal;
+}
+.thesis-quote em { font-style: italic; color: var(--tr); }
+
+.thesis-right { display: flex; flex-direction: column; }
+.tb {
+  padding: 2rem 0;
+  border-top: 1px solid var(--ln);
+}
+.tb:last-child { border-bottom: 1px solid var(--ln); }
+.tb-n {
+  font-family: var(--fm);
+  font-size: .54rem;
+  letter-spacing: .2em;
+  color: var(--tr);
+  margin-bottom: .75rem;
+}
+.tb-h {
+  font-family: var(--fd);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--f);
+  margin-bottom: .5rem;
+  letter-spacing: -.01em;
+  word-break: normal;
+}
+.tb-p {
+  font-size: .9rem;
+  color: var(--mu);
+  line-height: 1.8;
+  font-weight: 300;
 }
 
-.strip-label{
-  font-size:.62rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-
-  color:rgba(255,255,255,.4);
-
-  margin-bottom:.5rem;
+/* ── DOMAINS ────────────────────────────────────────────── */
+#domains { background: var(--f); padding: 7rem 0; }
+.domains-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: end;
+  margin-bottom: 3.5rem;
+}
+.domains-desc {
+  font-size: .92rem;
+  color: rgba(255,255,255,.42);
+  line-height: 1.8;
+  font-weight: 300;
+  max-width: 46ch;
+}
+.domains-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.07);
+}
+.dc {
+  background: var(--f);
+  padding: 2rem 1.8rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: background .3s;
+}
+.dc::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--tr);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .35s ease;
+}
+.dc:hover { background: var(--f3); }
+.dc:hover::after { transform: scaleX(1); }
+.dc-ph {
+  font-family: var(--fm);
+  font-size: .54rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--tr);
+  margin-bottom: 1rem;
+}
+.dc-h {
+  font-family: var(--fd);
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--wh);
+  line-height: 1.25;
+  margin-bottom: .65rem;
+  letter-spacing: -.01em;
+  word-break: normal;
+}
+.dc-p {
+  font-size: .83rem;
+  color: rgba(255,255,255,.4);
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 1.2rem;
+}
+.dc-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+.dc-tag {
+  font-family: var(--fm);
+  font-size: .52rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.26);
+  border: 1px solid rgba(255,255,255,.1);
+  padding: .2rem .52rem;
 }
 
-.strip-value{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:1rem;
-  font-weight:600;
-
-  color:white;
+/* ── INTELLIGENCE ───────────────────────────────────────── */
+#intelligence { padding: 7rem 0; background: var(--sg); }
+.intel-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 6rem; align-items: start; }
+.intel-left { position: sticky; top: 5.5rem; }
+.intel-desc {
+  font-size: .92rem;
+  color: var(--mu);
+  line-height: 1.8;
+  margin-top: 1rem;
+  font-weight: 300;
+}
+.intel-badge {
+  display: inline-block;
+  margin-top: 1.8rem;
+  background: var(--f);
+  color: var(--cr);
+  font-family: var(--fm);
+  font-size: .56rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  padding: .45rem 1rem;
+}
+.intel-items { display: flex; flex-direction: column; }
+.ii {
+  display: grid;
+  grid-template-columns: 2.5rem 1fr;
+  gap: 1.5rem;
+  padding: 1.8rem 0;
+  border-bottom: 1px solid var(--ln);
+}
+.ii:first-child { border-top: 1px solid var(--ln); }
+.ii-n {
+  font-family: var(--fd);
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: var(--ln);
+  line-height: 1;
+  padding-top: .2rem;
+}
+.ii-h {
+  font-family: var(--fd);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--f);
+  margin-bottom: .4rem;
+  letter-spacing: -.01em;
+  word-break: normal;
+}
+.ii-p {
+  font-size: .86rem;
+  color: var(--mu);
+  line-height: 1.75;
+  font-weight: 300;
 }
 
-/* SECTIONS */
+/* ── PUBLICATIONS ───────────────────────────────────────── */
+#publications { padding: 7rem 0; }
+.pub-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 5rem;
+  margin-top: 3rem;
+}
+.pub-note {
+  font-family: var(--fe);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--mu);
+  line-height: 1.65;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+.pub-types { display: flex; flex-direction: column; margin-top: 1.5rem; }
+.pub-type {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  font-family: var(--fm);
+  font-size: .58rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--mu);
+  padding: .7rem 0;
+  border-bottom: 1px solid var(--ln);
+  cursor: pointer;
+  transition: color .2s;
+}
+.pub-type::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--ln);
+  flex-shrink: 0;
+  transition: background .2s;
+}
+.pub-type.active { color: var(--tr); }
+.pub-type.active::before { background: var(--tr); }
 
-section{
-  padding:7rem 3rem;
+.pub-list { display: flex; flex-direction: column; }
+.pub-item {
+  display: grid;
+  grid-template-columns: 3.5rem 1fr auto;
+  gap: 1.8rem;
+  align-items: start;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--ln);
+}
+.pub-item:first-child { border-top: 1px solid var(--ln); }
+.pub-yr {
+  font-family: var(--fm);
+  font-size: .58rem;
+  letter-spacing: .1em;
+  color: var(--tr);
+  padding-top: .2rem;
+}
+.pub-h {
+  font-family: var(--fe);
+  font-size: .98rem;
+  font-weight: 400;
+  color: var(--f);
+  line-height: 1.45;
+  margin-bottom: .4rem;
+  word-break: normal;
+}
+.pub-meta {
+  font-family: var(--fm);
+  font-size: .56rem;
+  letter-spacing: .08em;
+  color: var(--mu);
+}
+.pub-bdg {
+  font-family: var(--fm);
+  font-size: .54rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: .28rem .62rem;
+  border: 1px solid var(--ln);
+  color: var(--mu);
+  white-space: nowrap;
+  margin-top: .2rem;
+}
+.pub-bdg.w { border-color: var(--tr); color: var(--tr); }
+.pub-bdg.g { border-color: var(--gold); color: var(--gold); }
+
+/* ── AFRICAN INFRA ──────────────────────────────────────── */
+#infrastructure { background: var(--f2); padding: 7rem 0; }
+.infra-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  margin-top: 3.5rem;
+}
+.infra-stmt {
+  font-family: var(--fe);
+  font-size: 1.6rem;
+  font-style: italic;
+  font-weight: 400;
+  color: rgba(255,255,255,.55);
+  line-height: 1.5;
+  margin-bottom: 2rem;
+  word-break: normal;
+}
+.infra-stmt strong { font-style: normal; color: var(--wh); }
+.infra-p {
+  font-size: .88rem;
+  color: rgba(255,255,255,.42);
+  line-height: 1.8;
+  margin-bottom: 1.1rem;
+  font-weight: 300;
+}
+.infra-pillars { display: flex; flex-direction: column; }
+.ip {
+  display: grid;
+  grid-template-columns: 2px 1fr;
+  gap: 1.2rem;
+  padding: 1.4rem 0;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  align-items: start;
+}
+.ip:first-child { border-top: 1px solid rgba(255,255,255,.07); }
+.ip-bar { background: var(--tr); opacity: .45; height: 100%; margin-top: .3rem; }
+.ip-h {
+  font-family: var(--fd);
+  font-size: .92rem;
+  font-weight: 600;
+  color: var(--wh);
+  margin-bottom: .4rem;
+  letter-spacing: -.01em;
+  word-break: normal;
+}
+.ip-p {
+  font-size: .83rem;
+  color: rgba(255,255,255,.38);
+  line-height: 1.65;
+  font-weight: 300;
 }
 
-.section-label{
-  font-size:.62rem;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  font-weight:700;
-
-  color:#bd8d72;
-
-  margin-bottom:1rem;
+/* ── PARTNERSHIPS ───────────────────────────────────────── */
+#partnerships { padding: 7rem 0; background: var(--cr); }
+.partner-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 5rem;
+  margin-top: 3rem;
+  align-items: start;
+}
+.partner-desc {
+  font-size: .9rem;
+  color: var(--mu);
+  line-height: 1.8;
+  font-weight: 300;
+  margin-top: 1rem;
+}
+.partner-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: var(--ln);
+  border: 1px solid var(--ln);
+}
+.pc {
+  background: var(--cr);
+  padding: 2rem;
+  border-top: 2px solid transparent;
+  transition: border-color .3s, background .3s;
+}
+.pc:hover { background: var(--sg); border-top-color: var(--tr); }
+.pc-type {
+  font-family: var(--fm);
+  font-size: .54rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--tr);
+  margin-bottom: .8rem;
+}
+.pc-name {
+  font-family: var(--fd);
+  font-size: .98rem;
+  font-weight: 600;
+  color: var(--f);
+  margin-bottom: .5rem;
+  letter-spacing: -.01em;
+  word-break: normal;
+}
+.pc-desc {
+  font-size: .84rem;
+  color: var(--mu);
+  line-height: 1.65;
+  font-weight: 300;
 }
 
-.section-title{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(2rem,4vw,3.5rem);
-  line-height:1;
-  letter-spacing:-0.05em;
-  font-weight:700;
-
-  margin-bottom:2rem;
+/* ── LEADERSHIP ─────────────────────────────────────────── */
+#leadership { background: var(--f); padding: 7rem 0; }
+.leadership-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.07);
+  margin-top: 3rem;
+}
+.lc {
+  background: var(--f);
+  padding: 3rem 2.5rem;
+  border-top: 2px solid transparent;
+  transition: border-color .3s, background .3s;
+}
+.lc:hover { border-top-color: var(--tr); background: var(--f3); }
+.lc-role {
+  font-family: var(--fm);
+  font-size: .56rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--tr);
+  margin-bottom: 1rem;
+}
+.lc-name {
+  font-family: var(--fd);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--wh);
+  letter-spacing: -.03em;
+  margin-bottom: .4rem;
+  word-break: normal;
+}
+.lc-title {
+  font-family: var(--fe);
+  font-size: .88rem;
+  font-style: italic;
+  color: rgba(255,255,255,.48);
+  margin-bottom: 1.2rem;
+  line-height: 1.5;
+}
+.lc-bio {
+  font-size: .86rem;
+  color: rgba(255,255,255,.4);
+  line-height: 1.75;
+  font-weight: 300;
+}
+.lc-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1.2rem; }
+.lc-tag {
+  font-family: var(--fm);
+  font-size: .54rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(255,255,255,.32);
+  padding: .24rem .58rem;
+}
+.lc-open {
+  background: var(--f3);
+  padding: 3rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  border: 1.5px dashed rgba(255,255,255,.1);
+  gap: .8rem;
+}
+.lc-open-label {
+  font-family: var(--fm);
+  font-size: .56rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.24);
+}
+.lc-open-text {
+  font-size: .86rem;
+  color: rgba(255,255,255,.3);
+  line-height: 1.65;
+  font-weight: 300;
+  max-width: 30ch;
 }
 
-/* MISSION */
+/* ── ROADMAP ────────────────────────────────────────────── */
+#roadmap { padding: 7rem 0; background: var(--sg); }
+.roadmap-phases {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: var(--ln);
+  border: 1px solid var(--ln);
+  margin-top: 3rem;
+}
+.phase {
+  background: var(--cr);
+  padding: 2rem 1.5rem;
+  position: relative;
+  transition: background .3s;
+}
+.phase::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--ln);
+  transition: background .3s;
+}
+.phase.active::before { background: var(--tr); }
+.phase:hover { background: var(--wh); }
+.phase:hover::before { background: var(--tr); }
+.ph-n {
+  font-family: var(--fd);
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--ln);
+  letter-spacing: -.05em;
+  line-height: 1;
+  margin-bottom: .8rem;
+}
+.ph-label {
+  font-family: var(--fm);
+  font-size: .53rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--tr);
+  margin-bottom: .6rem;
+}
+.ph-h {
+  font-family: var(--fd);
+  font-size: .92rem;
+  font-weight: 600;
+  color: var(--f);
+  letter-spacing: -.01em;
+  margin-bottom: .6rem;
+  word-break: normal;
+}
+.ph-p {
+  font-size: .78rem;
+  color: var(--mu);
+  line-height: 1.65;
+  font-weight: 300;
+}
+.ph-status {
+  margin-top: 1.4rem;
+  font-family: var(--fm);
+  font-size: .52rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--mu);
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+}
+.ph-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ln); }
+.phase.active .ph-dot { background: var(--tr); }
+.phase.active .ph-status { color: var(--tr); }
 
-#mission{
-  display:grid;
-  grid-template-columns:1fr 1.4fr;
-  gap:5rem;
+/* ── CONTACT ────────────────────────────────────────────── */
+#contact { padding: 7rem 0; }
+.contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6rem; }
+.contact-h {
+  font-family: var(--fd);
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--f);
+  letter-spacing: -.03em;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+  word-break: normal;
+}
+.contact-h em {
+  font-family: var(--fe);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--tr);
+}
+.contact-p {
+  font-size: .9rem;
+  color: var(--mu);
+  line-height: 1.8;
+  margin-bottom: 2.5rem;
+  font-weight: 300;
+  max-width: 42ch;
+}
+.contact-rows { display: flex; flex-direction: column; }
+.crow {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  gap: 1rem;
+  padding: .9rem 0;
+  border-bottom: 1px solid var(--ln);
+  align-items: baseline;
+}
+.crow-l {
+  font-family: var(--fm);
+  font-size: .56rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--tr);
+}
+.crow-v { font-size: .88rem; color: var(--ink); font-weight: 300; }
+
+.cf { display: flex; flex-direction: column; gap: 1.4rem; }
+.fg { display: flex; flex-direction: column; gap: .4rem; }
+.fg label {
+  font-family: var(--fm);
+  font-size: .56rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--mu);
+}
+.fg input, .fg select, .fg textarea {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--ln);
+  padding: .65rem 0;
+  font-family: var(--fe);
+  font-size: .92rem;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .2s;
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+}
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--f); }
+.fg textarea { resize: none; height: 85px; }
+.fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+
+.btn-submit {
+  align-self: flex-start;
+  background: var(--f);
+  color: var(--cr);
+  border: none;
+  padding: .88rem 2rem;
+  font-family: var(--fm);
+  font-size: .62rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  transition: background .2s;
+  white-space: nowrap;
+}
+.btn-submit::after { content: '→'; }
+.btn-submit:hover { background: var(--tr); }
+
+/* ── FOOTER ─────────────────────────────────────────────── */
+footer {
+  background: var(--f2);
+  border-top: 1px solid rgba(255,255,255,.05);
+}
+.foot-top {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 4rem var(--pad) 3rem;
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr 1fr;
+  gap: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.foot-brand-name {
+  font-family: var(--fd);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--wh);
+  letter-spacing: -.02em;
+  margin-bottom: .3rem;
+}
+.foot-brand-sub {
+  font-family: var(--fm);
+  font-size: .54rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.26);
+  margin-bottom: 1rem;
+}
+.foot-brand-p {
+  font-size: .82rem;
+  color: rgba(255,255,255,.26);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 34ch;
+}
+.foot-col-label {
+  font-family: var(--fm);
+  font-size: .53rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.2);
+  margin-bottom: .9rem;
+}
+.foot-links { display: flex; flex-direction: column; gap: .45rem; }
+.foot-links a {
+  font-size: .78rem;
+  color: rgba(255,255,255,.26);
+  transition: color .2s;
+  font-family: var(--fe);
+  font-weight: 300;
+}
+.foot-links a:hover { color: rgba(255,255,255,.65); }
+.foot-bottom {
+  max-width: var(--wrap);
+  margin: 0 auto;
+  padding: 1.8rem var(--pad);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.foot-copy {
+  font-size: .68rem;
+  letter-spacing: .04em;
+  color: rgba(255,255,255,.2);
+  line-height: 1.6;
+  font-family: var(--fm);
+}
+.foot-badges { display: flex; gap: .6rem; flex-wrap: wrap; }
+.foot-badge {
+  font-family: var(--fm);
+  font-size: .52rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255,255,255,.1);
+  color: rgba(255,255,255,.26);
+  padding: .26rem .62rem;
 }
 
-.mission-quote{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:2.3rem;
-  line-height:1.1;
-  letter-spacing:-0.05em;
-  font-weight:700;
-
-  color:var(--forest);
+/* ── KEYFRAMES ──────────────────────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: none; }
 }
 
-.mission-quote span{
-  color:#bd8d72;
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  :root { --pad: 2rem; }
+  .domains-grid { grid-template-columns: repeat(2, 1fr); }
+  .roadmap-phases { grid-template-columns: repeat(3, 1fr); }
+  .numbers-inner { grid-template-columns: repeat(3, 1fr); }
+  .num-item:nth-child(4) { border-right: none; }
 }
 
-.mission-body p{
-  color:var(--muted);
-  margin-bottom:1.5rem;
+@media (max-width: 900px) {
+  :root { --pad: 1.4rem; }
+
+  nav { position: relative; }
+  .notice-bar { padding: .6rem 1.4rem; }
+  .nav-links { display: none; }
+
+  #hero { padding-top: 0; }
+  .hero-grid { grid-template-columns: 1fr; gap: 0; padding: 3.5rem 0 2.5rem; }
+  .hero-panel-wrap { display: none; }
+  .hero-strip-inner { grid-template-columns: 1fr 1fr; }
+  .hs:nth-child(4) { display: none; }
+  .hs:nth-child(3) { border-right: none; }
+
+  #numbers .numbers-inner { grid-template-columns: repeat(2, 1fr); }
+  .num-item:nth-child(2) { border-right: none; }
+  .num-item:nth-child(5) { display: none; }
+
+  #thesis .thesis-grid { grid-template-columns: 1fr; gap: 3rem; }
+  #thesis .thesis-left { position: static; }
+
+  #domains .domains-head { grid-template-columns: 1fr; gap: 1.5rem; }
+  #domains .domains-grid { grid-template-columns: 1fr 1fr; }
+
+  #intelligence .intel-grid { grid-template-columns: 1fr; gap: 3rem; }
+  #intelligence .intel-left { position: static; }
+
+  #publications .pub-layout { grid-template-columns: 1fr; gap: 3rem; }
+
+  #infrastructure .infra-layout { grid-template-columns: 1fr; gap: 3rem; }
+
+  #partnerships .partner-layout { grid-template-columns: 1fr; gap: 3rem; }
+  #partnerships .partner-grid { grid-template-columns: 1fr; }
+
+  #leadership .leadership-grid { grid-template-columns: 1fr; }
+
+  #roadmap .roadmap-phases { grid-template-columns: 1fr 1fr; }
+
+  #contact .contact-grid { grid-template-columns: 1fr; gap: 3.5rem; }
+  .fg-row { grid-template-columns: 1fr; }
+
+  .foot-top { grid-template-columns: 1fr; gap: 2.5rem; }
+  .foot-bottom { flex-direction: column; align-items: flex-start; }
 }
 
-.pillars{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1rem;
-
-  margin-top:2rem;
-}
-
-.pillar{
-  background:var(--sage);
-
-  border-left:3px solid var(--forest);
-
-  padding:1.5rem;
-}
-
-.pillar h4{
-  font-family:'Space Grotesk',sans-serif;
-  color:var(--forest);
-
-  margin-bottom:.7rem;
-}
-
-/* RESEARCH */
-
-#research{
-  background:var(--sage);
-}
-
-.research-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1px;
-
-  background:var(--line);
-  border:1px solid var(--line);
-}
-
-.card{
-  background:var(--cream);
-
-  padding:2.5rem;
-}
-
-.card-phase{
-  font-size:.62rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  font-weight:700;
-
-  color:#bd8d72;
-
-  margin-bottom:1rem;
-}
-
-.card h3{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:1.7rem;
-  line-height:1.1;
-  letter-spacing:-0.04em;
-
-  color:var(--forest);
-
-  margin-bottom:1rem;
-}
-
-.card p{
-  color:var(--muted);
-  margin-bottom:1.5rem;
-}
-
-.tags{
-  display:flex;
-  flex-wrap:wrap;
-  gap:.5rem;
-}
-
-.tag{
-  border:1px solid var(--line);
-
-  padding:.45rem .7rem;
-
-  font-size:.62rem;
-  font-weight:700;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-
-  color:var(--muted);
-}
-
-/* LEADERSHIP */
-
-#leadership{
-  background:var(--forest);
-  color:white;
-}
-
-#leadership .section-title{
-  color:white;
-}
-
-.leadership-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:1.5rem;
-}
-
-.leader{
-  background:rgba(255,255,255,.03);
-
-  border:1px solid rgba(255,255,255,.08);
-
-  padding:2rem;
-}
-
-.leader-role{
-  font-size:.62rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-
-  color:var(--terra);
-
-  margin-bottom:.8rem;
-}
-
-.leader-name{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:1.5rem;
-  font-weight:700;
-
-  margin-bottom:.8rem;
-}
-
-.leader-bio{
-  color:rgba(255,255,255,.72);
-}
-
-/* CONTACT */
-
-#contact{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:5rem;
-}
-
-.contact-left p{
-  color:var(--muted);
-
-  margin-bottom:2rem;
-}
-
-.detail{
-  display:grid;
-  grid-template-columns:150px 1fr;
-
-  padding:1rem 0;
-
-  border-bottom:1px solid var(--line);
-}
-
-.detail-label{
-  font-size:.62rem;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  font-weight:700;
-
-  color:#bd8d72;
-}
-
-form{
-  display:flex;
-  flex-direction:column;
-  gap:1.5rem;
-}
-
-input,
-textarea,
-select{
-  width:100%;
-
-  background:transparent;
-
-  border:none;
-  border-bottom:1px solid var(--line);
-
-  padding:1rem 0;
-
-  font-family:'Inter',sans-serif;
-  font-size:1rem;
-
-  outline:none;
-}
-
-textarea{
-  min-height:120px;
-  resize:none;
-}
-
-button{
-  width:max-content;
-
-  background:var(--forest);
-  color:white;
-
-  border:none;
-
-  padding:1rem 1.8rem;
-
-  font-size:.72rem;
-  font-weight:700;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-
-  cursor:pointer;
-}
-
-/* FOOTER */
-
-footer{
-  background:#0c1611;
-  color:rgba(255,255,255,.42);
-
-  padding:3rem;
-}
-
-.footer-grid{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr;
-  gap:3rem;
-
-  margin-bottom:2rem;
-}
-
-.footer-brand{
-  font-family:'Space Grotesk',sans-serif;
-  font-size:1.2rem;
-  font-weight:700;
-
-  color:white;
-
-  margin-bottom:.6rem;
-}
-
-.footer-tag{
-  font-size:.7rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-}
-
-.footer-links{
-  display:flex;
-  flex-direction:column;
-  gap:.6rem;
-}
-
-.footer-links a{
-  color:rgba(255,255,255,.45);
-  text-decoration:none;
-  font-size:.78rem;
-}
-
-.footer-note{
-  border-top:1px solid rgba(255,255,255,.08);
-
-  padding-top:1.5rem;
-
-  font-size:.74rem;
-  line-height:1.8;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-  nav{
-    padding:1rem 1.2rem;
-  }
-
-  .nav-links{
-    display:none;
-  }
-
-  #hero,
-  section{
-    padding-left:1.2rem;
-    padding-right:1.2rem;
-  }
-
-  .hero-grid,
-  #mission,
-  .research-grid,
-  .leadership-grid,
-  #contact,
-  .footer-grid{
-    grid-template-columns:1fr;
-  }
-
-  .pillars{
-    grid-template-columns:1fr;
-  }
-
-  .hero-strip{
-    grid-template-columns:1fr;
-  }
-
-  .strip{
-    border-right:none;
-    border-bottom:1px solid rgba(255,255,255,.08);
-  }
-
-  .panel-title{
-    font-size:2.2rem;
-  }
-
+@media (max-width: 600px) {
+  #domains .domains-grid { grid-template-columns: 1fr; }
+  #roadmap .roadmap-phases { grid-template-columns: 1fr; }
+  .hero-strip-inner { grid-template-columns: 1fr; }
+  .hs { border-right: none; border-bottom: 1px solid rgba(255,255,255,.08); }
 }
 
 </style>
 </head>
-
 <body>
 
+<!-- NOTICE BAR -->
+<div class="notice-bar">
+  <div class="nb-dot"></div>
+  <div class="nb-text">
+    <strong>Active:</strong> ISBD Pan-Africa Chapter engaged · Phase I asthma protocol in MakSPH-REC preparation · lanforteinstitute.org
+  </div>
+</div>
+
+<!-- NAV -->
 <nav>
-
-<a href="#" class="brand">
-<div class="brand-main">
-Lanforte Institute
-</div>
-
-<div class="brand-sub">
-Public Health · Uganda
-</div>
-</a>
-
-<ul class="nav-links">
-<li><a href="#mission">Mission</a></li>
-<li><a href="#research">Research</a></li>
-<li><a href="#leadership">Leadership</a></li>
-<li><a href="#contact">Contact</a></li>
-</ul>
-
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">
+      <div class="nav-brand-a">Lanforte Institute</div>
+      <div class="nav-brand-b">Evidence Systems · Uganda</div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#thesis">Mission</a></li>
+      <li><a href="#domains">Research</a></li>
+      <li><a href="#intelligence">Intelligence</a></li>
+      <li><a href="#publications">Publications</a></li>
+      <li><a href="#roadmap">Roadmap</a></li>
+      <li><a href="#leadership">Leadership</a></li>
+      <li><a href="#contact" class="nav-cta">Collaborate</a></li>
+    </ul>
+  </div>
 </nav>
 
+<!-- HERO -->
 <section id="hero">
-
-<div class="hero-grid">
-
-<div class="hero-left">
-
-<div class="hero-eyebrow">
-UNDER LANFORTE SMC LTD · BULONDE, KAJJANSI · UGANDA
-</div>
-
-<h1 class="hero-title">
-Evidence for Africa.<br>
-<span>Built to global standards.</span>
-</h1>
-
-<p class="hero-text">
-The Lanforte Institute of Public Health is an independent Ugandan public health and research initiative focused on respiratory disease, mental health systems, epidemiology, environmental health, and future machine learning applications for African healthcare environments.
-</p>
-
-<div class="hero-actions">
-<a href="#research" class="btn-primary">
-Research Focus
-</a>
-
-<a href="#contact" class="btn-secondary">
-Collaborate
-</a>
-</div>
-
-</div>
-
-<div class="hero-right">
-
-<div class="hero-panel">
-
-<div class="panel-label">
-Institutional Focus
-</div>
-
-<div class="panel-title">
-Public Health.<br>
-Research.<br>
-Systems.
-</div>
-
-<div class="panel-divider"></div>
-
-<div class="hero-stat">
-<div class="hero-stat-number">
-3+
-</div>
-
-<div class="hero-stat-text">
-Core Research Tracks
-</div>
-</div>
-
-<div class="hero-stat">
-<div class="hero-stat-number">
-ML
-</div>
-
-<div class="hero-stat-text">
-Future Machine Learning Infrastructure
-</div>
-</div>
-
-<div class="hero-stat">
-<div class="hero-stat-number">
-EA
-</div>
-
-<div class="hero-stat-text">
-East Africa Research Vision
-</div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<div class="hero-strip">
-
-<div class="strip">
-<div class="strip-label">
-Primary Focus
-</div>
-
-<div class="strip-value">
-Respiratory & Asthma Research
-</div>
-</div>
-
-<div class="strip">
-<div class="strip-label">
-Future Expansion
-</div>
-
-<div class="strip-value">
-Mental Health & Machine Learning
-</div>
-</div>
-
-<div class="strip">
-<div class="strip-label">
-Institutional Goal
-</div>
-
-<div class="strip-value">
-Evidence → Policy → Systems Impact
-</div>
-</div>
-
-</div>
-
+  <div class="hero-wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="hero-eyebrow">
+          <div class="he-dot"></div>
+          <div class="he-text">Lanforte SMC Ltd · Bulonde, Kajjansi · Uganda · Est. 2024</div>
+        </div>
+        <h1 class="hero-h">
+          Evidence<br>
+          <span class="line-dim">Infrastructure</span>
+          <span class="line-accent">for Africa.</span>
+        </h1>
+        <p class="hero-desc">
+          An independent Ugandan research institution building the public health evidence systems, applied intelligence infrastructure, and institutional research capacity that African health systems will run on.
+        </p>
+        <div class="hero-actions">
+          <a href="#domains" class="btn-solid">Research Agenda</a>
+          <a href="#contact" class="btn-outline">Partner With Us</a>
+        </div>
+      </div>
+      <div class="hero-panel-wrap">
+        <div class="hero-panel">
+          <div class="panel-head">Institutional Development · 2024–2033</div>
+          <div class="panel-item">
+            <div class="pi-ph">Phase <span>I</span></div>
+            <div class="pi-lbl">Respiratory & Asthma Systems — Active</div>
+          </div>
+          <div class="panel-item">
+            <div class="pi-ph">Phase <span>II</span></div>
+            <div class="pi-lbl">Mental Health & Psychiatric Epidemiology</div>
+          </div>
+          <div class="panel-item">
+            <div class="pi-ph">Phase <span>III–V</span></div>
+            <div class="pi-lbl">ML Infrastructure · East African Evidence Systems</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-strip">
+    <div class="hero-strip-inner">
+      <div class="hs">
+        <div class="hs-l">Primary Research</div>
+        <div class="hs-v">Asthma–Bipolar Disorder Correlation (Paediatric, 0–18)</div>
+      </div>
+      <div class="hs">
+        <div class="hs-l">Target Funders</div>
+        <div class="hs-v">Fogarty D43 · Wellcome Trust ARL · NIMH R21</div>
+      </div>
+      <div class="hs">
+        <div class="hs-l">Ethics Framework</div>
+        <div class="hs-v">MakSPH-REC · UNCST · Declaration of Helsinki</div>
+      </div>
+      <div class="hs">
+        <div class="hs-l">Active Network</div>
+        <div class="hs-v">MGH · Harvard Medical School · ISBD Pan-Africa</div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="mission">
-
-<div>
-
-<div class="section-label">
-01 — Mission
+<!-- NUMBERS -->
+<div id="numbers">
+  <div class="numbers-inner">
+    <div class="num-item reveal">
+      <div class="num-n">90<span>%+</span></div>
+      <div class="num-l">Uganda Mental Health Treatment Gap</div>
+    </div>
+    <div class="num-item reveal">
+      <div class="num-n">8<span>+</span></div>
+      <div class="num-l">ISBD Pan-Africa Chapter Countries</div>
+    </div>
+    <div class="num-item reveal">
+      <div class="num-n">5</div>
+      <div class="num-l">Institutional Development Phases</div>
+    </div>
+    <div class="num-item reveal">
+      <div class="num-n">0<span>–18</span></div>
+      <div class="num-l">Paediatric Study Population (Years)</div>
+    </div>
+    <div class="num-item reveal">
+      <div class="num-n">4<span>+</span></div>
+      <div class="num-l">Major Grant Funding Pathways</div>
+    </div>
+  </div>
 </div>
 
-<h2 class="mission-quote">
-Building <span>institutional capacity</span> for African public health research.
-</h2>
-
-</div>
-
-<div class="mission-body">
-
-<p>
-The Lanforte Institute of Public Health exists to strengthen scientific and institutional research capacity in Uganda through evidence-driven programmes aligned with international public health standards.
-</p>
-
-<p>
-The institute focuses on respiratory disease, epidemiology, environmental health systems, mental health research, health informatics, and long-term machine learning applications for African healthcare systems.
-</p>
-
-<p>
-Our long-term objective is to establish internationally credible research infrastructure capable of supporting grant-funded projects, institutional partnerships, publication pipelines, and policy translation initiatives across East Africa.
-</p>
-
-<div class="pillars">
-
-<div class="pillar">
-<h4>Independence</h4>
-<p>Institutional architecture designed for long-term scientific credibility.</p>
-</div>
-
-<div class="pillar">
-<h4>Rigor</h4>
-<p>Research systems aligned to internationally recognized standards.</p>
-</div>
-
-<div class="pillar">
-<h4>Relevance</h4>
-<p>Research rooted in real African health system realities and needs.</p>
-</div>
-
-</div>
-
-</div>
-
+<!-- THESIS -->
+<section id="thesis">
+  <div class="wrap">
+    <div class="thesis-grid">
+      <div class="thesis-left reveal">
+        <div class="sec-tag">01 — Institutional Thesis</div>
+        <p class="thesis-quote">
+          The gap is not the disease.<br>
+          The gap is the <em>institutional capacity</em> to study it.
+        </p>
+      </div>
+      <div class="thesis-right">
+        <div class="tb reveal">
+          <div class="tb-n">001</div>
+          <div class="tb-h">We build evidence infrastructure, not just studies.</div>
+          <div class="tb-p">Single studies answer single questions. Institutional infrastructure answers them continuously. The Lanforte Institute is designed to function as a permanent evidence-generating system — producing research, training researchers, building partnerships, and translating findings into policy across decades, not grant cycles.</div>
+        </div>
+        <div class="tb reveal">
+          <div class="tb-n">002</div>
+          <div class="tb-h">We start where the evidence gap is sharpest.</div>
+          <div class="tb-p">Uganda's asthma burden is real and growing. Its correlation with bipolar disorder in paediatric populations — children and adolescents from birth to 18 — is entirely unstudied in Sub-Saharan Africa. That intersection is our initial research mandate. Specific enough to be fundable, significant enough to matter at scale.</div>
+        </div>
+        <div class="tb reveal">
+          <div class="tb-n">003</div>
+          <div class="tb-h">We build to international standards from day one.</div>
+          <div class="tb-p">MakSPH-REC ethics alignment, UNCST clearance, SPIRIT and STROBE reporting standards, Fogarty-compatible protocol architecture, ISBD-networked psychiatric research — not aspirational targets, but the operating floor. Research that cannot withstand international peer review is not research we produce.</div>
+        </div>
+        <div class="tb reveal">
+          <div class="tb-n">004</div>
+          <div class="tb-h">Machine learning infrastructure is a long-term strategic investment.</div>
+          <div class="tb-p">Applied intelligence in African public health is the logical endpoint of high-quality longitudinal data collection. The Institute builds toward computational epidemiology, GIS-linked health analytics, and predictive disease modelling from the foundation up — governed by ethical AI frameworks designed for African data systems and data sovereignty.</div>
+        </div>
+      </div>
+    </div>
+  </div>
 </section>
 
-<section id="research">
-
-<div class="section-label">
-02 — Research
-</div>
-
-<h2 class="section-title">
-Research Focus Areas
-</h2>
-
-<div class="research-grid">
-
-<div class="card">
-
-<div class="card-phase">
-Phase I · Active Focus
-</div>
-
-<h3>
-Respiratory Disease & Asthma
-</h3>
-
-<p>
-Primary research initiatives focus on asthma burden, respiratory disease prevalence, environmental exposure, air quality, and chronic respiratory health outcomes in Uganda and East Africa.
-</p>
-
-<div class="tags">
-<span class="tag">Epidemiology</span>
-<span class="tag">Air Quality</span>
-<span class="tag">NCD Research</span>
-<span class="tag">Clinical Systems</span>
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-phase">
-Phase II · Expansion
-</div>
-
-<h3>
-Mental Health & Psychiatry
-</h3>
-
-<p>
-Future programmes will explore psychiatric epidemiology, bipolar disorder systems research, treatment access, institutional mental health capacity, and global mental health implementation models.
-</p>
-
-<div class="tags">
-<span class="tag">Psychiatry</span>
-<span class="tag">Mental Health</span>
-<span class="tag">Systems Research</span>
-<span class="tag">Global Health</span>
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-phase">
-Infrastructure
-</div>
-
-<h3>
-Health Informatics & Machine Learning
-</h3>
-
-<p>
-The institute is building future capacity in research informatics, epidemiological data systems, GIS-linked health analysis, and machine learning applications for predictive disease modelling and public health decision support.
-</p>
-
-<div class="tags">
-<span class="tag">Machine Learning</span>
-<span class="tag">Health Informatics</span>
-<span class="tag">GIS</span>
-<span class="tag">Data Systems</span>
-</div>
-
-</div>
-
-<div class="card">
-
-<div class="card-phase">
-Institutional
-</div>
-
-<h3>
-Research Governance & Ethics
-</h3>
-
-<p>
-Development of institutional governance systems supporting ethics alignment, data governance, publication management, research compliance, and internationally credible operational standards.
-</p>
-
-<div class="tags">
-<span class="tag">Research Ethics</span>
-<span class="tag">IRB Alignment</span>
-<span class="tag">Governance</span>
-<span class="tag">Institution Building</span>
-</div>
-
-</div>
-
-</div>
-
+<!-- DOMAINS -->
+<section id="domains">
+  <div class="wrap">
+    <div class="domains-head">
+      <div class="reveal">
+        <div class="sec-tag sec-tag--lt">02 — Research</div>
+        <h2 class="sec-h sec-h--lt">Eight Research Domains</h2>
+      </div>
+      <p class="domains-desc reveal">Each domain is a future institutional division. Phases I and II are active. Phases III–V build the intelligence infrastructure that makes the Institute a permanent continental asset.</p>
+    </div>
+    <div class="domains-grid">
+      <div class="dc reveal">
+        <div class="dc-ph">Phase I · Active</div>
+        <div class="dc-h">Respiratory Disease & Asthma</div>
+        <div class="dc-p">Prevalence mapping, diagnostic gap quantification, and environmental risk factor analysis for asthma in Ugandan paediatric populations. Phase I flagship programme under ISAAC-adapted protocol.</div>
+        <div class="dc-tags"><span class="dc-tag">Epidemiology</span><span class="dc-tag">ISAAC Protocol</span><span class="dc-tag">MakSPH-REC</span></div>
+      </div>
+      <div class="dc reveal">
+        <div class="dc-ph">Phase I · Core Research</div>
+        <div class="dc-h">Asthma–Bipolar Disorder Correlation</div>
+        <div class="dc-p">First systematic investigation of the asthma–bipolar disorder correlation in paediatric Sub-Saharan African populations aged birth to 18. Conducted in partnership with the ISBD Pan-Africa Chapter.</div>
+        <div class="dc-tags"><span class="dc-tag">Psychiatric Epi</span><span class="dc-tag">Paediatric</span><span class="dc-tag">ISBD</span></div>
+      </div>
+      <div class="dc reveal">
+        <div class="dc-ph">Phase II</div>
+        <div class="dc-h">Mental Health Systems</div>
+        <div class="dc-p">Psychiatric burden quantification, treatment gap analysis, and task-sharing delivery model evaluation for Uganda's 90%+ mental health treatment gap. NIMH R21 grant development pathway.</div>
+        <div class="dc-tags"><span class="dc-tag">Psychiatry</span><span class="dc-tag">Task-Sharing</span><span class="dc-tag">NIMH</span></div>
+      </div>
+      <div class="dc reveal">
+        <div class="dc-ph">Phase II</div>
+        <div class="dc-h">Environmental Health & Air Quality</div>
+        <div class="dc-p">Biomass fuel exposure, indoor air quality, traffic-related pollution, and climate-linked respiratory health outcomes in urban and peri-urban Kampala. GIS-integrated exposure mapping.</div>
+        <div class="dc-tags"><span class="dc-tag">Air Quality</span><span class="dc-tag">Climate-Health</span><span class="dc-tag">GIS</span></div>
+      </div>
+      <div class="dc reveal">
+        <div class="dc-ph">Phase III</div>
+        <div class="dc-h">Health Informatics & Data Systems</div>
+        <div class="dc-p">REDCap research data pipelines, longitudinal dataset architecture, open data governance frameworks, and FAIR-aligned data repository infrastructure for East African health research.</div>
+        <div class="dc-tags"><span class="dc-tag">REDCap</span><span class="dc-tag">Data Governance</span><span class="dc-tag">Open Data</span></div>
+      </div>
+      <div class="dc reveal">
+        <div class="dc-ph">Phase III</div>
+        <div class="dc-h">Applied Machine Learning</div>
+        <div class="dc-p">Predictive disease modelling, computational epidemiology, and GIS-linked health analytics. Ethical AI systems designed for African health system contexts and data sovereignty requirements.</div>
+        <div class="dc-tags"><span class="dc-tag">ML</span><span class="dc-tag">Predictive Models</span><span class="dc-tag">Ethical AI</span></div>
+      </div>
+      <div class="dc reveal">
+        <div class="dc-ph">Phase IV</div>
+        <div class="dc-h">Research Governance & Ethics</div>
+        <div class="dc-p">IRB-aligned protocol systems, ISQM-equivalent research quality management, institutional ethics infrastructure, and publication management for a credible, internationally auditable research operation.</div>
+        <div class="dc-tags"><span class="dc-tag">IRB</span><span class="dc-tag">Quality Management</span><span class="dc-tag">Governance</span></div>
+      </div>
+      <div class="dc reveal">
+        <div class="dc-ph">Phase V</div>
+        <div class="dc-h">African Systems Intelligence</div>
+        <div class="dc-p">Continent-level evidence synthesis, policy translation systems, and regional research coordination — positioning the Institute as a node in East Africa's emerging public health intelligence architecture.</div>
+        <div class="dc-tags"><span class="dc-tag">Policy Translation</span><span class="dc-tag">East Africa</span><span class="dc-tag">Systems</span></div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- INTELLIGENCE -->
+<section id="intelligence">
+  <div class="wrap">
+    <div class="intel-grid">
+      <div class="intel-left reveal">
+        <div class="sec-tag">03 — Applied Intelligence</div>
+        <h2 class="sec-h">Research Computing & ML Infrastructure</h2>
+        <p class="intel-desc">Not artificial intelligence as spectacle. Computational infrastructure as institutional discipline — built carefully, governed rigorously, deployed in the service of African public health systems.</p>
+        <div class="intel-badge">Long-Term Infrastructure Investment</div>
+      </div>
+      <div class="intel-items">
+        <div class="ii reveal">
+          <div class="ii-n">01</div>
+          <div>
+            <div class="ii-h">Epidemiological Modelling</div>
+            <div class="ii-p">Computational disease burden modelling for Uganda and East Africa, built on the Institute's own longitudinal datasets. Designed to produce estimates meeting WHO and GBD methodological standards.</div>
+          </div>
+        </div>
+        <div class="ii reveal">
+          <div class="ii-n">02</div>
+          <div>
+            <div class="ii-h">GIS-Linked Health Analytics</div>
+            <div class="ii-p">Geospatial analysis of disease distribution, environmental exposure mapping, and health facility access modelling across Kampala and peri-urban Uganda. Linked to air quality and climate data systems.</div>
+          </div>
+        </div>
+        <div class="ii reveal">
+          <div class="ii-n">03</div>
+          <div>
+            <div class="ii-h">Predictive Disease Surveillance</div>
+            <div class="ii-p">Machine learning models for early warning of respiratory disease exacerbation and psychiatric episode risk — trained on African paediatric population data with documented bias auditing.</div>
+          </div>
+        </div>
+        <div class="ii reveal">
+          <div class="ii-n">04</div>
+          <div>
+            <div class="ii-h">Research Data Pipelines</div>
+            <div class="ii-p">End-to-end data management: REDCap collection, structured cleaning, encrypted storage, open access repositories, and version-controlled analysis environments aligned to FAIR data principles.</div>
+          </div>
+        </div>
+        <div class="ii reveal">
+          <div class="ii-n">05</div>
+          <div>
+            <div class="ii-h">Ethical AI Governance Framework</div>
+            <div class="ii-p">All ML systems developed under a documented ethical AI governance framework addressing data provenance, model fairness, African data sovereignty, algorithmic transparency, and community consent.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section id="publications">
+  <div class="wrap">
+    <div class="sec-tag reveal">04 — Research Outputs</div>
+    <h2 class="sec-h reveal">Publications & Research Pipeline</h2>
+    <div class="pub-layout">
+      <div class="reveal">
+        <p class="pub-note">An institution is measured not only by what it studies but by what it publishes. The Institute's publication pipeline is structured from inception for peer-reviewed outputs at international standard.</p>
+        <div class="pub-types">
+          <div class="pub-type active">Working Papers</div>
+          <div class="pub-type">Policy Briefs</div>
+          <div class="pub-type">Protocols</div>
+          <div class="pub-type">Institutional Reports</div>
+          <div class="pub-type">Data Notes</div>
+        </div>
+      </div>
+      <div class="pub-list">
+        <div class="pub-item reveal">
+          <div class="pub-yr">2026</div>
+          <div>
+            <div class="pub-h">School-Based Asthma Prevalence and Diagnostic Gap Among Adolescents in Urban Kampala: Protocol for a Cross-Sectional Pilot Study</div>
+            <div class="pub-meta">Luutu A. · Lanforte Institute of Public Health · MakSPH-REC Submission Version</div>
+          </div>
+          <div class="pub-bdg w">Protocol</div>
+        </div>
+        <div class="pub-item reveal">
+          <div class="pub-yr">2026</div>
+          <div>
+            <div class="pub-h">The Asthma–Bipolar Disorder Correlation in Paediatric Sub-Saharan African Populations: A Systematic Evidence Gap Review</div>
+            <div class="pub-meta">Luutu A. · Lanforte Institute of Public Health · In preparation</div>
+          </div>
+          <div class="pub-bdg g">In Preparation</div>
+        </div>
+        <div class="pub-item reveal">
+          <div class="pub-yr">2026</div>
+          <div>
+            <div class="pub-h">Mental Health Treatment Gap in Uganda: Evidence Synthesis for NIMH R21 Grant Development</div>
+            <div class="pub-meta">Luutu A. · Lanforte Institute of Public Health · Working Paper No. 002</div>
+          </div>
+          <div class="pub-bdg w">Working Paper</div>
+        </div>
+        <div class="pub-item reveal">
+          <div class="pub-yr">2026</div>
+          <div>
+            <div class="pub-h">Asthma and Respiratory Disease in Uganda: A Policy Brief for the Ministry of Health NCD Division</div>
+            <div class="pub-meta">Lanforte Institute of Public Health · Policy Brief No. 001</div>
+          </div>
+          <div class="pub-bdg g">Forthcoming</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AFRICAN INFRA -->
+<section id="infrastructure">
+  <div class="wrap">
+    <div class="sec-tag sec-tag--lt reveal">05 — Vision</div>
+    <h2 class="sec-h sec-h--lt reveal">African Evidence Infrastructure</h2>
+    <div class="infra-layout">
+      <div class="reveal">
+        <p class="infra-stmt">Africa does not have a <strong>disease problem.</strong> It has an <strong>evidence infrastructure problem.</strong></p>
+        <p class="infra-p">The data to understand, predict, and respond to African disease burdens is not being collected. The institutions to collect it systematically do not yet exist at scale. The Lanforte Institute is one attempt to change that — beginning in Uganda, designed to scale across East Africa.</p>
+        <p class="infra-p">This is not a research project. It is institutional architecture. A permanent evidence-generating system, designed to outlast any single grant cycle, any single researcher, and any single disease focus.</p>
+      </div>
+      <div class="infra-pillars reveal">
+        <div class="ip">
+          <div class="ip-bar"></div>
+          <div>
+            <div class="ip-h">East African Datasets</div>
+            <div class="ip-p">Longitudinal, IRB-approved, open-access datasets on respiratory, psychiatric, and environmental health outcomes — built to FAIR data principles for international research use.</div>
+          </div>
+        </div>
+        <div class="ip">
+          <div class="ip-bar"></div>
+          <div>
+            <div class="ip-h">Policy Translation Architecture</div>
+            <div class="ip-p">Dedicated MOH Uganda engagement, KCCA school health programme channels, and regional policy brief infrastructure ensuring findings translate into decisions, not just publications.</div>
+          </div>
+        </div>
+        <div class="ip">
+          <div class="ip-bar"></div>
+          <div>
+            <div class="ip-h">Research Capacity Building</div>
+            <div class="ip-p">Fellowship programmes, clinical research methods workshops, and structured mentorship for Ugandan early-career researchers — building the next generation of African health scientists from inside the institution.</div>
+          </div>
+        </div>
+        <div class="ip">
+          <div class="ip-bar"></div>
+          <div>
+            <div class="ip-h">North-South Partnership Infrastructure</div>
+            <div class="ip-p">Formal research MOU frameworks, co-investigator agreement templates, and IRB co-application architecture for genuine peer-level partnerships with U.S., UK, and European academic medical centres.</div>
+          </div>
+        </div>
+        <div class="ip">
+          <div class="ip-bar"></div>
+          <div>
+            <div class="ip-h">Grant Pipeline Development</div>
+            <div class="ip-p">Fogarty D43, Wellcome Trust ARL, NIMH R21, Grand Challenges Canada, EDCTP — a sequenced grant calendar building institutional funding capacity from seed awards to major multi-year grants.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERSHIPS -->
+<section id="partnerships">
+  <div class="wrap">
+    <div class="partner-layout">
+      <div class="reveal">
+        <div class="sec-tag">06 — Network</div>
+        <h2 class="sec-h">Research Partnerships</h2>
+        <p class="partner-desc">The Institute's partnership architecture is built around peer-level institutional relationships — not subcontracting arrangements. We engage academic medical centres, international scientific societies, and regulatory bodies as co-investigators and co-applicants.</p>
+      </div>
+      <div class="partner-grid">
+        <div class="pc reveal">
+          <div class="pc-type">Clinical Research Advisor</div>
+          <div class="pc-name">Massachusetts General Hospital</div>
+          <div class="pc-desc">Dauten Family Center for Bipolar Treatment Innovation. Institutional linkage through Dr. Andrew A. Nierenberg, MD — Thomas P. Hackett Endowed Chair in Psychiatry; Professor, Harvard Medical School.</div>
+        </div>
+        <div class="pc reveal">
+          <div class="pc-type">Scientific Society</div>
+          <div class="pc-name">ISBD Pan-Africa Chapter</div>
+          <div class="pc-desc">International Society for Bipolar Disorders. Pan-Africa Chapter spanning 8 African countries. Engaged through VP of Outreach Dr. Erin Michalak. Core network for the asthma–bipolar disorder programme.</div>
+        </div>
+        <div class="pc reveal">
+          <div class="pc-type">Ethics & Regulatory</div>
+          <div class="pc-name">MakSPH-REC · UNCST</div>
+          <div class="pc-desc">Makerere University School of Public Health Research Ethics Committee and Uganda National Council for Science and Technology. All protocols submitted and cleared before data collection.</div>
+        </div>
+        <div class="pc reveal">
+          <div class="pc-type">Target Funder Pathways</div>
+          <div class="pc-name">Fogarty · Wellcome · NIMH</div>
+          <div class="pc-desc">NIH Fogarty International Center (D43), Wellcome Trust African Research Leaders programme, and NIMH R21/R01 mechanisms. Pre-application engagement and protocol alignment underway.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
 <section id="leadership">
-
-<div class="section-label">
-03 — Leadership
-</div>
-
-<h2 class="section-title">
-Leadership & Advisory
-</h2>
-
-<div class="leadership-grid">
-
-<div class="leader">
-
-<div class="leader-role">
-Founding Principal
-</div>
-
-<div class="leader-name">
-Andrew Luutu
-</div>
-
-<div class="leader-bio">
-M.A. Sustainable International Development · Brandeis University<br><br>
-
-Founder, LANFORTE SMC LTD · CPA Candidate · Public Health Research Initiative Lead
-</div>
-
-</div>
-
-<div class="leader">
-
-<div class="leader-role">
-Clinical Research Advisor
-</div>
-
-<div class="leader-name">
-Andrew A. Nierenberg, MD
-</div>
-
-<div class="leader-bio">
-Director, Dauten Family Center for Bipolar Treatment Innovation · Massachusetts General Hospital<br><br>
-
-Professor of Psychiatry · Harvard Medical School
-</div>
-
-</div>
-
-</div>
-
+  <div class="wrap">
+    <div class="sec-tag sec-tag--lt reveal">07 — Leadership</div>
+    <h2 class="sec-h sec-h--lt reveal">Principal & Advisory Board</h2>
+    <div class="leadership-grid">
+      <div class="lc reveal">
+        <div class="lc-role">Founding Principal</div>
+        <div class="lc-name">Andrew Luutu</div>
+        <div class="lc-title">Institutional Builder · Public Health Researcher · CPA Candidate</div>
+        <div class="lc-bio">Founding principal of Lanforte SMC Ltd and the Lanforte Institute of Public Health. Background in sustainable international development, accounting analytics, and professional practice. Building Uganda's first systematic asthma–bipolar disorder correlation research programme in paediatric populations, with institutional architecture designed for Fogarty, Wellcome Trust, and NIMH funding pathways.</div>
+        <div class="lc-tags">
+          <span class="lc-tag">Brandeis University — MA SID</span>
+          <span class="lc-tag">Bentley University — MS Analytics</span>
+          <span class="lc-tag">Lanforte SMC Ltd</span>
+        </div>
+      </div>
+      <div class="lc reveal">
+        <div class="lc-role">Clinical Research Advisor</div>
+        <div class="lc-name">Andrew A. Nierenberg, MD</div>
+        <div class="lc-title">Thomas P. Hackett, MD, Endowed Chair in Psychiatry · MGH / Harvard Medical School</div>
+        <div class="lc-bio">Director, Dauten Family Center for Bipolar Treatment Innovation. Co-Director, Center for Clinical Research Education, Massachusetts General Hospital. Professor of Psychiatry, Harvard Medical School. One of the foremost global experts in bipolar disorder treatment and clinical research systems. Institutional advisor to the Institute's psychiatric and mental health programmes.</div>
+        <div class="lc-tags">
+          <span class="lc-tag">Harvard Medical School</span>
+          <span class="lc-tag">Massachusetts General Hospital</span>
+          <span class="lc-tag">Dauten Center for Bipolar</span>
+        </div>
+      </div>
+      <div class="lc-open reveal">
+        <div class="lc-open-label">Advisory Board — Invitation Only</div>
+        <div class="lc-open-text">Actively recruiting clinical researchers, epidemiologists, and public health scientists aligned with East African research priorities. Positions are invitation-only and non-remunerated.</div>
+      </div>
+      <div class="lc-open reveal">
+        <div class="lc-open-label">Research Fellow — Position Open</div>
+        <div class="lc-open-text">Fellowship programme accepting applications from Ugandan early-career researchers in public health and clinical research methods. First cohort: 2 fellows maximum.</div>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="wrap">
+    <div class="sec-tag reveal">08 — Institutional Roadmap</div>
+    <h2 class="sec-h reveal">Five-Phase Development Plan · 2024–2033</h2>
+    <div class="roadmap-phases">
+      <div class="phase active reveal">
+        <div class="ph-n">I</div>
+        <div class="ph-label">Active · 2024–2026</div>
+        <div class="ph-h">Public Health & Respiratory Systems</div>
+        <div class="ph-p">School-based asthma pilot study. MakSPH-REC ethics clearance. Asthma–bipolar correlation evidence synthesis. ISBD Pan-Africa engagement. Fogarty D43 pre-application.</div>
+        <div class="ph-status"><div class="ph-dot"></div>In Progress</div>
+      </div>
+      <div class="phase reveal">
+        <div class="ph-n">II</div>
+        <div class="ph-label">2026–2028</div>
+        <div class="ph-h">Mental Health & Psychiatric Epidemiology</div>
+        <div class="ph-p">NIMH R21 submission. Task-sharing model study. Bipolar burden quantification. Fellowship cohort one. First peer-reviewed publications submitted.</div>
+        <div class="ph-status"><div class="ph-dot"></div>Planned</div>
+      </div>
+      <div class="phase reveal">
+        <div class="ph-n">III</div>
+        <div class="ph-label">2028–2030</div>
+        <div class="ph-h">Research Informatics & ML Infrastructure</div>
+        <div class="ph-p">REDCap data infrastructure. GIS-linked health analytics. First computational epidemiology outputs. Fogarty D43 active grant. Institutional data repository.</div>
+        <div class="ph-status"><div class="ph-dot"></div>Planned</div>
+      </div>
+      <div class="phase reveal">
+        <div class="ph-n">IV</div>
+        <div class="ph-label">2030–2033</div>
+        <div class="ph-h">East African Evidence Infrastructure</div>
+        <div class="ph-p">Multi-country research consortium. East African longitudinal dataset. Policy at regional scale. Wellcome Trust or EDCTP major grant. Research training centre accreditation.</div>
+        <div class="ph-status"><div class="ph-dot"></div>Vision</div>
+      </div>
+      <div class="phase reveal">
+        <div class="ph-n">V</div>
+        <div class="ph-label">2033+</div>
+        <div class="ph-h">Continental Applied Intelligence Institute</div>
+        <div class="ph-p">Africa-level ML disease surveillance. Continental research network. Independent endowment. Recognised by WHO and African Union as a regional public health intelligence node.</div>
+        <div class="ph-status"><div class="ph-dot"></div>Long-term Vision</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
 <section id="contact">
-
-<div class="contact-left">
-
-<div class="section-label">
-04 — Contact
-</div>
-
-<h2 class="section-title">
-Institutional Contact
-</h2>
-
-<p>
-We welcome collaboration enquiries from researchers, clinicians, institutions, advisors, and public health partners aligned with evidence-driven work in Africa.
-</p>
-
-<div class="detail">
-<div class="detail-label">
-Location
-</div>
-
-<div class="detail-value">
-Bulonde, Kajjansi · Wakiso District · Uganda
-</div>
-</div>
-
-<div class="detail">
-<div class="detail-label">
-Director
-</div>
-
-<div class="detail-value">
-director@lanforteinstitute.org
-</div>
-</div>
-
-<div class="detail">
-<div class="detail-label">
-Operations
-</div>
-
-<div class="detail-value">
-operations@lanforteinstitute.org
-</div>
-</div>
-
-<div class="detail">
-<div class="detail-label">
-Corporate
-</div>
-
-<div class="detail-value">
-admin@lanforte.com
-</div>
-</div>
-
-</div>
-
-<form>
-
-<input type="text" placeholder="Full name">
-
-<input type="email" placeholder="Email address">
-
-<input type="text" placeholder="Institution or organisation">
-
-<select>
-<option>Nature of enquiry</option>
-<option>Research Collaboration</option>
-<option>Funding & Grants</option>
-<option>Clinical Partnership</option>
-<option>Institutional Advisory</option>
-<option>Other</option>
-</select>
-
-<textarea placeholder="Message"></textarea>
-
-<button type="button">
-Send Message
-</button>
-
-</form>
-
+  <div class="wrap">
+    <div class="contact-grid">
+      <div class="reveal">
+        <div class="sec-tag">09 — Contact</div>
+        <h2 class="contact-h">Build<br><em>with us.</em></h2>
+        <p class="contact-p">We engage researchers, clinicians, funders, institutions, and policy partners who are serious about evidence-driven public health in Africa. Every enquiry receives a personal response from the principal.</p>
+        <div class="contact-rows">
+          <div class="crow">
+            <div class="crow-l">Institution</div>
+            <div class="crow-v">Lanforte SMC Ltd — Lanforte Institute of Public Health</div>
+          </div>
+          <div class="crow">
+            <div class="crow-l">Location</div>
+            <div class="crow-v">Bulonde, Kajjansi · Wakiso District · Uganda</div>
+          </div>
+          <div class="crow">
+            <div class="crow-l">Inquiries</div>
+            <div class="crow-v">admin@lanforteinstitute.org</div>
+          </div>
+          <div class="crow">
+            <div class="crow-l">Research</div>
+            <div class="crow-v">research@lanforteinstitute.org</div>
+          </div>
+          <div class="crow">
+            <div class="crow-l">Operations</div>
+            <div class="crow-v">operations@lanforteinstitute.org</div>
+          </div>
+          <div class="crow">
+            <div class="crow-l">Corporate</div>
+            <div class="crow-v">keystone@lanfortesmc.com</div>
+          </div>
+          <div class="crow">
+            <div class="crow-l">Website</div>
+            <div class="crow-v">lanforteinstitute.org</div>
+          </div>
+        </div>
+      </div>
+      <div class="cf reveal">
+        <div class="fg-row">
+          <div class="fg">
+            <label>Full Name</label>
+            <input type="text" placeholder="Your name">
+          </div>
+          <div class="fg">
+            <label>Institution</label>
+            <input type="text" placeholder="University or organisation">
+          </div>
+        </div>
+        <div class="fg">
+          <label>Email</label>
+          <input type="email" placeholder="your@institution.edu">
+        </div>
+        <div class="fg">
+          <label>Nature of Enquiry</label>
+          <select>
+            <option value="" disabled selected>Select type</option>
+            <option>Research Collaboration</option>
+            <option>Co-Investigator / Grant Partnership</option>
+            <option>Advisory Board Interest</option>
+            <option>Funding & Philanthropy</option>
+            <option>Letter of Support</option>
+            <option>Fellowship Application</option>
+            <option>Media & Press</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>Message</label>
+          <textarea placeholder="Brief description of your interest or proposed collaboration"></textarea>
+        </div>
+        <button class="btn-submit" onclick="alert('Wire to Formspree or Netlify Forms for production.')">Send Message</button>
+      </div>
+    </div>
+  </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-
-<div class="footer-grid">
-
-<div>
-
-<div class="footer-brand">
-Lanforte Institute of Public Health
-</div>
-
-<div class="footer-tag">
-Under LANFORTE SMC LTD · Uganda
-</div>
-
-</div>
-
-<div class="footer-links">
-<a href="#">Research Ethics</a>
-<a href="#">Data Governance</a>
-<a href="#">Institutional Policies</a>
-<a href="#">Publications Archive</a>
-</div>
-
-<div class="footer-links">
-<a href="#">Disclaimer</a>
-<a href="#">Privacy Notice</a>
-<a href="#">Partnership Policy</a>
-<a href="#">Governance</a>
-</div>
-
-</div>
-
-<div class="footer-note">
-
-© 2026 Lanforte Institute of Public Health.<br>
-Independent public health and research initiative headquartered in Uganda. All rights reserved.<br><br>
-
-Research content published on this platform is informational and does not constitute medical advice, diagnosis, or treatment.
-
-</div>
-
+  <div class="foot-top">
+    <div>
+      <div class="foot-brand-name">Lanforte Institute of Public Health</div>
+      <div class="foot-brand-sub">Under Lanforte SMC Ltd · Kampala, Uganda</div>
+      <div class="foot-brand-p">An independent Ugandan public health research institution. Building evidence systems for Africa — to global standards from Kampala.</div>
+    </div>
+    <div>
+      <div class="foot-col-label">Research</div>
+      <div class="foot-links">
+        <a href="#domains">Research Domains</a>
+        <a href="#intelligence">Applied Intelligence</a>
+        <a href="#publications">Publications</a>
+        <a href="#roadmap">Roadmap</a>
+      </div>
+    </div>
+    <div>
+      <div class="foot-col-label">Institution</div>
+      <div class="foot-links">
+        <a href="#">Research Ethics Policy</a>
+        <a href="#">Data Governance</a>
+        <a href="#">Partnership Policy</a>
+        <a href="#">Fellowship Programme</a>
+      </div>
+    </div>
+    <div>
+      <div class="foot-col-label">Governance</div>
+      <div class="foot-links">
+        <a href="#">Disclaimer</a>
+        <a href="#">Privacy Notice</a>
+        <a href="#">Grant Disclosures</a>
+        <a href="#">Publications Archive</a>
+      </div>
+    </div>
+  </div>
+  <div class="foot-bottom">
+    <div class="foot-copy">© 2026 Lanforte Institute of Public Health. Under Lanforte SMC Ltd. All rights reserved. Research content is informational and does not constitute medical advice, diagnosis, or treatment.</div>
+    <div class="foot-badges">
+      <div class="foot-badge">MakSPH-REC</div>
+      <div class="foot-badge">UNCST</div>
+      <div class="foot-badge">ISBD Pan-Africa</div>
+      <div class="foot-badge">MGH · Harvard</div>
+      <div class="foot-badge">lanforteinstitute.org</div>
+    </div>
+  </div>
 </footer>
+
+<script>
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      e.target.style.transitionDelay = (i * 0.07) + 's';
+      e.target.classList.add('in');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.09 });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+document.querySelectorAll('.pub-type').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pub-type').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  });
+});
+</script>
 
 </body>
 </html>
