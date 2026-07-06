@@ -1,2889 +1,535 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lanforte Institute of Public Health — Independent Public Health Research Institute</title>
-<meta name="description" content="Building the evidence infrastructure Africa needs. Childhood health, neuroscience, and population health research from Uganda.">
+<title>LANFORTE Institute of Biomedical Research</title>
+<meta name="description" content="Advancing biomedical discovery for healthier populations. Research Division: Center for Respiratory Biology. Flagship Program: Severe Asthma Research Initiative.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap">
-
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════
-   TOKENS — Parchment & Vintage Ink
-═══════════════════════════════════════ */
-:root {
-  /* Paper */
-  --parch:    #F0E8D5;   /* aged parchment — primary background */
-  --parch2:   #E8DFC8;   /* deeper parchment */
-  --parch3:   #DDD4BB;   /* dark parchment */
-  --parch4:   #F7F2E8;   /* lightest parchment — for cards */
-  --vellum:   #FAF5ED;   /* near-white vellum */
+:root{
+  --ink:#0A0F0D;
+  --ink2:#101815;
+  --ink3:#152019;
+  --line:rgba(245,243,238,.10);
+  --line2:rgba(245,243,238,.06);
+  --paper:#F5F3EE;
+  --paper-dim:rgba(245,243,238,.62);
+  --paper-faint:rgba(245,243,238,.38);
+  --gold:#D4A73C;
+  --gold-dim:rgba(212,167,60,.5);
+  --teal:#3FA9A0;
+  --teal-dim:rgba(63,169,160,.5);
+  --radius:18px;
+  --radius-sm:10px;
+  --maxw:1240px;
+  --disp:'Space Grotesk',ui-sans-serif,sans-serif;
+  --body:'IBM Plex Sans',ui-sans-serif,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--ink);color:var(--paper);font-family:var(--body);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+.container{max-width:var(--maxw);margin:0 auto;padding:0 56px}
+@media(max-width:900px){.container{padding:0 24px}}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
-  /* Ink — deep and warm */
-  --ink:      #19160E;   /* warm near-black — primary text */
-  --ink2:     #352E22;   /* secondary ink */
-  --ink3:     #5A5040;   /* muted ink */
-  --ink4:     #8A7D6A;   /* faded ink */
+/* type */
+h1,h2,h3{font-family:var(--disp);font-weight:600;letter-spacing:-.01em;color:var(--paper)}
+.h-xl{font-size:clamp(2.6rem,5vw,4.4rem);line-height:1.04;font-weight:700}
+.h-lg{font-size:clamp(2rem,3.2vw,2.9rem);line-height:1.1}
+.h-md{font-size:clamp(1.3rem,1.8vw,1.6rem)}
+.eyebrow{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.eyebrow::before{content:'';width:22px;height:1px;background:var(--gold)}
+.lede{font-size:1.15rem;line-height:1.65;color:var(--paper-dim);max-width:560px}
+.mono{font-family:var(--mono)}
 
-  /* Forest greens — botanical */
-  --forest:   #1A3D25;   /* deep institutional green */
-  --forest2:  #243D1C;
-  --sage:     #2E6040;   /* sage green */
-  --sage2:    #4A8A5E;
-  --fern:     #6BAE7A;   /* lighter fern */
+/* nav */
+.nav{position:fixed;top:0;left:0;right:0;z-index:900;background:rgba(10,15,13,.82);backdrop-filter:blur(12px);border-bottom:1px solid transparent;transition:border-color .25s}
+.nav.elevated{border-color:var(--line)}
+.nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 56px;height:80px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+@media(max-width:900px){.nav-inner{padding:0 24px}}
+.nav-logo{font-family:var(--disp);font-weight:700;font-size:1.02rem;letter-spacing:-.01em}
+.nav-logo span{color:var(--gold)}
+.nav-logo small{display:block;font-family:var(--mono);font-weight:400;font-size:.62rem;letter-spacing:.1em;color:var(--paper-faint);text-transform:uppercase;margin-top:2px}
+.nav-links{display:flex;align-items:center;gap:26px;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{font-size:.88rem;color:var(--paper-dim);white-space:nowrap;transition:color .15s}
+.nav-links a:hover{color:var(--paper)}
+@media(max-width:1000px){.nav-links{display:none}}
+.btn{display:inline-flex;align-items:center;gap:8px;border-radius:2px;padding:13px 24px;font-family:var(--body);font-size:.88rem;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all .15s}
+.btn-gold{background:var(--gold);color:var(--ink)}
+.btn-gold:hover{background:#e8bd54}
+.btn-line{border-color:var(--line);color:var(--paper)}
+.btn-line:hover{border-color:var(--gold-dim);color:var(--gold)}
 
-  /* Aged copper / sepia */
-  --copper:   #7A4E22;   /* 5.8:1 on parch ✓ */
-  --copper2:  #9A6830;
-  --copper3:  #B88845;
+/* hero */
+.hero{padding:150px 0 72px;position:relative;overflow:hidden}
+.hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:end}
+.hero-actions{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
+.hero-side{border-left:1px solid var(--line);padding-left:32px}
+.hero-side-label{font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.1em;color:var(--paper-faint);margin-bottom:10px}
+.hero-side-val{font-family:var(--disp);font-size:1.3rem;color:var(--gold);margin-bottom:22px}
+@media(max-width:900px){.hero-inner{grid-template-columns:1fr}.hero-side{border-left:none;border-top:1px solid var(--line);padding-left:0;padding-top:24px}}
+.airway-bg{position:absolute;inset:0;z-index:1;opacity:.55;pointer-events:none}
 
-  /* Rules */
-  --rule:     #C0B49A;   /* aged rule line */
-  --rule2:    #D0C4AA;
+/* waveform divider - spirometry trace, used as a recurring signature motif */
+.wave-divider{width:100%;height:56px;display:block}
+.wave-divider path{fill:none;stroke:var(--teal-dim);stroke-width:1.4}
 
-  /* Everything is Cormorant Garamond */
-  --font:     'Cormorant Garamond', 'Garamond', 'Georgia', serif;
-}
+/* positioning band */
+.position-band{background:var(--ink2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:44px 0}
+.position-quote{font-family:var(--disp);font-size:clamp(1.3rem,2.4vw,1.85rem);font-weight:500;line-height:1.45;max-width:900px;color:var(--paper)}
+.position-quote .accent{color:var(--gold)}
 
-/* ═══════════════════════════════════════
-   PARCHMENT TEXTURE
-═══════════════════════════════════════ */
-/* CSS noise grain for paper feel */
-@keyframes grain {
-  0%,100% { transform: translate(0, 0); }
-  10%      { transform: translate(-2%, -3%); }
-  30%      { transform: translate(3%, 2%); }
-  50%      { transform: translate(-1%, 4%); }
-  70%      { transform: translate(2%, -2%); }
-  90%      { transform: translate(-3%, 1%); }
-}
+/* sections */
+.section{padding:72px 0}
+.section-head{max-width:680px;margin-bottom:36px}
+.section-tight{padding-bottom:0}
 
-/* ═══════════════════════════════════════
-   RESET
-═══════════════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 18px; scroll-behavior: smooth; }
-body {
-  background: var(--parch);
-  color: var(--ink);
-  font-family: var(--font);
-  font-weight: 400;
-  line-height: 1.7;
-  -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
-  /* Subtle parchment grain */
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23noise)' opacity='.028'/%3E%3C/svg%3E"),
-    linear-gradient(160deg, #F2E9D6 0%, #EDE4CC 40%, #F0E8D5 100%);
-  background-attachment: fixed;
-}
-a { text-decoration: none; color: inherit; }
-:focus-visible { outline: 1px solid var(--copper); outline-offset: 4px; }
+/* research themes */
+.themes-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.theme-cell{background:var(--ink);padding:30px 24px;display:flex;flex-direction:column;min-height:340px;transition:background .2s}
+.theme-cell:hover{background:var(--ink3)}
+.theme-idx{font-family:var(--mono);font-size:.72rem;color:var(--teal);margin-bottom:20px}
+.theme-title{font-family:var(--disp);font-size:1.05rem;font-weight:600;margin-bottom:12px;line-height:1.25}
+.theme-desc{font-size:.86rem;color:var(--paper-dim);line-height:1.55;margin-bottom:auto;flex:1}
+.theme-out{border-top:1px solid var(--line);padding-top:14px;margin-top:18px}
+.theme-out-label{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--paper-faint);margin-bottom:5px}
+.theme-out-val{font-size:.82rem;color:var(--paper);font-weight:500}
+@media(max-width:1100px){.themes-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.themes-grid{grid-template-columns:1fr}}
 
-/* Ornamental rules */
-.rule-thin-thick-thin {
-  display: flex; flex-direction: column; gap: 2px;
-  margin: 0;
-}
-.rule-thin-thick-thin::before {
-  content: '';
-  display: block;
-  height: 1px;
-  background: var(--rule);
-}
-.rule-thin-thick-thin::after {
-  content: '';
-  display: block;
-  height: 3px;
-  background: var(--ink2);
-  margin-top: 2px;
-}
+/* stats */
+.stats-band{background:var(--ink2);padding:52px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0}
+.stat{padding:0 28px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:none;padding-left:0}
+.stat-val{font-family:var(--disp);font-size:clamp(1.8rem,3.4vw,2.6rem);font-weight:700;color:var(--gold);letter-spacing:-.02em}
+.stat-label{font-size:.85rem;color:var(--paper-dim);margin-top:8px}
+@media(max-width:900px){.stats-grid{grid-template-columns:1fr 1fr;row-gap:32px}.stat{border-left:none;padding-left:0}}
 
-/* ─ Section ornament ─ */
-.ornament {
-  text-align: center;
-  font-size: 1.4rem;
-  color: var(--ink4);
-  letter-spacing: .5em;
-  margin: 0;
-  user-select: none;
-}
-.ornament-left {
-  display: flex; align-items: center; gap: 14px;
-  color: var(--ink4);
-  font-size: 1rem;
-}
-.ornament-left::after {
-  content: '';
-  flex: 1;
-  height: 1px;
-  background: var(--rule);
-}
+/* publications */
+.pub-list{display:flex;flex-direction:column}
+.pub-item{display:grid;grid-template-columns:90px 1fr auto;gap:24px;align-items:start;padding:26px 0;border-bottom:1px solid var(--line)}
+.pub-item:first-child{border-top:1px solid var(--line)}
+.pub-year{font-family:var(--mono);font-size:.85rem;color:var(--teal)}
+.pub-type{font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--paper-faint);display:block;margin-bottom:6px}
+.pub-title{font-family:var(--disp);font-size:1.08rem;font-weight:600;line-height:1.35;margin-bottom:6px}
+.pub-meta{font-size:.83rem;color:var(--paper-dim)}
+.pub-doi{font-family:var(--mono);font-size:.78rem;color:var(--paper-faint)}
+.pub-status{font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;padding:5px 12px;border:1px solid var(--line);color:var(--paper-dim);white-space:nowrap;height:fit-content}
+@media(max-width:700px){.pub-item{grid-template-columns:1fr}.pub-year{order:-1}}
 
-/* ═══════════════════════════════════════
-   MASTHEAD NAV — Journal Header Style
-═══════════════════════════════════════ */
-.masthead {
-  position: fixed; top: 0; left: 0; right: 0;
-  z-index: 900;
-  background: var(--parch);
-  border-bottom: 1px solid var(--ink2);
-  transition: box-shadow .3s;
-}
-.masthead.elevated { box-shadow: 0 2px 20px rgba(25,22,14,.12); }
+/* innovation */
+.innov-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.innov-card{border:1px solid var(--line);border-radius:2px;padding:32px}
+.innov-num{font-family:var(--mono);font-size:.72rem;color:var(--gold);margin-bottom:18px}
+.innov-title{font-family:var(--disp);font-size:1.1rem;font-weight:600;margin-bottom:10px}
+.innov-desc{font-size:.88rem;color:var(--paper-dim);line-height:1.6}
+@media(max-width:900px){.innov-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.innov-grid{grid-template-columns:1fr}}
 
-/* Top rule strip */
-.masthead-rules {
-  height: 4px;
-  background: var(--forest);
-  position: relative;
-}
-.masthead-rules::after {
-  content: '';
-  position: absolute;
-  bottom: -2px; left: 0; right: 0;
-  height: 1px;
-  background: var(--copper3);
-}
+/* collaborate */
+.collab-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.collab-cell{background:var(--ink);padding:26px 20px}
+.collab-title{font-family:var(--disp);font-size:.95rem;font-weight:600;margin-bottom:10px}
+.collab-desc{font-size:.8rem;color:var(--paper-dim);line-height:1.5}
+@media(max-width:1000px){.collab-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.collab-grid{grid-template-columns:1fr}}
 
-.masthead-inner {
-  padding: 8px 56px 10px;
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: 24px;
-}
-.masthead-meta-left {
-  font-size: .68rem;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--ink4);
-  letter-spacing: .06em;
-}
-.masthead-logo {
-  text-align: center;
-  text-decoration: none;
-  display: block;
-}
-.masthead-logo-abbr {
-  font-family: var(--font);
-  font-size: .7rem;
-  font-weight: 400;
-  letter-spacing: .35em;
-  text-transform: uppercase;
-  color: var(--ink4);
-  display: block;
-  margin-bottom: 2px;
-}
-.masthead-logo-name {
-  font-family: var(--font);
-  font-size: 1.15rem;
-  font-weight: 700;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-  color: var(--ink);
-  line-height: 1;
-  display: block;
-}
-.masthead-logo-sub {
-  font-family: var(--font);
-  font-size: .65rem;
-  font-style: italic;
-  color: var(--ink4);
-  letter-spacing: .1em;
-  display: block;
-  margin-top: 2px;
-}
-.masthead-meta-right {
-  text-align: right;
-  font-size: .68rem;
-  font-style: italic;
-  color: var(--ink4);
-  letter-spacing: .06em;
-}
+/* leadership */
+.lead-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:24px}
+.lead-card{border:1px solid var(--line);padding:30px;border-radius:2px}
+.lead-card.principal{background:var(--ink2)}
+.lead-avatar{width:44px;height:44px;border:1px solid var(--gold-dim);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--disp);font-weight:700;font-size:.95rem;color:var(--gold);margin-bottom:18px}
+.lead-name{font-family:var(--disp);font-size:1.15rem;font-weight:600}
+.lead-role{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--teal);display:block;margin:6px 0 10px}
+.lead-affil{font-size:.82rem;color:var(--paper-faint);line-height:1.5;margin-bottom:14px}
+.lead-bio{font-size:.88rem;color:var(--paper-dim);line-height:1.6}
+@media(max-width:900px){.lead-grid{grid-template-columns:1fr}}
 
-/* Nav links row */
-.masthead-nav {
-  border-top: 1px solid var(--rule2);
-  padding: 6px 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-}
-.masthead-nav a {
-  font-family: var(--font);
-  font-size: .8rem;
-  font-weight: 500;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--ink2);
-  padding: 4px 20px;
-  border-right: 1px solid var(--rule2);
-  transition: color .2s, background .2s;
-  white-space: nowrap;
-}
-.masthead-nav a:first-child { border-left: 1px solid var(--rule2); }
-.masthead-nav a:hover { color: var(--forest); background: rgba(42,96,64,.05); }
-.masthead-nav .engage-link {
-  background: var(--forest);
-  color: var(--parch4);
-  margin-left: 24px;
-  border: 1px solid var(--forest) !important;
-  border-left: 1px solid var(--forest) !important;
-}
-.masthead-nav .engage-link:hover { background: var(--sage); }
+/* careers */
+.careers-band{background:var(--ink2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:64px 0}
+.careers-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+.careers-tag{border:1px solid var(--line);padding:10px 18px;font-size:.85rem;color:var(--paper-dim);border-radius:2px}
 
-/* Mobile */
-.mob-trigger {
-  display: none;
-  background: none; border: none;
-  font-family: var(--font);
-  font-size: .75rem;
-  font-weight: 500;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-  color: var(--ink2);
-  cursor: pointer;
-  padding: 6px 0;
-}
+/* contact */
+.contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px}
+.contact-row{display:grid;grid-template-columns:90px 1fr;gap:12px;padding:14px 0;border-bottom:1px solid var(--line);font-size:.9rem}
+.contact-row:first-child{border-top:1px solid var(--line)}
+.contact-lbl{font-family:var(--mono);font-size:.7rem;text-transform:uppercase;color:var(--paper-faint)}
+.contact-val a{color:var(--gold)}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.fg{margin-bottom:14px}
+.fl{font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.06em;color:var(--paper-faint);display:block;margin-bottom:7px}
+.fi,.fs,.fta{width:100%;background:transparent;border:1px solid var(--line);border-radius:2px;padding:13px 15px;font-family:var(--body);font-size:.94rem;color:var(--paper);outline:none}
+.fi::placeholder,.fta::placeholder{color:var(--paper-faint)}
+.fi:focus,.fs:focus,.fta:focus{border-color:var(--gold-dim)}
+.fs option{background:var(--ink2)}
+.fta{resize:vertical;min-height:100px}
+.fsubmit{border:none;border-radius:2px;background:var(--gold);color:var(--ink);font-family:var(--body);font-size:.92rem;font-weight:700;padding:14px 28px;cursor:pointer}
+.fsubmit:hover{background:#e8bd54}
 
-/* ═══════════════════════════════════════
-   HERO — Broadsheet Front Page
-═══════════════════════════════════════ */
-.hero {
-  min-height: 100vh;
-  display: flex; flex-direction: column;
-  position: relative;
-  overflow: hidden;
-  /* Extra top padding for the double nav */
-}
-.hero-top-padding { height: 104px; }
+/* footer */
+footer{padding:64px 0 0}
+.footer-top{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;padding-bottom:44px;border-bottom:1px solid var(--line)}
+.footer-brand{font-family:var(--disp);font-size:1.15rem;font-weight:700;margin-bottom:12px}
+.footer-desc{font-size:.86rem;color:var(--paper-dim);line-height:1.6;max-width:280px}
+.footer-col-label{font-family:var(--mono);font-size:.66rem;text-transform:uppercase;letter-spacing:.08em;color:var(--paper-faint);margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:11px}
+.footer-links a{font-size:.88rem;color:var(--paper-dim)}
+.footer-links a:hover{color:var(--gold)}
+.footer-bottom{padding:22px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.76rem;color:var(--paper-faint)}
+@media(max-width:900px){.footer-top{grid-template-columns:1fr 1fr}}
 
-#breathCanvas {
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 180px;
-  opacity: .18;
-  pointer-events: none;
-}
+/* hierarchy breadcrumb */
+.hierarchy{display:flex;align-items:center;flex-wrap:wrap;gap:0;padding:20px 0}
+.hierarchy-tier{display:flex;flex-direction:column;padding-right:22px;margin-right:22px;border-right:1px solid var(--line)}
+.hierarchy-tier:last-child{border-right:none;margin-right:0;padding-right:0}
+.hierarchy-tier-label{font-family:var(--mono);font-size:.62rem;text-transform:uppercase;letter-spacing:.1em;color:var(--paper-faint);margin-bottom:6px}
+.hierarchy-tier-val{font-family:var(--disp);font-size:1rem;font-weight:600;color:var(--paper)}
+.hierarchy-tier.is-institute .hierarchy-tier-val{color:var(--gold)}
+.hierarchy-tier.is-program .hierarchy-tier-val{color:var(--teal)}
+@media(max-width:900px){.hierarchy{flex-direction:column;align-items:flex-start;gap:16px}.hierarchy-tier{border-right:none;padding-right:0;margin-right:0;border-left:2px solid var(--line);padding-left:16px}}
 
-/* The broadsheet layout */
-.hero-masthead-strip {
-  padding: 32px 72px 20px;
-  text-align: center;
-  border-bottom: 3px double var(--ink2);
-}
-.hero-vol {
-  font-size: .72rem;
-  font-weight: 400;
-  font-style: italic;
-  color: var(--ink4);
-  letter-spacing: .15em;
-  display: block;
-  margin-bottom: 20px;
-}
-.hero-headline-main {
-  font-size: clamp(3rem, 7.5vw, 8rem);
-  font-weight: 700;
-  line-height: .95;
-  letter-spacing: -.025em;
-  color: var(--ink);
-  display: block;
-}
-.hero-headline-em {
-  font-size: clamp(2.5rem, 6.5vw, 7rem);
-  font-weight: 300;
-  font-style: italic;
-  color: var(--forest);
-  display: block;
-  line-height: .98;
-  letter-spacing: -.02em;
-}
-.hero-rule-ornament {
-  display: flex; align-items: center; gap: 16px;
-  margin: 20px 0;
-}
-.hero-rule-ornament::before,
-.hero-rule-ornament::after {
-  content: ''; flex: 1;
-  height: 1px; background: var(--rule);
-}
-.hero-rule-ornament-glyph {
-  font-size: 1.2rem;
-  color: var(--copper);
-}
-
-/* Three-column broadsheet grid */
-.hero-columns {
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  gap: 0;
-  flex: 1;
-  border-bottom: 2px solid var(--ink2);
-}
-.hero-col {
-  padding: 28px 36px;
-  position: relative;
-}
-.hero-col + .hero-col { border-left: 1px solid var(--rule); }
-.hero-col-label {
-  font-size: .62rem;
-  font-weight: 500;
-  font-style: italic;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--ink4);
-  display: block;
-  margin-bottom: 14px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--rule2);
-}
-.hero-thesis {
-  font-size: clamp(1.05rem, 1.5vw, 1.25rem);
-  font-weight: 300;
-  font-style: italic;
-  line-height: 1.68;
-  color: var(--ink2);
-}
-.hero-thesis strong {
-  font-weight: 600;
-  font-style: normal;
-  color: var(--forest);
-}
-.hero-thesis .drop-cap::first-letter {
-  font-size: 3.5em;
-  font-weight: 700;
-  float: left;
-  line-height: .72;
-  margin: .04em .06em 0 0;
-  color: var(--forest);
-}
-.hero-actions-vintage {
-  display: flex; flex-direction: column; gap: 10px;
-  margin-top: 20px;
-}
-.btn-broadsheet {
-  font-family: var(--font);
-  font-size: .8rem;
-  font-weight: 600;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--parch);
-  background: var(--forest);
-  padding: 12px 20px;
-  border: 1px solid var(--forest);
-  text-align: center;
-  transition: background .2s;
-  display: block;
-}
-.btn-broadsheet:hover { background: var(--sage); }
-.btn-broadsheet-outline {
-  font-family: var(--font);
-  font-size: .8rem;
-  font-weight: 500;
-  font-style: italic;
-  letter-spacing: .08em;
-  color: var(--ink2);
-  background: transparent;
-  padding: 10px 20px;
-  border: 1px solid var(--rule);
-  text-align: center;
-  transition: border-color .2s, color .2s;
-  display: block;
-}
-.btn-broadsheet-outline:hover { border-color: var(--sage); color: var(--forest); }
-.hero-right-col { }
-.hero-status-stamp {
-  display: inline-flex; align-items: center; gap: 8px;
-  border: 1px solid var(--sage2);
-  padding: 6px 12px;
-  margin-bottom: 16px;
-  background: rgba(42,96,64,.05);
-}
-.status-pip {
-  width: 6px; height: 6px;
-  background: var(--sage2);
-  border-radius: 50%;
-  animation: pip 2.5s ease-in-out infinite;
-}
-@keyframes pip {
-  0%,100%{ box-shadow: 0 0 0 0 rgba(74,138,94,.5); }
-  50%    { box-shadow: 0 0 0 8px rgba(74,138,94,0); }
-}
-.status-text {
-  font-size: .65rem;
-  font-style: italic;
-  color: var(--sage);
-  letter-spacing: .08em;
-}
-.hero-center-items {
-  list-style: none;
-  display: flex; flex-direction: column; gap: 10px;
-}
-.hero-center-items li {
-  font-size: .88rem;
-  font-weight: 400;
-  color: var(--ink2);
-  padding: 10px 0;
-  border-bottom: 1px solid var(--rule2);
-  display: flex; align-items: center; gap: 10px;
-}
-.hero-center-items li::before {
-  content: '◆';
-  font-size: .45rem;
-  color: var(--copper);
-}
-
-/* Bottom strip */
-.hero-dateline {
-  padding: 12px 72px;
-  display: flex; align-items: center; justify-content: space-between;
-  border-top: 1px solid var(--rule);
-  background: var(--parch2);
-  font-size: .68rem;
-  font-style: italic;
-  color: var(--ink4);
-  letter-spacing: .08em;
-  position: relative; z-index: 1;
-}
-
-/* ═══════════════════════════════════════
-   SEARCH — Card Catalog Style
-═══════════════════════════════════════ */
-.search-s {
-  background: var(--forest);
-  padding: 72px 72px;
-  position: relative;
-  overflow: hidden;
-}
-/* Vintage decorative corners */
-.search-s::before, .search-s::after {
-  content: '✦';
-  position: absolute;
-  font-size: 1rem;
-  color: rgba(255,255,255,.1);
-}
-.search-s::before { top: 20px; left: 28px; }
-.search-s::after { bottom: 20px; right: 28px; }
-
-.search-inner {
-  max-width: 820px;
-  margin: 0 auto;
-  text-align: center;
-}
-.search-kicker {
-  font-size: .7rem;
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: rgba(240,232,213,.45);
-  display: flex; align-items: center; gap: 14px;
-  justify-content: center;
-  margin-bottom: 20px;
-}
-.search-kicker::before, .search-kicker::after {
-  content: '—'; color: rgba(240,232,213,.25);
-}
-.search-h2 {
-  font-family: var(--font);
-  font-size: clamp(2rem, 4vw, 3.8rem);
-  font-weight: 400;
-  font-style: italic;
-  color: rgba(240,232,213,.9);
-  line-height: 1.15;
-  letter-spacing: -.01em;
-  margin-bottom: 8px;
-}
-.search-h2 em { font-style: normal; font-weight: 600; color: var(--parch4); }
-.search-desc {
-  font-size: 1.05rem;
-  font-style: italic;
-  color: rgba(240,232,213,.5);
-  margin-bottom: 32px;
-  line-height: 1.6;
-}
-.search-box-wrap {
-  position: relative;
-}
-.search-box {
-  width: 100%;
-  background: var(--parch4);
-  border: 1px solid var(--copper3);
-  border-top: 3px solid var(--copper3);
-  padding: 18px 60px 18px 24px;
-  font-family: var(--font);
-  font-size: 1.1rem;
-  font-style: italic;
-  color: var(--ink);
-  outline: none;
-  transition: border-color .2s;
-}
-.search-box::placeholder { color: var(--ink4); }
-.search-box:focus { border-color: var(--fern); }
-.search-submit {
-  position: absolute; right: 0; top: 0; bottom: 0;
-  background: var(--copper);
-  border: none;
-  padding: 0 22px;
-  font-family: var(--font);
-  font-size: .78rem;
-  font-weight: 600;
-  letter-spacing: .12em;
-  text-transform: uppercase;
-  color: var(--parch);
-  cursor: pointer;
-  transition: background .2s;
-}
-.search-submit:hover { background: var(--copper2); }
-.search-tags {
-  display: flex; gap: 8px; flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 16px;
-}
-.search-tag {
-  font-family: var(--font);
-  font-size: .72rem;
-  font-style: italic;
-  color: rgba(240,232,213,.5);
-  border: 1px solid rgba(240,232,213,.2);
-  padding: 4px 12px;
-  cursor: pointer;
-  transition: all .2s;
-}
-.search-tag:hover {
-  border-color: var(--fern);
-  color: var(--fern);
-}
-
-/* ═══════════════════════════════════════
-   SHARED SECTION STYLES
-═══════════════════════════════════════ */
-.s-header {
-  padding: 80px 72px 56px;
-  border-bottom: 1px solid var(--rule);
-}
-.s-eyebrow {
-  font-size: .68rem;
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: var(--ink4);
-  margin-bottom: 12px;
-  display: flex; align-items: center; gap: 14px;
-}
-.s-eyebrow::before {
-  content: '§';
-  font-size: .9rem;
-  color: var(--copper);
-  font-style: normal;
-}
-.display-xl {
-  font-size: clamp(2.2rem, 5vw, 5rem);
-  font-weight: 500;
-  line-height: 1.06;
-  color: var(--ink);
-  letter-spacing: -.02em;
-}
-.display-xl em { font-style: italic; font-weight: 300; color: var(--forest); }
-.display-lg {
-  font-size: clamp(1.8rem, 3.5vw, 3.4rem);
-  font-weight: 500;
-  line-height: 1.1;
-  color: var(--ink);
-  letter-spacing: -.015em;
-}
-.display-md {
-  font-size: clamp(1.3rem, 2.2vw, 2rem);
-  font-weight: 500;
-  line-height: 1.15;
-  color: var(--ink);
-}
-.italic-body {
-  font-size: 1.05rem;
-  font-style: italic;
-  font-weight: 300;
-  line-height: 1.72;
-  color: var(--ink2);
-}
-.italic-body strong { font-style: normal; font-weight: 600; color: var(--ink); }
-.stamp-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  border: 1px solid var(--rule);
-  padding: 4px 12px;
-  font-size: .65rem;
-  font-style: italic;
-  letter-spacing: .1em;
-  color: var(--ink4);
-  background: var(--parch4);
-  position: relative;
-}
-.stamp-badge.active {
-  border-color: var(--sage2);
-  color: var(--sage);
-  background: rgba(42,96,64,.05);
-}
-.stamp-badge.active::before {
-  content: '●';
-  font-size: .5rem;
-  color: var(--sage2);
-}
-
-/* ═══════════════════════════════════════
-   CENTERS — Vintage Accordion
-═══════════════════════════════════════ */
-.centers-section {
-  background: var(--parch);
-}
-.centers-hdr {
-  padding: 80px 72px 64px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 80px;
-  align-items: start;
-  border-bottom: 1px solid var(--rule);
-}
-.centers-hdr-right {
-  font-size: 1.1rem;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--ink2);
-  line-height: 1.7;
-  padding-top: 24px;
-  border-top: 3px solid var(--forest);
-}
-
-.center-drawer { overflow: hidden; }
-.center-drawer:first-child { border-top: 1px solid var(--ink2); }
-.center-trigger {
-  width: 100%; background: none; border: none; text-align: left;
-  padding: 0 72px;
-  height: 110px;
-  display: grid;
-  grid-template-columns: 100px 1fr auto 120px;
-  align-items: center;
-  gap: 32px;
-  cursor: pointer;
-  border-bottom: 1px solid var(--rule);
-  transition: background .25s;
-}
-.center-trigger:hover { background: rgba(26,61,37,.03); }
-.center-drawer.open .center-trigger {
-  background: var(--forest);
-  border-bottom-color: var(--sage);
-}
-.center-roman {
-  font-size: 2.2rem;
-  font-weight: 300;
-  font-style: italic;
-  color: var(--rule);
-  letter-spacing: .05em;
-  transition: color .25s;
-}
-.center-drawer.open .center-roman { color: rgba(240,232,213,.2); }
-.center-trigger:hover .center-roman { color: var(--ink3); }
-.center-name {
-  font-size: clamp(1rem, 1.8vw, 1.45rem);
-  font-weight: 600;
-  color: var(--ink);
-  line-height: 1.2;
-  letter-spacing: -.01em;
-  transition: color .25s;
-}
-.center-drawer.open .center-name { color: var(--parch); }
-.center-trigger:hover .center-name { color: var(--forest); }
-.center-open-label {
-  font-size: .65rem;
-  font-weight: 500;
-  font-style: italic;
-  letter-spacing: .15em;
-  color: var(--ink4);
-  transition: color .25s;
-  text-align: center;
-}
-.center-drawer.open .center-open-label { color: rgba(240,232,213,.4); }
-.center-open-label span { display: block; }
-.center-stamp {
-  font-size: .6rem;
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: .1em;
-  color: var(--ink4);
-  border: 1px solid var(--rule);
-  padding: 5px 12px;
-  text-align: center;
-  transition: all .25s;
-  white-space: nowrap;
-}
-.center-drawer.open .center-stamp {
-  background: rgba(107,174,122,.12);
-  border-color: var(--fern);
-  color: var(--fern);
-}
-/* Body */
-.drawer-body {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows .42s cubic-bezier(.4,0,.2,1);
-}
-.center-drawer.open .drawer-body { grid-template-rows: 1fr; }
-.drawer-inner { overflow: hidden; background: var(--forest); }
-.drawer-content {
-  padding: 60px 72px 72px;
-  display: grid;
-  grid-template-columns: 1.1fr 1fr 1fr;
-  gap: 56px;
-  border-top: 2px solid rgba(240,232,213,.08);
-}
-.drawer-quote {
-  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
-  font-style: italic;
-  font-weight: 300;
-  color: rgba(240,232,213,.85);
-  line-height: 1.6;
-  margin-bottom: 20px;
-  padding-left: 16px;
-  border-left: 2px solid rgba(107,174,122,.4);
-}
-.drawer-desc {
-  font-size: .88rem;
-  font-style: italic;
-  font-weight: 300;
-  color: rgba(240,232,213,.5);
-  line-height: 1.7;
-}
-.drawer-col-label {
-  font-size: .58rem;
-  font-weight: 500;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  font-style: italic;
-  color: var(--fern);
-  margin-bottom: 18px;
-  display: flex; align-items: center; gap: 10px;
-}
-.drawer-col-label::after {
-  content: ''; flex: 1;
-  height: 1px; background: rgba(107,174,122,.2);
-}
-.drawer-list {
-  list-style: none;
-  display: flex; flex-direction: column; gap: 9px;
-}
-.drawer-list li {
-  font-size: .88rem;
-  font-style: italic;
-  font-weight: 300;
-  color: rgba(240,232,213,.7);
-  padding-left: 14px;
-  position: relative; line-height: 1.5;
-}
-.drawer-list li::before {
-  content: '—';
-  position: absolute; left: 0;
-  color: rgba(107,174,122,.5);
-  font-style: normal;
-}
-.drawer-priorities {
-  grid-column: 1 / -1;
-  border-top: 1px solid rgba(240,232,213,.08);
-  padding-top: 24px;
-  display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
-}
-.drawer-priority-lbl {
-  font-size: .58rem;
-  letter-spacing: .15em;
-  font-style: italic;
-  color: rgba(240,232,213,.3);
-}
-.drawer-tag {
-  font-size: .62rem;
-  font-style: italic;
-  color: rgba(240,232,213,.55);
-  border: 1px solid rgba(240,232,213,.1);
-  padding: 4px 12px;
-  cursor: default;
-  transition: all .2s;
-}
-.drawer-tag:hover { border-color: var(--fern); color: var(--fern); }
-
-/* ═══════════════════════════════════════
-   OBSERVATORIES
-═══════════════════════════════════════ */
-.obs-section {
-  background: var(--parch2);
-  padding: 100px 72px;
-  border-top: 1px solid var(--rule);
-  border-bottom: 1px solid var(--rule);
-}
-.obs-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2px;
-  margin-top: 56px;
-  background: var(--rule);
-}
-.obs-card {
-  background: var(--parch4);
-  padding: 44px 40px;
-  position: relative;
-  overflow: hidden;
-  transition: background .25s;
-}
-.obs-card:hover { background: var(--vellum); }
-/* Vintage corner ornament */
-.obs-card::before {
-  content: '✦';
-  position: absolute;
-  top: 14px; right: 18px;
-  font-size: .7rem;
-  color: var(--rule);
-}
-.obs-roman {
-  font-size: .65rem;
-  font-style: italic;
-  letter-spacing: .2em;
-  color: var(--ink4);
-  margin-bottom: 16px;
-  display: flex; align-items: center; gap: 10px;
-}
-.obs-roman::after {
-  content: ''; flex: 1; max-width: 40px;
-  height: 1px; background: var(--rule);
-}
-.obs-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  color: var(--forest);
-  line-height: 1.2;
-  margin-bottom: 12px;
-  letter-spacing: -.01em;
-}
-.obs-desc {
-  font-size: .95rem;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--ink3);
-  line-height: 1.7;
-  margin-bottom: 20px;
-}
-.obs-status {
-  font-size: .62rem;
-  font-style: italic;
-  letter-spacing: .1em;
-  color: var(--sage);
-  display: flex; align-items: center; gap: 8px;
-}
-.obs-status::before {
-  content: '●';
-  font-size: .5rem;
-  animation: pip 2.5s ease-in-out infinite;
-}
-
-/* ═══════════════════════════════════════
-   PRIORITIES — Ledger Style
-═══════════════════════════════════════ */
-.priorities-section {
-  padding: 100px 72px;
-  background: var(--parch);
-}
-.priorities-layout {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 100px;
-  align-items: start;
-}
-.priority-ledger {
-  display: flex; flex-direction: column;
-}
-.ledger-header {
-  display: grid;
-  grid-template-columns: 60px 1fr auto;
-  gap: 20px;
-  padding: 10px 0;
-  border-bottom: 2px solid var(--ink2);
-  margin-bottom: 2px;
-}
-.ledger-header span {
-  font-size: .62rem;
-  font-weight: 600;
-  font-style: italic;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--ink4);
-}
-.ledger-row {
-  display: grid;
-  grid-template-columns: 60px 1fr auto;
-  gap: 20px;
-  padding: 18px 0;
-  border-bottom: 1px solid var(--rule2);
-  align-items: start;
-  transition: background .2s;
-}
-.ledger-row:hover { background: var(--parch2); padding-left: 10px; padding-right: 10px; margin: 0 -10px; }
-.ledger-num {
-  font-size: .75rem;
-  font-style: italic;
-  color: var(--copper);
-  letter-spacing: .05em;
-  padding-top: 2px;
-}
-.ledger-name {
-  font-size: 1.08rem;
-  font-weight: 500;
-  color: var(--ink);
-  line-height: 1.3;
-}
-.ledger-status {
-  font-size: .6rem;
-  font-style: italic;
-  color: var(--sage);
-  letter-spacing: .1em;
-  display: flex; align-items: center; gap: 5px;
-  white-space: nowrap;
-  padding-top: 3px;
-}
-.ledger-status::before { content: '●'; font-size: .45rem; }
-
-/* ═══════════════════════════════════════
-   DIGITAL LIBRARY
-═══════════════════════════════════════ */
-.library-section {
-  background: var(--parch2);
-  padding: 100px 72px;
-  border-top: 1px solid var(--rule);
-}
-.library-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--rule);
-  margin-top: 56px;
-}
-.lib-category {
-  background: var(--parch4);
-  padding: 36px 32px;
-  transition: background .2s;
-  cursor: pointer;
-}
-.lib-category:hover { background: var(--vellum); }
-.lib-cat-icon {
-  font-size: 1.6rem;
-  color: var(--ink3);
-  margin-bottom: 14px;
-  display: block;
-  user-select: none;
-}
-.lib-cat-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--forest);
-  margin-bottom: 6px;
-  letter-spacing: -.01em;
-}
-.lib-cat-count {
-  font-size: .68rem;
-  font-style: italic;
-  color: var(--copper);
-  letter-spacing: .08em;
-  display: block;
-  margin-bottom: 12px;
-}
-.lib-cat-desc {
-  font-size: .88rem;
-  font-style: italic;
-  color: var(--ink3);
-  line-height: 1.65;
-}
-
-/* ═══════════════════════════════════════
-   KNOWLEDGE HUB
-═══════════════════════════════════════ */
-.hub-section {
-  padding: 100px 72px;
-  background: var(--parch);
-  border-top: 1px solid var(--rule);
-}
-.hub-layout {
-  display: grid;
-  grid-template-columns: 4fr 5fr;
-  gap: 2px;
-  background: var(--rule);
-  margin-top: 56px;
-}
-.hub-categories {
-  background: var(--parch4);
-  padding: 36px 32px;
-  display: flex; flex-direction: column; gap: 2px;
-}
-.hub-cat-btn {
-  font-family: var(--font);
-  font-size: .88rem;
-  font-style: italic;
-  font-weight: 400;
-  color: var(--ink2);
-  padding: 12px 16px;
-  border: none;
-  background: transparent;
-  text-align: left;
-  cursor: pointer;
-  border-bottom: 1px solid var(--rule2);
-  display: flex; align-items: center; gap: 10px;
-  transition: all .2s;
-}
-.hub-cat-btn::before { content: '◆'; font-size: .4rem; color: var(--rule); transition: color .2s; }
-.hub-cat-btn:hover { color: var(--forest); background: var(--parch2); }
-.hub-cat-btn:hover::before { color: var(--copper); }
-.hub-cat-btn.active { color: var(--forest); font-weight: 600; font-style: normal; }
-.hub-cat-btn.active::before { color: var(--copper); }
-.hub-articles {
-  background: var(--parch4);
-  padding: 36px 32px;
-  display: flex; flex-direction: column; gap: 0;
-}
-.hub-article {
-  padding: 20px 0;
-  border-bottom: 1px solid var(--rule2);
-  display: block;
-  transition: padding-left .2s;
-}
-.hub-article:hover { padding-left: 8px; }
-.hub-article-type {
-  font-size: .58rem;
-  font-style: italic;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: var(--copper);
-  display: block;
-  margin-bottom: 5px;
-}
-.hub-article-title {
-  font-size: 1rem;
-  font-weight: 600;
-  color: var(--ink);
-  line-height: 1.3;
-  margin-bottom: 4px;
-}
-.hub-article-meta {
-  font-size: .75rem;
-  font-style: italic;
-  color: var(--ink4);
-}
-
-/* ═══════════════════════════════════════
-   ASK LIPH — Future Feature
-═══════════════════════════════════════ */
-.ask-section {
-  background: var(--parch2);
-  padding: 80px 72px;
-  border-top: 1px solid var(--rule);
-  position: relative;
-  overflow: hidden;
-}
-/* Vintage banner announcing future feature */
-.future-banner {
-  position: absolute;
-  top: 22px; right: -30px;
-  background: var(--copper);
-  color: var(--parch);
-  font-size: .55rem;
-  font-style: italic;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  padding: 6px 48px;
-  transform: rotate(12deg);
-}
-.ask-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 72px;
-  align-items: center;
-}
-.ask-left {}
-.ask-questions {
-  list-style: none;
-  margin-top: 28px;
-  display: flex; flex-direction: column; gap: 8px;
-}
-.ask-q {
-  font-size: .9rem;
-  font-style: italic;
-  color: var(--ink3);
-  padding: 10px 16px;
-  border-left: 2px solid var(--rule2);
-  cursor: default;
-  transition: border-color .2s, color .2s;
-}
-.ask-q:hover { border-color: var(--sage2); color: var(--forest); }
-.ask-q::before { content: '"'; color: var(--copper2); margin-right: 2px; }
-.ask-q::after  { content: '"'; color: var(--copper2); margin-left: 2px; }
-.ask-interface {
-  background: var(--parch4);
-  border: 1px solid var(--rule);
-  border-top: 3px solid var(--copper3);
-  padding: 32px 28px;
-}
-.ask-interface-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--forest);
-  margin-bottom: 4px;
-}
-.ask-interface-sub {
-  font-size: .88rem;
-  font-style: italic;
-  color: var(--ink4);
-  margin-bottom: 20px;
-  line-height: 1.55;
-}
-.ask-input-wrap { position: relative; }
-.ask-input {
-  width: 100%;
-  background: var(--parch);
-  border: 1px solid var(--rule);
-  padding: 14px 50px 14px 16px;
-  font-family: var(--font);
-  font-size: 1rem;
-  font-style: italic;
-  color: var(--ink);
-  outline: none;
-  transition: border-color .2s;
-}
-.ask-input::placeholder { color: var(--ink4); }
-.ask-input:focus { border-color: var(--sage2); }
-.ask-btn {
-  position: absolute; right: 0; top: 0; bottom: 0;
-  background: var(--forest);
-  border: none;
-  padding: 0 18px;
-  font-family: var(--font);
-  font-size: 1rem;
-  color: var(--parch);
-  cursor: pointer;
-  transition: background .2s;
-}
-.ask-btn:hover { background: var(--sage); }
-.ask-note {
-  margin-top: 14px;
-  font-size: .72rem;
-  font-style: italic;
-  color: var(--ink4);
-  line-height: 1.6;
-}
-
-/* ═══════════════════════════════════════
-   PUBLICATIONS — Journal Style
-═══════════════════════════════════════ */
-.pub-section {
-  padding: 100px 72px;
-  background: var(--parch);
-  border-top: 1px solid var(--rule);
-}
-.pub-tabs {
-  display: flex; gap: 0;
-  margin-top: 40px;
-  border: 1px solid var(--rule);
-  flex-wrap: wrap;
-}
-.pub-tab {
-  font-family: var(--font);
-  font-size: .72rem;
-  font-style: italic;
-  font-weight: 400;
-  letter-spacing: .1em;
-  color: var(--ink3);
-  padding: 10px 20px;
-  border: none;
-  border-right: 1px solid var(--rule);
-  background: transparent;
-  cursor: pointer;
-  transition: all .2s;
-  min-height: 42px;
-}
-.pub-tab:last-child { border-right: none; }
-.pub-tab:hover { background: var(--parch2); color: var(--forest); }
-.pub-tab.active { background: var(--forest); color: var(--parch); font-style: normal; font-weight: 600; }
-.pub-list {
-  margin-top: 2px;
-  display: flex; flex-direction: column;
-}
-.pub-item {
-  display: grid;
-  grid-template-columns: 80px 1fr auto;
-  gap: 28px;
-  padding: 22px 0;
-  border-bottom: 1px solid var(--rule2);
-  align-items: start;
-  transition: background .2s;
-}
-.pub-item:first-child { border-top: 1px solid var(--rule2); }
-.pub-item:hover { background: var(--parch2); padding: 22px 14px; margin: 0 -14px; }
-.pub-year {
-  font-size: .72rem;
-  font-style: italic;
-  color: var(--copper);
-  padding-top: 2px;
-  letter-spacing: .05em;
-}
-.pub-type {
-  font-size: .6rem;
-  font-style: italic;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: var(--ink4);
-  display: block; margin-bottom: 5px;
-}
-.pub-title {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--ink);
-  line-height: 1.3;
-  margin-bottom: 4px;
-}
-.pub-authors {
-  font-size: .82rem;
-  font-style: italic;
-  color: var(--ink4);
-}
-.pub-badge {
-  font-size: .6rem;
-  font-style: italic;
-  letter-spacing: .1em;
-  border: 1px solid var(--rule);
-  padding: 4px 10px;
-  color: var(--ink4);
-  white-space: nowrap;
-  align-self: start;
-  margin-top: 2px;
-}
-.pub-badge.active { border-color: var(--sage2); color: var(--sage); }
-
-/* ═══════════════════════════════════════
-   RESEARCHER TOOLKIT
-═══════════════════════════════════════ */
-.toolkit-section {
-  background: var(--parch2);
-  padding: 100px 72px;
-  border-top: 1px solid var(--rule);
-}
-.toolkit-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--rule);
-  margin-top: 56px;
-}
-.toolkit-card {
-  background: var(--parch4);
-  padding: 36px 32px;
-  transition: background .2s;
-}
-.toolkit-card:hover { background: var(--vellum); }
-.toolkit-num {
-  font-size: .65rem;
-  font-style: italic;
-  letter-spacing: .18em;
-  color: var(--ink4);
-  margin-bottom: 12px;
-}
-.toolkit-title {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 10px;
-  line-height: 1.2;
-}
-.toolkit-items {
-  list-style: none;
-  display: flex; flex-direction: column; gap: 7px;
-}
-.toolkit-items li {
-  font-size: .88rem;
-  font-style: italic;
-  color: var(--ink3);
-  padding-left: 14px;
-  position: relative; line-height: 1.4;
-}
-.toolkit-items li::before {
-  content: '—';
-  position: absolute; left: 0;
-  color: var(--rule);
-  font-style: normal;
-}
-
-/* ═══════════════════════════════════════
-   LEADERSHIP — Formal Portrait Style
-═══════════════════════════════════════ */
-.leadership-section {
-  padding: 100px 72px;
-  background: var(--parch);
-  border-top: 1px solid var(--rule);
-}
-.leadership-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2px;
-  background: var(--rule);
-  margin-top: 56px;
-}
-.person-card {
-  background: var(--parch4);
-  padding: 48px 44px;
-  transition: background .2s;
-}
-.person-card:hover { background: var(--vellum); }
-.person-card.principal {
-  background: var(--forest);
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 64px;
-  align-items: start;
-}
-.person-seal {
-  width: 60px; height: 60px;
-  border: 2px solid var(--rule);
-  border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 1.3rem;
-  font-weight: 700;
-  font-style: italic;
-  color: var(--ink3);
-  margin-bottom: 20px;
-  background: var(--parch);
-}
-.person-card.principal .person-seal {
-  border-color: rgba(107,174,122,.3);
-  background: rgba(26,61,37,.5);
-  color: rgba(240,232,213,.6);
-}
-.person-name {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--ink);
-  letter-spacing: -.015em;
-  margin-bottom: 3px;
-}
-.person-card.principal .person-name { color: var(--parch); }
-.person-role {
-  font-size: .7rem;
-  font-style: italic;
-  letter-spacing: .12em;
-  color: var(--copper);
-  margin-bottom: 6px;
-  display: block;
-}
-.person-card.principal .person-role { color: var(--fern); }
-.person-affil {
-  font-size: .68rem;
-  font-style: italic;
-  letter-spacing: .08em;
-  color: var(--ink4);
-  margin-bottom: 20px;
-  line-height: 1.6;
-}
-.person-card.principal .person-affil { color: rgba(240,232,213,.4); }
-.person-bio {
-  font-size: 1rem;
-  font-style: italic;
-  font-weight: 300;
-  color: var(--ink2);
-  line-height: 1.7;
-  margin-bottom: 24px;
-}
-.person-card.principal .person-bio { color: rgba(240,232,213,.7); }
-.person-creds {
-  list-style: none;
-  border-top: 1px solid var(--rule2);
-  padding-top: 16px;
-  display: flex; flex-direction: column; gap: 7px;
-}
-.person-card.principal .person-creds { border-top-color: rgba(240,232,213,.1); }
-.person-creds li {
-  font-size: .88rem;
-  font-style: italic;
-  color: var(--ink2);
-  padding-left: 16px; position: relative; line-height: 1.45;
-}
-.person-card.principal .person-creds li { color: rgba(240,232,213,.6); }
-.person-creds li::before {
-  content: '—';
-  position: absolute; left: 0;
-  color: var(--rule); font-style: normal;
-}
-.person-card.principal .person-creds li::before { color: rgba(107,174,122,.4); }
-
-/* ═══════════════════════════════════════
-   STUDENTS & FELLOWS
-═══════════════════════════════════════ */
-.fellows-section {
-  padding: 100px 72px;
-  background: var(--parch2);
-  border-top: 1px solid var(--rule);
-}
-.fellows-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 2px;
-  background: var(--rule);
-  margin-top: 56px;
-}
-.fellows-card {
-  background: var(--parch4);
-  padding: 36px 28px;
-  transition: background .2s;
-}
-.fellows-card:hover { background: var(--vellum); }
-.fellows-type {
-  font-size: .62rem;
-  font-style: italic;
-  letter-spacing: .18em;
-  text-transform: uppercase;
-  color: var(--copper);
-  display: block;
-  margin-bottom: 12px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid var(--rule2);
-}
-.fellows-title {
-  font-size: 1.05rem;
-  font-weight: 600;
-  color: var(--ink);
-  margin-bottom: 10px;
-  line-height: 1.2;
-}
-.fellows-desc {
-  font-size: .88rem;
-  font-style: italic;
-  color: var(--ink3);
-  line-height: 1.65;
-}
-
-/* ═══════════════════════════════════════
-   COLLABORATE
-═══════════════════════════════════════ */
-.collab-section {
-  padding: 100px 72px;
-  background: var(--parch);
-  border-top: 1px solid var(--rule);
-}
-.collab-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 2px;
-  background: var(--rule);
-  margin-top: 56px;
-}
-.collab-card {
-  background: var(--parch4);
-  padding: 40px 36px;
-  transition: background .2s;
-}
-.collab-card:hover { background: var(--vellum); }
-.collab-roman {
-  font-size: .68rem;
-  font-style: italic;
-  letter-spacing: .18em;
-  color: var(--ink4);
-  margin-bottom: 18px;
-  display: flex; align-items: center; gap: 12px;
-}
-.collab-roman::after { content: ''; flex: 1; max-width: 40px; height: 1px; background: var(--rule); }
-.collab-title {
-  font-size: 1.15rem;
-  font-weight: 600;
-  color: var(--forest);
-  margin-bottom: 10px; line-height: 1.2;
-}
-.collab-desc {
-  font-size: .9rem;
-  font-style: italic;
-  color: var(--ink2);
-  line-height: 1.68;
-  margin-bottom: 20px;
-}
-.collab-list {
-  list-style: none;
-  display: flex; flex-direction: column; gap: 6px;
-}
-.collab-list li {
-  font-size: .82rem;
-  font-style: italic;
-  color: var(--ink3);
-  padding-left: 14px; position: relative;
-}
-.collab-list li::before {
-  content: '—';
-  position: absolute; left: 0;
-  color: var(--rule); font-style: normal;
-}
-
-/* ═══════════════════════════════════════
-   CONTACT — Formal Correspondence Style
-═══════════════════════════════════════ */
-.contact-section {
-  background: var(--forest);
-  padding: 100px 72px;
-  border-top: 3px double var(--sage);
-}
-.contact-inner {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 100px;
-}
-.contact-left {}
-.contact-letterhead {
-  border: 1px solid rgba(240,232,213,.12);
-  padding: 32px;
-  margin-top: 36px;
-  background: rgba(240,232,213,.03);
-}
-.contact-letterhead-title {
-  font-size: .62rem;
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: .22em;
-  text-transform: uppercase;
-  color: rgba(240,232,213,.35);
-  margin-bottom: 16px;
-  display: block;
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(240,232,213,.08);
-}
-.contact-email {
-  font-size: clamp(1.1rem, 2vw, 1.7rem);
-  font-weight: 400;
-  font-style: italic;
-  color: var(--fern);
-  display: block;
-  margin-bottom: 20px;
-  transition: color .2s;
-}
-.contact-email:hover { color: rgba(107,174,122,.8); }
-.contact-addr-row {
-  display: grid;
-  grid-template-columns: 100px 1fr;
-  gap: 12px;
-  padding: 10px 0;
-  border-bottom: 1px solid rgba(240,232,213,.06);
-}
-.contact-addr-lbl {
-  font-size: .6rem;
-  font-style: italic;
-  letter-spacing: .12em;
-  color: rgba(240,232,213,.3);
-  padding-top: 2px;
-}
-.contact-addr-val {
-  font-size: .9rem;
-  font-style: italic;
-  color: rgba(240,232,213,.65);
-  line-height: 1.5;
-}
-.contact-addr-val a { color: var(--fern); }
-.contact-note-block {
-  margin-top: 24px;
-  padding: 18px 20px;
-  border-left: 2px solid rgba(107,174,122,.3);
-  font-size: .88rem;
-  font-style: italic;
-  color: rgba(240,232,213,.5);
-  line-height: 1.68;
-}
-.contact-note-block strong { font-weight: 600; font-style: normal; color: rgba(240,232,213,.75); }
-/* Form */
-.form-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: rgba(240,232,213,.9);
-  margin-bottom: 4px;
-}
-.form-sub {
-  font-size: .9rem;
-  font-style: italic;
-  color: rgba(240,232,213,.45);
-  margin-bottom: 28px; line-height: 1.6;
-}
-.fg { margin-bottom: 12px; }
-.fl {
-  font-family: var(--font);
-  font-size: .6rem;
-  font-style: italic;
-  letter-spacing: .15em;
-  text-transform: uppercase;
-  color: rgba(240,232,213,.4);
-  display: block; margin-bottom: 6px;
-}
-.fi, .fs, .fta {
-  width: 100%;
-  background: rgba(240,232,213,.06);
-  border: 1px solid rgba(240,232,213,.15);
-  padding: 12px 14px;
-  font-family: var(--font);
-  font-size: .95rem;
-  font-style: italic;
-  color: rgba(240,232,213,.9);
-  outline: none;
-  transition: border-color .2s;
-  min-height: 48px;
-  appearance: none; border-radius: 0;
-}
-.fi::placeholder, .fta::placeholder { color: rgba(240,232,213,.3); }
-.fi:focus, .fs:focus, .fta:focus { border-color: var(--fern); }
-.fs option { background: var(--forest2); }
-.fta { resize: vertical; min-height: 100px; }
-.f2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.fsubmit {
-  width: 100%; margin-top: 8px;
-  font-family: var(--font);
-  font-size: .85rem;
-  font-style: italic;
-  font-weight: 600;
-  letter-spacing: .08em;
-  color: var(--forest);
-  background: var(--fern);
-  border: none;
-  padding: 16px;
-  min-height: 52px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  transition: background .2s;
-}
-.fsubmit:hover { background: var(--sage2); color: var(--parch); }
-
-/* ═══════════════════════════════════════
-   FOOTER — Masthead Style
-═══════════════════════════════════════ */
-footer {
-  background: var(--parch2);
-  border-top: 3px solid var(--ink2);
-  padding: 0;
-  overflow: hidden;
-}
-.footer-rules {
-  height: 2px;
-  background: linear-gradient(90deg, var(--copper3), var(--forest), var(--copper3));
-}
-.footer-masthead {
-  text-align: center;
-  padding: 32px 72px 24px;
-  border-bottom: 1px solid var(--rule);
-}
-.footer-name {
-  font-size: clamp(1.5rem, 3.5vw, 3.2rem);
-  font-weight: 700;
-  font-style: italic;
-  color: var(--ink);
-  letter-spacing: -.02em;
-  display: block;
-  line-height: 1;
-}
-.footer-sub {
-  font-size: .7rem;
-  font-style: italic;
-  letter-spacing: .2em;
-  color: var(--ink4);
-  display: block;
-  margin-top: 6px;
-}
-.footer-ornament {
-  font-size: 1rem;
-  color: var(--copper3);
-  letter-spacing: .8em;
-  margin-top: 12px;
-  display: block;
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 0;
-  padding: 36px 72px;
-  border-bottom: 1px solid var(--rule);
-}
-.fcol { }
-.fcol + .fcol {
-  padding-left: 40px;
-  border-left: 1px solid var(--rule2);
-}
-.fcol-title {
-  font-family: var(--font);
-  font-size: .62rem;
-  font-weight: 600;
-  font-style: italic;
-  letter-spacing: .2em;
-  text-transform: uppercase;
-  color: var(--ink4);
-  display: block; margin-bottom: 16px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--rule2);
-}
-.fcol-desc {
-  font-size: .9rem;
-  font-style: italic;
-  color: var(--ink3);
-  line-height: 1.7;
-  margin-bottom: 16px;
-  max-width: 260px;
-}
-.fbadges { display: flex; flex-wrap: wrap; gap: 6px; }
-.fbadge {
-  font-size: .58rem;
-  font-style: italic;
-  color: var(--ink4);
-  border: 1px solid var(--rule);
-  padding: 3px 8px;
-}
-.flinks { list-style: none; display: flex; flex-direction: column; gap: 9px; }
-.flinks a {
-  font-family: var(--font);
-  font-size: .9rem;
-  font-style: italic;
-  color: var(--ink3);
-  transition: color .2s;
-  min-height: 32px; display: flex; align-items: center;
-}
-.flinks a:hover { color: var(--forest); }
-.footer-colophon {
-  padding: 14px 72px;
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;
-  background: var(--parch3);
-}
-.colophon-text {
-  font-size: .62rem;
-  font-style: italic;
-  color: var(--ink4);
-  letter-spacing: .08em;
-}
-.colophon-links { display: flex; gap: 20px; }
-.colophon-links a {
-  font-family: var(--font);
-  font-size: .62rem;
-  font-style: italic;
-  color: var(--ink4);
-  transition: color .2s;
-}
-.colophon-links a:hover { color: var(--forest); }
-
-/* ═══════════════════════════════════════
-   SCROLL REVEALS
-═══════════════════════════════════════ */
-.rv { opacity: 0; transform: translateY(20px); transition: opacity .75s ease, transform .75s ease; }
-.rv.in { opacity: 1; transform: none; }
-.rv.d1 { transition-delay: .1s; }
-.rv.d2 { transition-delay: .2s; }
-.rv.d3 { transition-delay: .3s; }
-
-/* ═══════════════════════════════════════
-   RESPONSIVE
-═══════════════════════════════════════ */
-@media (max-width: 1100px) {
-  html { font-size: 16px; }
-  .masthead-inner { padding: 8px 28px 10px; }
-  .masthead-nav { padding: 6px 28px; overflow-x: auto; justify-content: flex-start; }
-  .hero-masthead-strip { padding: 24px 32px 16px; }
-  .hero-columns { grid-template-columns: 1fr; border-left: none; }
-  .hero-col + .hero-col { border-left: none; border-top: 1px solid var(--rule); }
-  .hero-dateline { padding: 10px 32px; }
-  .s-header, .centers-hdr, .priorities-section, .obs-section,
-  .library-section, .hub-section, .ask-section,
-  .pub-section, .toolkit-section, .leadership-section,
-  .fellows-section, .collab-section, .contact-section { padding: 72px 32px; }
-  .center-trigger { padding: 0 32px; grid-template-columns: 60px 1fr auto; }
-  .center-stamp { display: none; }
-  .drawer-content { padding: 44px 32px 56px; grid-template-columns: 1fr; }
-  .centers-hdr { padding: 60px 32px 48px; grid-template-columns: 1fr; }
-  .priorities-layout { grid-template-columns: 1fr; gap: 48px; }
-  .obs-grid { grid-template-columns: 1fr; }
-  .library-grid { grid-template-columns: 1fr 1fr; }
-  .hub-layout { grid-template-columns: 1fr; }
-  .leadership-grid { grid-template-columns: 1fr; }
-  .person-card.principal { grid-column: 1; grid-template-columns: 1fr; gap: 32px; }
-  .fellows-grid { grid-template-columns: 1fr 1fr; }
-  .collab-grid { grid-template-columns: 1fr; }
-  .contact-inner { grid-template-columns: 1fr; gap: 56px; }
-  .footer-grid { padding: 36px 32px; grid-template-columns: 1fr 1fr; }
-  .fcol + .fcol { border-left: none; padding-left: 0; }
-  .footer-masthead { padding: 28px 32px 20px; }
-  .footer-colophon { padding: 12px 32px; }
-  .ask-inner { grid-template-columns: 1fr; gap: 48px; }
-  .toolkit-grid { grid-template-columns: 1fr 1fr; }
-}
-@media (max-width: 640px) {
-  html { font-size: 15px; }
-  .masthead-inner { grid-template-columns: 1fr auto; }
-  .masthead-meta-left, .masthead-meta-right { display: none; }
-  .masthead-nav { display: none; }
-  .mob-trigger { display: block; }
-  .hero-columns { grid-template-columns: 1fr; }
-  .library-grid { grid-template-columns: 1fr; }
-  .fellows-grid { grid-template-columns: 1fr; }
-  .toolkit-grid { grid-template-columns: 1fr; }
-  .f2 { grid-template-columns: 1fr; }
-  .footer-grid { grid-template-columns: 1fr; }
-  .pub-tabs { flex-direction: column; }
-  .pub-item { grid-template-columns: 56px 1fr; }
-  .pub-badge { display: none; }
-}
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+.rv.d1{transition-delay:.08s}
+.rv.d2{transition-delay:.16s}
 </style>
 </head>
 <body>
 
-<!-- ── MASTHEAD ── -->
-<header>
-  <div class="masthead" id="masthead">
-    <div class="masthead-rules" aria-hidden="true"></div>
-    <div class="masthead-inner">
-      <div class="masthead-meta-left" aria-hidden="true">
-        Vol. I, No. 1 · Est. MMXXIV<br>
-        Kampala, Uganda
-      </div>
-      <a href="#" class="masthead-logo" aria-label="LIPH home">
-        <span class="masthead-logo-abbr">L · I · P · H</span>
-        <span class="masthead-logo-name">Lanforte Institute of Public Health</span>
-        <span class="masthead-logo-sub">Independent Public Health Research Institute</span>
-      </a>
-      <div class="masthead-meta-right" aria-hidden="true">
-        Childhood Health · Neuroscience<br>
-        Population Health Systems
-      </div>
-    </div>
-    <nav class="masthead-nav" role="navigation" aria-label="Main navigation">
-      <a href="#centers">Research Centers</a>
-      <a href="#observatories">Observatories</a>
-      <a href="#priorities">Priorities</a>
-      <a href="#library">Digital Library</a>
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">LANFORTE<span>.</span><small>Institute of Biomedical Research</small></a>
+    <div class="nav-links">
+      <a href="#focus">Research</a>
       <a href="#publications">Publications</a>
-      <a href="#leadership">Leadership</a>
-      <a href="#collaborate">Collaborate</a>
-      <a href="#contact" class="engage-link">Get Involved</a>
-    </nav>
-    <button class="mob-trigger" id="mobTrigger" aria-label="Navigation" aria-expanded="false">
-      Menu ↓
-    </button>
+      <a href="#innovation">Innovation</a>
+      <a href="#collaborate">Collaborations</a>
+      <a href="#careers">Careers</a>
+      <a href="#leadership">People</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="btn btn-line">Get Involved</a>
   </div>
-</header>
+</nav>
 
-<main id="main">
-<!-- ── HERO — Broadsheet ── -->
-<section class="hero" aria-labelledby="hero-h1">
-  <!-- Nav height spacer — dynamically set -->
-  <div id="heroSpacer"></div>
-  <canvas id="breathCanvas" aria-hidden="true"></canvas>
-
-  <div class="hero-masthead-strip">
-    <span class="hero-vol" aria-hidden="true">
-      Inaugurum · Volume I · 2026 · Building the Evidence Infrastructure Africa Needs
-    </span>
-    <h1 id="hero-h1">
-      <span class="hero-headline-main">Building</span>
-      <span class="hero-headline-em">Evidence Infrastructure</span>
-      <span class="hero-headline-main" style="font-size: clamp(2.2rem,5.5vw,6rem);">for Africa.</span>
-    </h1>
-    <div class="hero-rule-ornament" aria-hidden="true">
-      <span class="hero-rule-ornament-glyph">❦</span>
-    </div>
-  </div>
-
-  <div class="hero-columns">
-    <!-- Left column -->
-    <div class="hero-col">
-      <span class="hero-col-label" aria-hidden="true">The Institutional Thesis</span>
-      <p class="hero-thesis">
-        <span class="drop-cap">A</span>frica does not lack health challenges.
-        It lacks <strong>durable evidence infrastructure</strong> capable of generating,
-        translating, and sustaining high-quality research over decades.
-        LIPH was established to help build that infrastructure.
-      </p>
-      <div style="margin-top:24px; display:flex; flex-direction:column; gap:10px;">
-        <a href="#centers" class="btn-broadsheet">Explore Research Centers</a>
-        <a href="#collaborate" class="btn-broadsheet-outline">Collaborate With Us</a>
-      </div>
-    </div>
-
-    <!-- Center column -->
-    <div class="hero-col" style="border-left:1px solid var(--rule); padding:28px 52px;">
-      <span class="hero-col-label" aria-hidden="true">Mission</span>
-      <p class="hero-thesis" style="font-size:1.15rem; line-height:1.72;">
-        To develop the evidence, research systems, partnerships, and scientific infrastructure
-        required to improve public health outcomes across Africa.
-      </p>
-      <div style="margin-top:28px; padding-top:24px; border-top:1px solid var(--rule2);">
-        <span class="hero-col-label" aria-hidden="true">Vision</span>
-        <p class="hero-thesis" style="font-size:.95rem; color:var(--ink3);">
-          To become a leading African research institution advancing childhood health,
-          neuroscience, and population health through evidence generation, research excellence,
-          and institutional capacity building.
-        </p>
-      </div>
-    </div>
-
-    <!-- Right column -->
-    <div class="hero-col">
-      <div class="hero-status-stamp" aria-label="Research active">
-        <span class="status-pip" aria-hidden="true"></span>
-        <span class="status-text">Research Active · 2026</span>
-      </div>
-      <span class="hero-col-label" aria-hidden="true">Three Active Research Centers</span>
-      <ul class="hero-center-items" aria-label="Research centers">
-        <li>Center for Childhood Lung, Brain & Developmental Health</li>
-        <li>Center for Neuroscience, Surgical Education & Health Systems Innovation</li>
-        <li>Center for Population Health Data & Research Systems</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="hero-dateline" aria-label="Institute information">
-    <span>Established MMXXIV · Bulonde, Kajjansi, Wakiso District, Uganda</span>
-    <span aria-hidden="true">❦</span>
-    <span>Clinical Advisory: Harvard Medical School · MGH</span>
-    <span aria-hidden="true">❦</span>
-    <span>Subsidiary of Lanforte SMC Ltd · lanforteinstitute.org</span>
-  </div>
-</section>
-
-<!-- ── SEARCH ── -->
-<section class="search-s" id="search" aria-labelledby="search-h">
-  <div class="search-inner">
-    <div class="search-kicker" aria-hidden="true">Knowledge Base</div>
-    <h2 class="search-h2" id="search-h">
-      Search the <em>Knowledge Base</em>
-    </h2>
-    <p class="search-desc">
-      Evidence summaries, publications, protocols, datasets, and health resources 
-      from the Institute's growing research archive.
-    </p>
-    <div class="search-box-wrap rv">
-      <input type="search" class="search-box"
-        placeholder="Search asthma, child health, air quality, neuroscience, research papers, protocols..."
-        aria-label="Search the knowledge base">
-      <button class="search-submit" type="submit" aria-label="Search">Search</button>
-    </div>
-    <div class="search-tags rv d1" role="list" aria-label="Suggested searches">
-      <span class="search-tag" role="listitem">Childhood Asthma</span>
-      <span class="search-tag" role="listitem">Air Quality & Lung Health</span>
-      <span class="search-tag" role="listitem">Bronchopulmonary Dysplasia</span>
-      <span class="search-tag" role="listitem">Neurosurgical Capacity</span>
-      <span class="search-tag" role="listitem">Longitudinal Cohort</span>
-      <span class="search-tag" role="listitem">Uganda Health Data</span>
-      <span class="search-tag" role="listitem">Research Methods</span>
-    </div>
-  </div>
-</section>
-
-<!-- ── CENTERS ── -->
-<section class="centers-section" id="centers" aria-labelledby="centers-h">
-  <div class="centers-hdr rv">
-    <div>
-      <div class="s-eyebrow" aria-hidden="true">Research Centers</div>
-      <h2 class="display-xl" id="centers-h">Three centers.<br><em>One mission.</em></h2>
-    </div>
-    <p class="centers-hdr-right">
-      The Institute is organized around three permanent research centers — 
-      each designed for long-term scientific activity, not individual projects. 
-      Open each center to explore its scope, research areas, and current priorities.
-    </p>
-  </div>
-
-  <article class="center-drawer" id="cd1">
-    <button class="center-trigger" data-center="cd1" aria-expanded="false" aria-controls="cd1-body">
-      <span class="center-roman" aria-hidden="true">I</span>
-      <span class="center-name">Center for Childhood Lung, Brain & Developmental Health</span>
-      <span class="center-open-label" aria-hidden="true"><span>Open</span><span>Center</span></span>
-      <span class="center-stamp">Flagship Center</span>
-    </button>
-    <div class="drawer-body" id="cd1-body" role="region">
-      <div class="drawer-inner">
-        <div class="drawer-content">
-          <div>
-            <div class="drawer-quote">
-              Generating longitudinal evidence on childhood respiratory, neurological, 
-              and developmental health across East Africa.
-            </div>
-            <p class="drawer-desc">
-              This is the Institute's flagship scientific center. It anchors LIPH's identity 
-              in childhood health — from air quality and lung development to neurodevelopmental 
-              outcomes and mental health. Research here is designed for cohort depth.
-            </p>
-          </div>
-          <div>
-            <div class="drawer-col-label">Research Areas</div>
-            <ul class="drawer-list">
-              <li>Childhood Asthma & Respiratory Disease</li>
-              <li>Bronchopulmonary Dysplasia (BPD)</li>
-              <li>Child Development & Neurodevelopment</li>
-              <li>Environmental Health & Air Quality</li>
-              <li>Mental Health Outcomes</li>
-              <li>Developmental Epidemiology</li>
-              <li>Longitudinal Cohort Research</li>
-            </ul>
-          </div>
-          <div>
-            <div class="drawer-col-label">Active Programmes</div>
-            <ul class="drawer-list">
-              <li>Uganda Childhood Lung Observatory</li>
-              <li>School Respiratory Health Assessment Programme</li>
-              <li>Air Quality & Child Health Initiative</li>
-              <li>Childhood Health Cohort Development</li>
-              <li>Project Abraham — Founding Flagship Programme</li>
-            </ul>
-          </div>
-          <div class="drawer-priorities">
-            <span class="drawer-priority-lbl" aria-hidden="true">Current Focus ·</span>
-            <span class="drawer-tag">Cohort Development 2026</span>
-            <span class="drawer-tag">School Health Assessment</span>
-            <span class="drawer-tag">Air Quality Monitoring</span>
-            <span class="drawer-tag">Ethics Clearance Active</span>
-            <span class="drawer-tag">Fogarty D43 Preparation</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <article class="center-drawer" id="cd2">
-    <button class="center-trigger" data-center="cd2" aria-expanded="false" aria-controls="cd2-body">
-      <span class="center-roman" aria-hidden="true">II</span>
-      <span class="center-name">Center for Neuroscience, Surgical Education & Health Systems Innovation</span>
-      <span class="center-open-label" aria-hidden="true"><span>Open</span><span>Center</span></span>
-      <span class="center-stamp">Active Center</span>
-    </button>
-    <div class="drawer-body" id="cd2-body" role="region">
-      <div class="drawer-inner">
-        <div class="drawer-content">
-          <div>
-            <div class="drawer-quote">
-              Building neurosurgical capacity, simulation-based training infrastructure, 
-              and health systems evidence for East Africa.
-            </div>
-            <p class="drawer-desc">
-              Africa's neurosurgical capacity deficit is among the most consequential health 
-              systems failures on the continent. This center produces the evidence and builds 
-              the training infrastructure to address it — through rigorous capacity mapping 
-              and simulation-based education.
-            </p>
-          </div>
-          <div>
-            <div class="drawer-col-label">Research Areas</div>
-            <ul class="drawer-list">
-              <li>Neurosurgical Education & Capacity</li>
-              <li>Simulation-Based Clinical Learning</li>
-              <li>Traumatic Brain Injury</li>
-              <li>Capacity Mapping & Systems Analysis</li>
-              <li>Medical Education Research</li>
-              <li>Health Systems Innovation</li>
-              <li>Clinical Training Infrastructure</li>
-            </ul>
-          </div>
-          <div>
-            <div class="drawer-col-label">Active Programmes</div>
-            <ul class="drawer-list">
-              <li>National Neurosurgical Capacity Assessment</li>
-              <li>Surgical Simulation Initiative</li>
-              <li>Open Neuro Learning Platform</li>
-              <li>Neuroscience Education Partnerships</li>
-              <li>NeuroLab Programme</li>
-            </ul>
-          </div>
-          <div class="drawer-priorities">
-            <span class="drawer-priority-lbl" aria-hidden="true">Current Focus ·</span>
-            <span class="drawer-tag">Capacity Assessment 2026</span>
-            <span class="drawer-tag">Simulation Infrastructure</span>
-            <span class="drawer-tag">Open Learning Libraries</span>
-            <span class="drawer-tag">Partnership Development</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-
-  <article class="center-drawer" id="cd3">
-    <button class="center-trigger" data-center="cd3" aria-expanded="false" aria-controls="cd3-body">
-      <span class="center-roman" aria-hidden="true">III</span>
-      <span class="center-name">Center for Population Health Data & Research Systems</span>
-      <span class="center-open-label" aria-hidden="true"><span>Open</span><span>Center</span></span>
-      <span class="center-stamp">Active Center</span>
-    </button>
-    <div class="drawer-body" id="cd3-body" role="region">
-      <div class="drawer-inner">
-        <div class="drawer-content">
-          <div>
-            <div class="drawer-quote">
-              Building the data infrastructure, research governance, and population health 
-              intelligence that underpins the entire Institute.
-            </div>
-            <p class="drawer-desc">
-              Without rigorous data systems, research governance, and population health 
-              infrastructure, no scientific output is reproducible or scalable. 
-              This center builds what makes the other two possible.
-            </p>
-          </div>
-          <div>
-            <div class="drawer-col-label">Research Areas</div>
-            <ul class="drawer-list">
-              <li>Epidemiology & Population Health</li>
-              <li>Health Registries & Longitudinal Data</li>
-              <li>Health Informatics</li>
-              <li>GIS Analytics & Spatial Epidemiology</li>
-              <li>Data Stewardship & Governance</li>
-              <li>Research Governance & Ethics</li>
-              <li>Open Science Systems</li>
-            </ul>
-          </div>
-          <div>
-            <div class="drawer-col-label">Active Programmes</div>
-            <ul class="drawer-list">
-              <li>Public Health Observatory Platform</li>
-              <li>Research Data Infrastructure Development</li>
-              <li>Open Science Systems Implementation</li>
-              <li>Population Health Intelligence Development</li>
-              <li>Research Partnership Framework</li>
-            </ul>
-          </div>
-          <div class="drawer-priorities">
-            <span class="drawer-priority-lbl" aria-hidden="true">Current Focus ·</span>
-            <span class="drawer-tag">Observatory Platform</span>
-            <span class="drawer-tag">Data Infrastructure</span>
-            <span class="drawer-tag">Open Science 2026</span>
-            <span class="drawer-tag">Partner Framework</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </article>
-</section>
-
-<!-- ── OBSERVATORIES ── -->
-<section class="obs-section" id="observatories" aria-labelledby="obs-h">
-  <div class="s-eyebrow rv" aria-hidden="true">Observatories & Intelligence Systems</div>
-  <h2 class="display-lg rv" id="obs-h">Tracking. Measuring.<br>Generating evidence.</h2>
-  <div class="obs-grid">
-    <div class="obs-card rv">
-      <div class="obs-roman" aria-hidden="true">Observatory I</div>
-      <h3 class="obs-title">Uganda Childhood Lung Observatory</h3>
-      <p class="obs-desc">Longitudinal monitoring of childhood respiratory health, air quality exposure, and lung development outcomes in urban and peri-urban Uganda.</p>
-      <div class="obs-status">In Development · 2026</div>
-    </div>
-    <div class="obs-card rv d1">
-      <div class="obs-roman" aria-hidden="true">Observatory II</div>
-      <h3 class="obs-title">School Respiratory Health Observatory</h3>
-      <p class="obs-desc">Systematic assessment of respiratory health across Kampala school populations — building the baseline evidence for national child health policy.</p>
-      <div class="obs-status">Active Assessment Phase</div>
-    </div>
-    <div class="obs-card rv d2">
-      <div class="obs-roman" aria-hidden="true">Observatory III</div>
-      <h3 class="obs-title">Population Health Data Platform</h3>
-      <p class="obs-desc">A longitudinal population health intelligence system for East Africa — registries, datasets, and open science infrastructure for public health research.</p>
-      <div class="obs-status">Platform Development</div>
-    </div>
-    <div class="obs-card rv d3">
-      <div class="obs-roman" aria-hidden="true">Observatory IV</div>
-      <h3 class="obs-title">Neurosurgical Capacity Observatory</h3>
-      <p class="obs-desc">Systematic mapping and longitudinal tracking of neurosurgical capacity, training infrastructure, and clinical systems across East Africa.</p>
-      <div class="obs-status">Assessment Active</div>
-    </div>
-  </div>
-</section>
-
-<!-- ── PRIORITIES ── -->
-<section class="priorities-section" id="priorities" aria-labelledby="priorities-h">
-  <div class="priorities-layout">
+<main>
+<!-- HERO -->
+<section class="hero">
+  <svg class="airway-bg" viewBox="0 0 1240 700" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g stroke="#3FA9A0" stroke-opacity=".28" stroke-width="1.6" fill="none">
+      <path d="M980 -20 C980 60 960 90 930 100 C900 110 880 140 880 190"/>
+      <path d="M880 190 C880 230 900 250 930 260 C960 270 975 300 975 340"/>
+      <path d="M880 190 C880 230 855 250 825 258 C790 266 775 300 775 345"/>
+      <path d="M975 340 C975 375 995 395 1020 405 C1045 415 1058 440 1058 470"/>
+      <path d="M975 340 C975 375 955 392 930 400 C902 408 890 435 890 465"/>
+      <path d="M775 345 C775 380 795 398 820 408 C846 418 858 444 858 472"/>
+      <path d="M775 345 C775 380 752 396 726 405 C698 414 686 440 686 470"/>
+    </g>
+    <g stroke="#D4A73C" stroke-opacity=".2" stroke-width="1.4" fill="none">
+      <path d="M100 700 C100 600 130 540 175 525 C215 512 240 470 240 415"/>
+      <path d="M240 415 C240 365 215 340 180 328 C148 317 130 280 130 235"/>
+      <path d="M240 415 C240 365 268 342 300 332 C335 321 352 285 352 240"/>
+    </g>
+  </svg>
+  <div class="container hero-inner">
     <div class="rv">
-      <div class="s-eyebrow" aria-hidden="true">Institutional Priorities</div>
-      <h2 class="display-lg" id="priorities-h">
-        MMXXVI —<br>MMXXVII
-      </h2>
-      <p class="italic-body" style="margin-top:20px;">
-        What the Institute is actively building now. Not roadmaps. 
-        Not aspirations. Active institutional work.
-      </p>
+      <span class="eyebrow">LANFORTE Institute of Biomedical Research</span>
+      <h1 class="h-xl">Advancing biomedical discovery for healthier populations.</h1>
+      <p class="lede" style="margin-top:24px;">Our Research Division, the Center for Respiratory Biology, studies airway biology, lung inflammation, and respiratory immunology across African populations. Its flagship program, the Severe Asthma Research Initiative, generates primary evidence on the phenotypes, biomarkers, and genetic-environmental drivers of severe asthma — and converts that evidence into diagnostics, therapies, and policy.</p>
+      <div class="hero-actions">
+        <a href="#focus" class="btn btn-gold">Explore the Research →</a>
+        <a href="#collaborate" class="btn btn-line">Partner With Us</a>
+      </div>
     </div>
-    <div class="rv d1">
-      <div class="priority-ledger" role="list" aria-label="Current institutional priorities">
-        <div class="ledger-header" aria-hidden="true">
-          <span>No.</span>
-          <span>Priority</span>
-          <span>Status</span>
-        </div>
-        <div class="ledger-row" role="listitem">
-          <span class="ledger-num">I</span>
-          <span class="ledger-name">Uganda Childhood Lung Observatory</span>
-          <span class="ledger-status">In Development</span>
-        </div>
-        <div class="ledger-row" role="listitem">
-          <span class="ledger-num">II</span>
-          <span class="ledger-name">School Respiratory Health Assessment Programme</span>
-          <span class="ledger-status">Active</span>
-        </div>
-        <div class="ledger-row" role="listitem">
-          <span class="ledger-num">III</span>
-          <span class="ledger-name">Air Quality & Child Health Initiative</span>
-          <span class="ledger-status">In Development</span>
-        </div>
-        <div class="ledger-row" role="listitem">
-          <span class="ledger-num">IV</span>
-          <span class="ledger-name">National Neurosurgical Capacity Assessment</span>
-          <span class="ledger-status">Active</span>
-        </div>
-        <div class="ledger-row" role="listitem">
-          <span class="ledger-num">V</span>
-          <span class="ledger-name">Open Learning Libraries</span>
-          <span class="ledger-status">In Development</span>
-        </div>
-        <div class="ledger-row" role="listitem">
-          <span class="ledger-num">VI</span>
-          <span class="ledger-name">Research Infrastructure Development</span>
-          <span class="ledger-status">Active</span>
-        </div>
-        <div class="ledger-row" role="listitem">
-          <span class="ledger-num">VII</span>
-          <span class="ledger-name">Research Partnership Development</span>
-          <span class="ledger-status">Active</span>
-        </div>
+    <div class="hero-side rv d1">
+      <div class="hero-side-label">Institute</div>
+      <div class="hero-side-val" style="font-size:1.05rem;">LANFORTE Institute of Biomedical Research</div>
+      <div class="hero-side-label">Research Division</div>
+      <div class="hero-side-val" style="font-size:1.05rem;">Center for Respiratory Biology</div>
+      <div class="hero-side-label">Flagship Program</div>
+      <div class="hero-side-val" style="font-size:1.05rem;">Severe Asthma Research Initiative</div>
+    </div>
+  </div>
+</section>
+
+<section style="background:var(--ink2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+  <div class="container hierarchy rv">
+    <div class="hierarchy-tier is-institute">
+      <span class="hierarchy-tier-label">Institute</span>
+      <span class="hierarchy-tier-val">LANFORTE Institute of Biomedical Research</span>
+    </div>
+    <div class="hierarchy-tier">
+      <span class="hierarchy-tier-label">Research Division</span>
+      <span class="hierarchy-tier-val">Center for Respiratory Biology</span>
+    </div>
+    <div class="hierarchy-tier is-program">
+      <span class="hierarchy-tier-label">Flagship Program</span>
+      <span class="hierarchy-tier-val">Severe Asthma Research Initiative</span>
+    </div>
+    <div class="hierarchy-tier">
+      <span class="hierarchy-tier-label">Research Themes</span>
+      <span class="hierarchy-tier-val">5</span>
+    </div>
+  </div>
+</section>
+
+<svg class="wave-divider" viewBox="0 0 1240 56" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+  <path d="M0 28 L140 28 L155 6 L172 50 L188 28 L340 28 L355 12 L372 44 L388 28 L560 28 L575 4 L592 52 L608 28 L800 28 L815 14 L832 42 L848 28 L1020 28 L1035 8 L1052 48 L1068 28 L1240 28"/>
+</svg>
+
+<!-- POSITIONING -->
+<section class="position-band">
+  <div class="container">
+    <p class="position-quote rv">LANFORTE Institute of Biomedical Research advances the <span class="accent">biology of the respiratory system</span> through its Center for Respiratory Biology — beginning with a flagship <span class="accent">Severe Asthma Research Initiative</span> — through precision science, biomarker discovery, and evidence-based innovation for African populations.</p>
+  </div>
+</section>
+
+<!-- FOCUS / ONE CENTRE -->
+<section class="section" id="focus">
+  <div class="container">
+    <div class="section-head rv">
+      <span class="eyebrow">Research Division</span>
+      <h2 class="h-lg">One research division. One flagship program to start.</h2>
+      <p class="lede" style="margin-top:16px;">The Research Division, Center for Respiratory Biology, studies airway biology, lung inflammation, biomarkers, respiratory immunology, and environmental lung disease. Its flagship program, the Severe Asthma Research Initiative, is organized into five interdependent themes moving from population phenotyping to bedside translation.</p>
+    </div>
+    <div class="col-label-row rv">
+      <span class="theme-out-label" style="font-family:var(--mono);font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:var(--teal);">Flagship Program · Severe Asthma Research Initiative — Themes</span>
+    </div>
+    <div class="themes-grid rv d1" style="margin-top:16px;">
+      <div class="theme-cell">
+        <span class="theme-idx">Theme 01</span>
+        <div class="theme-title">Severe Asthma Phenotyping</div>
+        <p class="theme-desc">Characterizing the clinical and biological subtypes of severe asthma across African cohorts, at population scale.</p>
+        <div class="theme-out"><div class="theme-out-label">Primary Deliverable</div><div class="theme-out-val">African Severe Asthma Registry</div></div>
+      </div>
+      <div class="theme-cell">
+        <span class="theme-idx">Theme 02</span>
+        <div class="theme-title">Biomarker Discovery</div>
+        <p class="theme-desc">Identifying and validating molecular biomarkers that distinguish disease subtypes and predict treatment response.</p>
+        <div class="theme-out"><div class="theme-out-label">Primary Deliverable</div><div class="theme-out-val">Validated Biomarker Library</div></div>
+      </div>
+      <div class="theme-cell">
+        <span class="theme-idx">Theme 03</span>
+        <div class="theme-title">Precision Diagnostics</div>
+        <p class="theme-desc">Building and validating diagnostic platforms that translate biomarker discovery into point-of-care clinical use.</p>
+        <div class="theme-out"><div class="theme-out-label">Primary Deliverable</div><div class="theme-out-val">Precision Asthma Diagnostic Platform</div></div>
+      </div>
+      <div class="theme-cell">
+        <span class="theme-idx">Theme 04</span>
+        <div class="theme-title">Environmental &amp; Genetic Risk</div>
+        <p class="theme-desc">Mapping the environmental exposures and genetic determinants driving severe asthma incidence across the region.</p>
+        <div class="theme-out"><div class="theme-out-label">Primary Deliverable</div><div class="theme-out-val">African Asthma Risk Atlas</div></div>
+      </div>
+      <div class="theme-cell">
+        <span class="theme-idx">Theme 05</span>
+        <div class="theme-title">Translation to Clinical Care</div>
+        <p class="theme-desc">Converting the Centre's biology into clinical protocols, decision tools, and health-system implementation.</p>
+        <div class="theme-out"><div class="theme-out-label">Primary Deliverable</div><div class="theme-out-val">Clinical Translation Toolkit</div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── DIGITAL LIBRARY ── -->
-<section class="library-section" id="library" aria-labelledby="library-h">
-  <div class="s-eyebrow rv" aria-hidden="true">Digital Library</div>
-  <h2 class="display-lg rv" id="library-h">The beginning of a<br>national public health archive.</h2>
-  <div class="library-grid rv d1">
-    <div class="lib-category"><span class="lib-cat-icon" aria-hidden="true">📄</span><div class="lib-cat-title">Research Papers</div><span class="lib-cat-count">Archive · In Development</span><p class="lib-cat-desc">Peer-reviewed publications and pre-prints from LIPH researchers and collaborators.</p></div>
-    <div class="lib-category"><span class="lib-cat-icon" aria-hidden="true">📋</span><div class="lib-cat-title">Protocols</div><span class="lib-cat-count">Active · Open Access</span><p class="lib-cat-desc">Study protocols, ethics applications, and operational frameworks — open for peer review and adaptation.</p></div>
-    <div class="lib-category"><span class="lib-cat-icon" aria-hidden="true">🔭</span><div class="lib-cat-title">Observatory Reports</div><span class="lib-cat-count">In Development</span><p class="lib-cat-desc">Periodic intelligence reports from LIPH's observatories and monitoring systems.</p></div>
-    <div class="lib-category"><span class="lib-cat-icon" aria-hidden="true">📝</span><div class="lib-cat-title">Working Papers</div><span class="lib-cat-count">In Development</span><p class="lib-cat-desc">Pre-publication working papers and institutional research notes — available for comment and collaboration.</p></div>
-    <div class="lib-category"><span class="lib-cat-icon" aria-hidden="true">📊</span><div class="lib-cat-title">Data Dictionaries</div><span class="lib-cat-count">In Development</span><p class="lib-cat-desc">Dataset documentation, variable definitions, and data stewardship materials for open data.</p></div>
-    <div class="lib-category"><span class="lib-cat-icon" aria-hidden="true">📜</span><div class="lib-cat-title">Policy Briefs</div><span class="lib-cat-count">In Development</span><p class="lib-cat-desc">Evidence-to-policy translations for ministries, regulators, and development partners.</p></div>
-    <div class="lib-category"><span class="lib-cat-icon" aria-hidden="true">🎓</span><div class="lib-cat-title">Learning Materials</div><span class="lib-cat-count">In Development</span><p class="lib-cat-desc">Training resources, curricula, and educational materials developed by LIPH researchers.</p></div>
-    <div class="lib-category"><span class="lib-cat-icon" aria-hidden="true">🩺</span><div class="lib-cat-title">Clinical Resources</div><span class="lib-cat-count">In Development</span><p class="lib-cat-desc">Clinical guidance, reference materials, and practice resources from LIPH's clinical advisory network.</p></div>
-    <div class="lib-category"><span class="lib-cat-icon" aria-hidden="true">📚</span><div class="lib-cat-title">Recommended Reading</div><span class="lib-cat-count">Curated</span><p class="lib-cat-desc">A curated list of essential reading in childhood health, neuroscience, and population health methods.</p></div>
-  </div>
-</section>
-
-<!-- ── KNOWLEDGE HUB ── -->
-<section class="hub-section" id="hub" aria-labelledby="hub-h">
-  <div class="s-eyebrow rv" aria-hidden="true">Knowledge Hub</div>
-  <h2 class="display-lg rv" id="hub-h">Research briefs.<br>Not blog posts.</h2>
-  <div class="hub-layout rv d1">
-    <div class="hub-categories" role="list" aria-label="Knowledge categories">
-      <button class="hub-cat-btn active" role="listitem">Childhood Health</button>
-      <button class="hub-cat-btn" role="listitem">Respiratory Health</button>
-      <button class="hub-cat-btn" role="listitem">Environmental Health</button>
-      <button class="hub-cat-btn" role="listitem">Neuroscience</button>
-      <button class="hub-cat-btn" role="listitem">Public Health Systems</button>
-      <button class="hub-cat-btn" role="listitem">Research Methods</button>
-      <button class="hub-cat-btn" role="listitem">Data Science</button>
-      <button class="hub-cat-btn" role="listitem">Research Ethics</button>
-      <button class="hub-cat-btn" role="listitem">Uganda Health Insights</button>
-    </div>
-    <div class="hub-articles" aria-label="Knowledge articles">
-      <a href="#" class="hub-article">
-        <span class="hub-article-type">Research Brief · Childhood Health</span>
-        <div class="hub-article-title">What is Childhood Asthma? Prevalence, Pathology, and Evidence in East Africa</div>
-        <div class="hub-article-meta">LIPH · 2026 · USAAP-CDS Series</div>
-      </a>
-      <a href="#" class="hub-article">
-        <span class="hub-article-type">Research Brief · Respiratory Health</span>
-        <div class="hub-article-title">Bronchopulmonary Dysplasia: A Primer for East African Clinical Researchers</div>
-        <div class="hub-article-meta">LIPH · 2026 · Center I Series</div>
-      </a>
-      <a href="#" class="hub-article">
-        <span class="hub-article-type">Research Brief · Environmental Health</span>
-        <div class="hub-article-title">How Air Quality Affects Childhood Lung Development: Evidence and Implications for Uganda</div>
-        <div class="hub-article-meta">LIPH · 2026 · Observatory Series</div>
-      </a>
-      <a href="#" class="hub-article">
-        <span class="hub-article-type">Research Brief · Neuroscience</span>
-        <div class="hub-article-title">What is a Neurosurgical Capacity Assessment? Methods, Scope, and Application</div>
-        <div class="hub-article-meta">LIPH · 2026 · Center II Series</div>
-      </a>
-      <a href="#" class="hub-article">
-        <span class="hub-article-type">Research Methods</span>
-        <div class="hub-article-title">What is a Longitudinal Cohort Study? A Practical Guide for African Researchers</div>
-        <div class="hub-article-meta">LIPH · 2026 · Research Methods Series</div>
-      </a>
+<!-- STATS -->
+<section class="stats-band">
+  <div class="container">
+    <div class="stats-grid rv">
+      <div class="stat"><div class="stat-val">1</div><div class="stat-label">Flagship research centre</div></div>
+      <div class="stat"><div class="stat-val">1</div><div class="stat-label">Flagship program: Severe Asthma Research Initiative</div></div>
+      <div class="stat"><div class="stat-val">5</div><div class="stat-label">Flagship program research themes</div></div>
+      <div class="stat"><div class="stat-val">2026</div><div class="stat-label">Institute founded</div></div>
     </div>
   </div>
 </section>
 
-<!-- ── ASK LIPH ── -->
-<section class="ask-section" id="ask" aria-labelledby="ask-h">
-  <div class="future-banner" aria-label="Feature in development">Under Development</div>
-  <div class="ask-inner">
-    <div class="ask-left rv">
-      <div class="s-eyebrow" aria-hidden="true">Ask LIPH</div>
-      <h2 class="display-md" id="ask-h">An evidence assistant<br>for public health.</h2>
-      <p class="italic-body" style="margin-top:16px; max-width:400px;">
-        A future AI-powered evidence search — drawing from LIPH's growing knowledge base 
-        of publications, protocols, and health resources. Currently in development.
-      </p>
-      <ul class="ask-questions" aria-label="Example questions">
-        <li class="ask-q">What is childhood asthma?</li>
-        <li class="ask-q">What is bronchopulmonary dysplasia?</li>
-        <li class="ask-q">How does air quality affect lung health?</li>
-        <li class="ask-q">What is a neurosurgical capacity assessment?</li>
-        <li class="ask-q">What is a longitudinal cohort study?</li>
-      </ul>
+<!-- PUBLICATIONS -->
+<section class="section" id="publications">
+  <div class="container">
+    <div class="section-head rv">
+      <span class="eyebrow">Research Outputs</span>
+      <h2 class="h-lg">Publications &amp; scientific outputs</h2>
     </div>
-    <div class="ask-interface rv d1">
-      <div class="ask-interface-title">Ask LIPH</div>
-      <div class="ask-interface-sub">Search evidence summaries, publications, and health resources from the Institute's growing knowledge base.</div>
-      <div class="ask-input-wrap">
-        <input type="text" class="ask-input" placeholder="Search evidence or ask a public health question..." aria-label="Ask LIPH a question" disabled>
-        <button class="ask-btn" disabled aria-label="Search" title="Coming soon">→</button>
+    <div class="pub-list rv d1">
+      <div class="pub-item">
+        <span class="pub-year mono">2026</span>
+        <div><span class="pub-type">Signature Publication · Theme 01</span><div class="pub-title">The Biology and Clinical Phenotypes of Severe Asthma in African Populations</div><div class="pub-meta">Severe Asthma Research Initiative (Flagship Program) · Severe Asthma Phenotyping</div></div>
+        <span class="pub-status">In Preparation</span>
       </div>
-      <div class="ask-note">
-        This feature is in active development. The current version searches our publications 
-        and protocols. The AI-assisted evidence assistant will launch with our 2026–2027 
-        research outputs.
+      <div class="pub-item">
+        <span class="pub-year mono">2026</span>
+        <div><span class="pub-type">Signature Publication · Theme 02</span><div class="pub-title">Novel Biomarkers for Severe Asthma: Discovery and Clinical Validation</div><div class="pub-meta">Severe Asthma Research Initiative (Flagship Program) · Biomarker Discovery</div></div>
+        <span class="pub-status">In Preparation</span>
+      </div>
+      <div class="pub-item">
+        <span class="pub-year mono">2026</span>
+        <div><span class="pub-type">Signature Publication · Theme 03</span><div class="pub-title">Development and Validation of Precision Diagnostic Tools for Severe Asthma</div><div class="pub-meta">Severe Asthma Research Initiative (Flagship Program) · Precision Diagnostics</div></div>
+        <span class="pub-status">In Preparation</span>
+      </div>
+      <div class="pub-item">
+        <span class="pub-year mono">2026</span>
+        <div><span class="pub-type">Signature Publication · Theme 04</span><div class="pub-title">Environmental and Genetic Determinants of Severe Asthma in Africa</div><div class="pub-meta">Severe Asthma Research Initiative (Flagship Program) · Environmental &amp; Genetic Risk</div></div>
+        <span class="pub-status">In Preparation</span>
+      </div>
+      <div class="pub-item">
+        <span class="pub-year mono">2026</span>
+        <div><span class="pub-type">Signature Publication · Theme 05</span><div class="pub-title">Translating Asthma Biology into Clinical Practice</div><div class="pub-meta">Severe Asthma Research Initiative (Flagship Program) · Translation to Clinical Care</div></div>
+        <span class="pub-status">In Preparation</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ── PUBLICATIONS ── -->
-<section class="pub-section" id="publications" aria-labelledby="pub-h">
-  <div class="s-eyebrow rv" aria-hidden="true">Research Outputs</div>
-  <h2 class="display-lg rv" id="pub-h">Publications<br>& Working Papers</h2>
-  <div class="pub-tabs rv d1" role="list" aria-label="Filter publications">
-    <button class="pub-tab active" role="listitem">All</button>
-    <button class="pub-tab" role="listitem">Protocols</button>
-    <button class="pub-tab" role="listitem">Working Papers</button>
-    <button class="pub-tab" role="listitem">Policy Briefs</button>
-    <button class="pub-tab" role="listitem">Observatory Reports</button>
-    <button class="pub-tab" role="listitem">Institutional Reports</button>
+<!-- INNOVATION -->
+<section class="section" id="innovation">
+  <div class="container">
+    <div class="section-head rv">
+      <span class="eyebrow">Innovation</span>
+      <h2 class="h-lg">From discovery to intellectual property</h2>
+      <p class="lede" style="margin-top:16px;">The Institute treats every biomarker and diagnostic finding as a candidate for protection, licensing, and clinical deployment — not a publication endpoint.</p>
+    </div>
+    <div class="innov-grid rv d1">
+      <div class="innov-card"><div class="innov-num">01</div><div class="innov-title">Diagnostics &amp; Biomarkers</div><p class="innov-desc">Point-of-care diagnostic platforms and a validated biomarker library, built for regulatory pathway and clinical deployment.</p></div>
+      <div class="innov-card"><div class="innov-num">02</div><div class="innov-title">AI &amp; Clinical Decision Support</div><p class="innov-desc">Computational tools that translate phenotyping and risk-atlas data into decision support at the point of care.</p></div>
+      <div class="innov-card"><div class="innov-num">03</div><div class="innov-title">Technology Transfer</div><p class="innov-desc">Patent strategy, licensing, and commercialization pathways connecting laboratory discovery to industry partners.</p></div>
+    </div>
   </div>
-  <div class="pub-list rv d2">
-    <div class="pub-item">
-      <span class="pub-year">2026</span>
+</section>
+
+<!-- COLLABORATE -->
+<section class="section" id="collaborate">
+  <div class="container">
+    <div class="section-head rv">
+      <span class="eyebrow">Collaborations</span>
+      <h2 class="h-lg">Built for co-investigation, not affiliation</h2>
+      <p class="lede" style="margin-top:16px;">We partner through shared data infrastructure, joint grant applications, and implementation research — with universities, hospitals, governments, and industry.</p>
+    </div>
+    <div class="collab-grid rv d1">
+      <div class="collab-cell"><div class="collab-title">Universities</div><p class="collab-desc">Co-investigation, data sharing, and joint grants in severe asthma biology.</p></div>
+      <div class="collab-cell"><div class="collab-title">Hospitals</div><p class="collab-desc">Clinical implementation and site-investigator partnerships across East Africa.</p></div>
+      <div class="collab-cell"><div class="collab-title">Governments</div><p class="collab-desc">Risk atlas and policy translation for national respiratory health strategy.</p></div>
+      <div class="collab-cell"><div class="collab-title">Biotech &amp; Pharma</div><p class="collab-desc">Licensing, diagnostic co-development, and clinical trial partnership.</p></div>
+      <div class="collab-cell"><div class="collab-title">Funders</div><p class="collab-desc">International foundations and funders backing long-term African biomedical infrastructure.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAREERS -->
+<section class="careers-band" id="careers">
+  <div class="container">
+    <div class="rv">
+      <span class="eyebrow">Careers &amp; Training</span>
+      <h2 class="h-lg">A destination for scientists working on respiratory biology</h2>
+      <p class="lede" style="margin-top:16px;">The Institute recruits across every stage of a research career — from graduate training through independent investigation.</p>
+      <div class="careers-list">
+        <span class="careers-tag">Research Fellows</span>
+        <span class="careers-tag">Postdoctoral Researchers</span>
+        <span class="careers-tag">Graduate Students</span>
+        <span class="careers-tag">Clinical Collaborators</span>
+        <span class="careers-tag">Visiting Scientists</span>
+        <span class="careers-tag">Interns</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section class="section" id="leadership">
+  <div class="container">
+    <div class="section-head rv">
+      <span class="eyebrow">Leadership &amp; Clinical Advisors</span>
+      <h2 class="h-lg">The people behind the science</h2>
+    </div>
+    <div class="lead-grid rv d1">
+      <div class="lead-card principal">
+        <div class="lead-avatar">AL</div>
+        <div class="lead-name">Andrew Nehemia Luutu</div>
+        <span class="lead-role">Founder &amp; Principal Investigator</span>
+        <div class="lead-affil">LANFORTE Institute of Biomedical Research · Center for Respiratory Biology · Kampala, Uganda</div>
+        <p class="lead-bio">Founder of the Institute. Leads its institutional and research infrastructure strategy for the Center for Respiratory Biology and its flagship Severe Asthma Research Initiative in East Africa, drawing on training in public health research and international development.</p>
+      </div>
+      <div class="lead-card">
+        <div class="lead-avatar">AN</div>
+        <div class="lead-name">Dr. Andrew A. Nierenberg, MD</div>
+        <span class="lead-role">Clinical Advisor</span>
+        <div class="lead-affil">Professor of Psychiatry, Harvard Medical School<br>Massachusetts General Hospital</div>
+        <p class="lead-bio">Advises on clinical research methodology and epidemiological design across the Institute's translational studies.</p>
+      </div>
+      <div class="lead-card">
+        <div class="lead-avatar">DA</div>
+        <div class="lead-name">Dr. Arthur</div>
+        <span class="lead-role">Clinical Advisor — Paediatric &amp; Respiratory Health</span>
+        <div class="lead-affil">Ugandan Physician · Paediatric Medicine</div>
+        <p class="lead-bio">Brings direct clinical practice experience in Ugandan paediatric respiratory care to the Institute's phenotyping and translation themes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="contact-grid rv">
       <div>
-        <span class="pub-type">Study Protocol</span>
-        <div class="pub-title">Uganda School Asthma and Air Pollution (USAAP) Co-Design Study: Protocol for a Cross-Sectional Pilot in Urban Kampala Schools</div>
-        <div class="pub-authors">Luutu A.N. et al. · LIPH Working Paper Series</div>
+        <span class="eyebrow">Contact</span>
+        <h2 class="h-md" style="margin-bottom:24px;">Get in touch</h2>
+        <div class="contact-row"><span class="contact-lbl">Email</span><span class="contact-val"><a href="mailto:research@lanforteinstitute.org">research@lanforteinstitute.org</a></span></div>
+        <div class="contact-row"><span class="contact-lbl">Location</span><span class="contact-val">Kampala, Uganda</span></div>
+        <div class="contact-row"><span class="contact-lbl">Entity</span><span class="contact-val">LANFORTE Institute of Biomedical Research</span></div>
       </div>
-      <span class="pub-badge active">Active Protocol</span>
-    </div>
-    <div class="pub-item">
-      <span class="pub-year">2026</span>
-      <div>
-        <span class="pub-type">Policy Brief</span>
-        <div class="pub-title">Air Quality, Child Health, and Evidence Gaps: A Framework for Uganda's Childhood Lung Observatory</div>
-        <div class="pub-authors">LIPH Center I · Childhood Lung, Brain & Developmental Health</div>
-      </div>
-      <span class="pub-badge">In Preparation</span>
-    </div>
-    <div class="pub-item">
-      <span class="pub-year">2026</span>
-      <div>
-        <span class="pub-type">Working Paper</span>
-        <div class="pub-title">Neurosurgical Capacity in Uganda: A Scoping Assessment Framework for the National Capacity Mapping Initiative</div>
-        <div class="pub-authors">LIPH Center II · Neuroscience, Surgical Education & Health Systems Innovation</div>
-      </div>
-      <span class="pub-badge">In Preparation</span>
-    </div>
-    <div class="pub-item">
-      <span class="pub-year">2026</span>
-      <div>
-        <span class="pub-type">Institutional Report</span>
-        <div class="pub-title">LIPH Research Infrastructure Report: Data Governance Standards and Open Science Framework</div>
-        <div class="pub-authors">LIPH Center III · Population Health Data & Research Systems</div>
-      </div>
-      <span class="pub-badge">Forthcoming</span>
-    </div>
-  </div>
-</section>
-
-<!-- ── RESEARCHER TOOLKIT ── -->
-<section class="toolkit-section" id="toolkit" aria-labelledby="toolkit-h">
-  <div class="s-eyebrow rv" aria-hidden="true">Researcher Toolkit</div>
-  <h2 class="display-lg rv" id="toolkit-h">Resources for<br>rigorous research.</h2>
-  <div class="toolkit-grid rv d1">
-    <div class="toolkit-card">
-      <div class="toolkit-num" aria-hidden="true">Toolkit · I</div>
-      <div class="toolkit-title">Protocol & Design Resources</div>
-      <ul class="toolkit-items">
-        <li>Study Protocol Templates</li>
-        <li>Ethics Application Frameworks</li>
-        <li>Research Design Guides</li>
-        <li>Sample Size Calculators</li>
-      </ul>
-    </div>
-    <div class="toolkit-card">
-      <div class="toolkit-num" aria-hidden="true">Toolkit · II</div>
-      <div class="toolkit-title">Data Collection & Management</div>
-      <ul class="toolkit-items">
-        <li>Survey Instruments</li>
-        <li>Data Collection Forms</li>
-        <li>REDCap Templates</li>
-        <li>Data Dictionary Templates</li>
-      </ul>
-    </div>
-    <div class="toolkit-card">
-      <div class="toolkit-num" aria-hidden="true">Toolkit · III</div>
-      <div class="toolkit-title">Literature & Research Planning</div>
-      <ul class="toolkit-items">
-        <li>Literature Review Guides</li>
-        <li>Research Planning Frameworks</li>
-        <li>PRISMA Flow Templates</li>
-        <li>Citation Management Resources</li>
-      </ul>
-    </div>
-    <div class="toolkit-card">
-      <div class="toolkit-num" aria-hidden="true">Toolkit · IV</div>
-      <div class="toolkit-title">Governance & Ethics</div>
-      <ul class="toolkit-items">
-        <li>Research Governance Documents</li>
-        <li>Ethics Frameworks</li>
-        <li>Informed Consent Templates</li>
-        <li>Data Protection Resources</li>
-      </ul>
-    </div>
-    <div class="toolkit-card">
-      <div class="toolkit-num" aria-hidden="true">Toolkit · V</div>
-      <div class="toolkit-title">Publication Resources</div>
-      <ul class="toolkit-items">
-        <li>Writing Guides for African Researchers</li>
-        <li>Journal Selection Resources</li>
-        <li>Open Access Information</li>
-        <li>Authorship Standards</li>
-      </ul>
-    </div>
-    <div class="toolkit-card">
-      <div class="toolkit-num" aria-hidden="true">Toolkit · VI</div>
-      <div class="toolkit-title">Training & Methods</div>
-      <ul class="toolkit-items">
-        <li>Epidemiology Primers</li>
-        <li>Biostatistics Guides</li>
-        <li>GCP Training Resources</li>
-        <li>Research Methods Reading Lists</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ── LEADERSHIP ── -->
-<section class="leadership-section" id="leadership" aria-labelledby="leadership-h">
-  <div class="s-eyebrow rv" aria-hidden="true">Leadership & Scientific Advisors</div>
-  <h2 class="display-lg rv" id="leadership-h">The people behind<br>the evidence.</h2>
-  <div class="leadership-grid rv d1">
-    <div class="person-card principal">
-      <div>
-        <div class="person-seal" aria-hidden="true">AL</div>
-        <div class="person-name">Andrew Nehemia Luutu</div>
-        <span class="person-role">Founder & Principal Investigator</span>
-        <div class="person-affil">Lanforte Institute of Public Health · Kampala, Uganda</div>
-        <p class="person-bio">
-          Public health researcher, institutional builder, and founder of the Lanforte Institute 
-          of Public Health. Andrew's work spans sustainable international development, accounting 
-          analytics, governance systems, and the design of long-term research infrastructure 
-          for African public health contexts.
-        </p>
-      </div>
-      <div>
-        <ul class="person-creds" aria-label="Andrew Luutu credentials">
-          <li>MA, Sustainable International Development · Brandeis University (2025)</li>
-          <li>MS, Accounting Analytics · Bentley University</li>
-          <li>Founder, Lanforte SMC Ltd (Uganda) · LANFORTE GROUP INC. (Massachusetts)</li>
-          <li>Founder, Lanforte Business School</li>
-          <li>GAGAS ESG Audit Research · Watertown City Auditor's Office, Massachusetts</li>
-          <li>Every LIPH engagement is personally overseen by Andrew — research@lanforteinstitute.org</li>
-        </ul>
-      </div>
-    </div>
-    <div class="person-card">
-      <div class="person-seal" aria-hidden="true">AN</div>
-      <div class="person-name">Dr. Andrew A. Nierenberg, MD</div>
-      <span class="person-role">Clinical Research Advisor</span>
-      <div class="person-affil">Professor of Psychiatry · Harvard Medical School<br>Massachusetts General Hospital</div>
-      <p class="person-bio">Advising psychiatric epidemiology, mental health research methodology, and clinical research development for LIPH's childhood neuroscience and mental health programmes.</p>
-      <ul class="person-creds">
-        <li>Professor of Psychiatry, Harvard Medical School</li>
-        <li>Massachusetts General Hospital, Boston</li>
-        <li>Psychiatric Epidemiology · Clinical Research Development</li>
-      </ul>
-    </div>
-    <div class="person-card">
-      <div class="person-seal" aria-hidden="true">DA</div>
-      <div class="person-name">Dr. Arthur</div>
-      <span class="person-role">Clinical Advisor — Child Health & Paediatrics</span>
-      <div class="person-affil">Ugandan Physician · Paediatric Medicine & Child Health</div>
-      <p class="person-bio">Advising childhood health research, paediatric medicine, child health programme development, and clinical implementation strategy for LIPH's flagship research center.</p>
-      <ul class="person-creds">
-        <li>Child Health & Paediatric Medicine</li>
-        <li>Uganda-based Clinical Practice</li>
-        <li>Clinical Implementation Strategy</li>
-      </ul>
-    </div>
-  </div>
-  <div class="rv d2" style="margin-top:24px; padding:24px 32px; background:var(--parch4); border-left:2px solid var(--sage); font-size:.95rem; font-style:italic; color:var(--ink3);">
-    LIPH welcomes enquiries from researchers, clinicians, and public health scientists 
-    interested in advisory or collaborative roles. Contact: 
-    <a href="mailto:research@lanforteinstitute.org" style="color:var(--forest);">research@lanforteinstitute.org</a>
-  </div>
-</section>
-
-<!-- ── STUDENTS & FELLOWS ── -->
-<section class="fellows-section" id="fellows" aria-labelledby="fellows-h">
-  <div class="s-eyebrow rv" aria-hidden="true">Students & Fellows</div>
-  <h2 class="display-lg rv" id="fellows-h">Build your research<br>career here.</h2>
-  <div class="fellows-grid rv d1">
-    <div class="fellows-card">
-      <span class="fellows-type">Fellowship</span>
-      <div class="fellows-title">Research Fellows</div>
-      <p class="fellows-desc">Structured research fellowships for early-career researchers joining active LIPH research programmes under principal investigator supervision.</p>
-    </div>
-    <div class="fellows-card">
-      <span class="fellows-type">Associates</span>
-      <div class="fellows-title">Knowledge & Research Associates</div>
-      <p class="fellows-desc">Part-time and project-based research associate positions supporting active LIPH programmes, observatory development, and knowledge platform building.</p>
-    </div>
-    <div class="fellows-card">
-      <span class="fellows-type">Internship</span>
-      <div class="fellows-title">Public Health Interns</div>
-      <p class="fellows-desc">Structured internships for students in public health, medicine, nursing, and related fields — contributing to real institutional research activity.</p>
-    </div>
-    <div class="fellows-card">
-      <span class="fellows-type">Future Platform</span>
-      <div class="fellows-title">LIPH Research Academy</div>
-      <p class="fellows-desc">A future structured training academy for African public health researchers — building research capacity through mentored, evidence-based learning. In development.</p>
-    </div>
-  </div>
-</section>
-
-<!-- ── COLLABORATE ── -->
-<section class="collab-section" id="collaborate" aria-labelledby="collab-h">
-  <div class="s-eyebrow rv" aria-hidden="true">Collaborate</div>
-  <h2 class="display-lg rv" id="collab-h">Building evidence<br>takes partnerships.</h2>
-  <p class="italic-body rv d1" style="margin-top:16px; max-width:640px;">
-    LIPH seeks researchers, clinicians, institutions, and students who want to contribute 
-    to long-term public health evidence generation in East Africa. 
-    We do not accept passive affiliation. We build working relationships.
-  </p>
-  <div class="collab-grid rv d2">
-    <div class="collab-card">
-      <div class="collab-roman" aria-hidden="true">Collaboration · I</div>
-      <h3 class="collab-title">Academic & Research Institutions</h3>
-      <p class="collab-desc">Universities and research centers seeking African research partnerships with institutional depth and active programmes.</p>
-      <ul class="collab-list">
-        <li>Co-Investigator Partnerships</li>
-        <li>Data Sharing Agreements</li>
-        <li>Joint Grant Applications</li>
-        <li>Student Exchange Programmes</li>
-      </ul>
-    </div>
-    <div class="collab-card">
-      <div class="collab-roman" aria-hidden="true">Collaboration · II</div>
-      <h3 class="collab-title">Researchers & Clinicians</h3>
-      <p class="collab-desc">Individual researchers and clinicians with relevant expertise in childhood health, neuroscience, or population health.</p>
-      <ul class="collab-list">
-        <li>Research Fellows</li>
-        <li>Clinical Collaborators</li>
-        <li>Scientific Advisors</li>
-        <li>Site Investigators</li>
-      </ul>
-    </div>
-    <div class="collab-card">
-      <div class="collab-roman" aria-hidden="true">Collaboration · III</div>
-      <h3 class="collab-title">Students & Early-Career Researchers</h3>
-      <p class="collab-desc">Students and early-career researchers seeking structured research exposure in a growing African public health institution.</p>
-      <ul class="collab-list">
-        <li>Knowledge & Research Associates</li>
-        <li>Public Health Interns</li>
-        <li>Student Researchers</li>
-        <li>Research Training Fellowships</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ── CONTACT ── -->
-<section class="contact-section" id="contact" aria-labelledby="contact-h">
-  <div class="s-eyebrow rv" aria-hidden="true" style="color:var(--fern);">
-    <span style="background:var(--fern);display:inline-block;width:18px;height:1px;"></span>
-    Contact & Enquiries
-  </div>
-  <h2 class="display-lg rv" id="contact-h" style="color:rgba(240,232,213,.9);">
-    Every collaboration<br>begins with a letter.
-  </h2>
-  <div class="contact-inner">
-    <div class="contact-left rv d1">
-      <div class="contact-letterhead">
-        <span class="contact-letterhead-title">Correspondence Address</span>
-        <a href="mailto:research@lanforteinstitute.org" class="contact-email">research@lanforteinstitute.org</a>
-        <div class="contact-addr-row"><span class="contact-addr-lbl">Institute</span><span class="contact-addr-val">Lanforte Institute of Public Health</span></div>
-        <div class="contact-addr-row"><span class="contact-addr-lbl">Location</span><span class="contact-addr-val">Bulonde, Kajjansi<br>Wakiso District, Uganda</span></div>
-        <div class="contact-addr-row"><span class="contact-addr-lbl">Web</span><span class="contact-addr-val"><a href="https://lanforteinstitute.org">lanforteinstitute.org</a></span></div>
-        <div class="contact-addr-row"><span class="contact-addr-lbl">Parent</span><span class="contact-addr-val">Lanforte SMC Ltd (Uganda)<br>LANFORTE GROUP INC. (Massachusetts)</span></div>
-      </div>
-      <div class="contact-note-block">
-        <strong>A note on correspondence.</strong> Research enquiries, collaboration proposals, 
-        and fellowship applications are reviewed by the Principal Investigator personally. 
-        Every serious enquiry receives a response within five working days.
-      </div>
-    </div>
-    <div class="contact-right rv d2">
-      <div class="form-title">Submit an Enquiry</div>
-      <div class="form-sub">Tell us who you are and what you are looking for. We respond to substantive enquiries.</div>
-      <div class="f2">
-        <div class="fg"><label class="fl" for="cn">Name</label><input type="text" id="cn" name="name" class="fi" placeholder="Your name" autocomplete="name" required></div>
-        <div class="fg"><label class="fl" for="co">Institution</label><input type="text" id="co" name="org" class="fi" placeholder="Your institution"></div>
-      </div>
-      <div class="f2">
-        <div class="fg"><label class="fl" for="ce">Email</label><input type="email" id="ce" name="email" class="fi" placeholder="your@institution.edu" autocomplete="email" required></div>
+      <form>
+        <div class="f2">
+          <div class="fg"><span class="fl">Name</span><input class="fi" type="text" placeholder="Full name"></div>
+          <div class="fg"><span class="fl">Email</span><input class="fi" type="email" placeholder="you@organization.org"></div>
+        </div>
         <div class="fg">
-          <label class="fl" for="crole">Your Role</label>
-          <select id="crole" name="role" class="fs">
-            <option value="">Select role</option>
-            <option>Researcher / Scientist</option>
-            <option>Clinician / Physician</option>
-            <option>Graduate Student</option>
-            <option>Undergraduate Student</option>
-            <option>Public Health Professional</option>
-            <option>Academic Institution</option>
-            <option>Research Funder</option>
-            <option>Government / Ministry</option>
-            <option>Other</option>
+          <span class="fl">Interest</span>
+          <select class="fs">
+            <option>Research collaboration</option>
+            <option>Clinical partnership</option>
+            <option>Funding &amp; philanthropy</option>
+            <option>Careers &amp; training</option>
+            <option>Media enquiry</option>
           </select>
         </div>
-      </div>
-      <div class="fg">
-        <label class="fl" for="ctype">Enquiry Type</label>
-        <select id="ctype" name="type" class="fs">
-          <option value="">Select type</option>
-          <option>Research Collaboration</option>
-          <option>Research Fellowship</option>
-          <option>Clinical Advisory Interest</option>
-          <option>Academic Partnership</option>
-          <option>Student Research / Internship</option>
-          <option>Grant Co-Application</option>
-          <option>General Scientific Enquiry</option>
-        </select>
-      </div>
-      <div class="fg"><label class="fl" for="cmsg">Message</label><textarea id="cmsg" name="message" class="fta" rows="4" placeholder="Describe your research interests and proposed collaboration." required></textarea></div>
-      <a href="mailto:research@lanforteinstitute.org?subject=LIPH%20Research%20Enquiry" class="fsubmit" role="button">
-        Send Research Enquiry ❦
-      </a>
+        <div class="fg"><span class="fl">Message</span><textarea class="fta" placeholder="Tell us about your interest"></textarea></div>
+        <button class="fsubmit" type="submit">Send Message</button>
+      </form>
     </div>
   </div>
 </section>
 </main>
 
-<!-- ── FOOTER ── -->
-<footer role="contentinfo">
-  <div class="footer-rules" aria-hidden="true"></div>
-  <div class="footer-masthead">
-    <span class="footer-name">Lanforte Institute of Public Health</span>
-    <span class="footer-sub">Independent Public Health Research Institute · Kampala, Uganda · Est. MMXXIV</span>
-    <span class="footer-ornament" aria-hidden="true">❦ · ◆ · ❦</span>
-  </div>
-  <div class="footer-grid">
-    <div class="fcol">
-      <span class="fcol-title">The Institute</span>
-      <p class="fcol-desc">Building the evidence infrastructure required for long-term public health progress in Africa. Childhood health, neuroscience, and population health systems.</p>
-      <div class="fbadges">
-        <span class="fbadge">MakSPH-REC</span>
-        <span class="fbadge">UNCST</span>
-        <span class="fbadge">GCP Aligned</span>
-        <span class="fbadge">Open Science</span>
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">LANFORTE Institute of Biomedical Research<span style="color:var(--gold)">.</span></div>
+        <p class="footer-desc">Advancing biomedical discovery for healthier populations. Research Division: Center for Respiratory Biology. Flagship Program: Severe Asthma Research Initiative.</p>
       </div>
+      <div><div class="footer-col-label">Research</div><ul class="footer-links"><li><a href="#focus">Research Themes</a></li><li><a href="#publications">Publications</a></li><li><a href="#innovation">Innovation</a></li></ul></div>
+      <div><div class="footer-col-label">Institute</div><ul class="footer-links"><li><a href="#leadership">People</a></li><li><a href="#careers">Careers</a></li><li><a href="#collaborate">Collaborations</a></li></ul></div>
+      <div><div class="footer-col-label">Connect</div><ul class="footer-links"><li><a href="mailto:research@lanforteinstitute.org">Contact</a></li><li><a href="#contact">Get Involved</a></li></ul></div>
     </div>
-    <div class="fcol">
-      <span class="fcol-title">Research</span>
-      <ul class="flinks">
-        <li><a href="#centers">Research Centers</a></li>
-        <li><a href="#observatories">Observatories</a></li>
-        <li><a href="#priorities">Priorities MMXXVI</a></li>
-        <li><a href="#publications">Publications</a></li>
-      </ul>
+    <div class="footer-bottom">
+      <span>&copy; 2026 LANFORTE Institute of Biomedical Research. All rights reserved.</span>
+      <span>Center for Respiratory Biology · Severe Asthma Research Initiative · Kampala, Uganda</span>
     </div>
-    <div class="fcol">
-      <span class="fcol-title">Knowledge</span>
-      <ul class="flinks">
-        <li><a href="#library">Digital Library</a></li>
-        <li><a href="#hub">Knowledge Hub</a></li>
-        <li><a href="#toolkit">Researcher Toolkit</a></li>
-        <li><a href="#ask">Ask LIPH</a></li>
-      </ul>
-    </div>
-    <div class="fcol">
-      <span class="fcol-title">Institution</span>
-      <ul class="flinks">
-        <li><a href="#leadership">Leadership</a></li>
-        <li><a href="#fellows">Fellows & Students</a></li>
-        <li><a href="#collaborate">Collaborate</a></li>
-        <li><a href="mailto:research@lanforteinstitute.org">research@lanforteinstitute.org</a></li>
-        <li><a href="https://lanforte.com">Lanforte Group</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-colophon">
-    <span class="colophon-text">© MMXXVI Lanforte Institute of Public Health · Subsidiary of Lanforte SMC Ltd · Registered in Uganda · lanforteinstitute.org · All rights reserved.</span>
-    <nav class="colophon-links" aria-label="Legal">
-      <a href="#">Research Ethics</a>
-      <a href="#">Privacy</a>
-      <a href="#">Open Science Policy</a>
-    </nav>
   </div>
 </footer>
 
 <script>
-/* ─── HERO SPACER ──────────────────── */
-function setHeroSpacer() {
-  const mh = document.querySelector('.masthead');
-  const sp = document.getElementById('heroSpacer');
-  if (mh && sp) sp.style.height = mh.offsetHeight + 'px';
-}
-setHeroSpacer();
-window.addEventListener('resize', setHeroSpacer);
-
-/* ─── BREATH WAVEFORM ─────────────── */
-const canvas = document.getElementById('breathCanvas');
-const ctx = canvas.getContext('2d');
-function resize() { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; }
-resize(); window.addEventListener('resize', resize);
-let t = 0;
-function drawBreath() {
-  const W = canvas.width, H = canvas.height;
-  ctx.clearRect(0, 0, W, H);
-  // Natural breath: slow sine with slight asymmetry
-  ctx.beginPath();
-  for (let x = 0; x <= W; x += 2) {
-    const p = x / W;
-    const y = H * .5
-      - Math.sin(p * Math.PI * 2.5 + t) * H * .32
-      - Math.sin(p * Math.PI * 5 + t * .6) * H * .06;
-    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  }
-  ctx.strokeStyle = 'rgba(26,61,37,.6)';
-  ctx.lineWidth = 1.5;
-  ctx.stroke();
-  // Faint secondary
-  ctx.beginPath();
-  for (let x = 0; x <= W; x += 3) {
-    const p = x / W;
-    const y = H * .5 - Math.sin(p * Math.PI * 2.5 + t + Math.PI * .2) * H * .18;
-    x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  }
-  ctx.strokeStyle = 'rgba(26,61,37,.25)';
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  t += 0.005;
-  requestAnimationFrame(drawBreath);
-}
-drawBreath();
-
-/* ─── MASTHEAD SCROLL ─────────────── */
-const mh = document.getElementById('masthead');
-window.addEventListener('scroll', () => {
-  mh.classList.toggle('elevated', window.scrollY > 20);
-}, { passive: true });
-
-/* ─── CENTER DRAWERS ──────────────── */
-document.querySelectorAll('.center-trigger').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const id = btn.dataset.center;
-    const drawer = document.getElementById(id);
-    const wasOpen = drawer.classList.contains('open');
-    document.querySelectorAll('.center-drawer').forEach(d => {
-      d.classList.remove('open');
-      d.querySelector('.center-trigger').setAttribute('aria-expanded', 'false');
-    });
-    if (!wasOpen) {
-      drawer.classList.add('open');
-      btn.setAttribute('aria-expanded', 'true');
-      setTimeout(() => {
-        window.scrollTo({ top: drawer.offsetTop - 120, behavior: 'smooth' });
-      }, 60);
-    }
-  });
-});
-
-/* ─── TAB BUTTONS ────────────────── */
-['pub-tab', 'hub-cat-btn'].forEach(cls => {
-  document.querySelectorAll('.' + cls).forEach(tab => {
-    tab.addEventListener('click', () => {
-      tab.closest('section, div').querySelectorAll('.' + cls).forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
-    });
-  });
-});
-
-/* ─── SMOOTH SCROLL ──────────────── */
-document.querySelectorAll('a[href^="#"]').forEach(a => {
-  a.addEventListener('click', e => {
-    const id = a.getAttribute('href');
-    if (!id || id === '#') return;
-    const target = document.querySelector(id);
-    if (target) {
-      e.preventDefault();
-      const mhH = document.querySelector('.masthead')?.offsetHeight || 104;
-      window.scrollTo({ top: target.offsetTop - mhH, behavior: 'smooth' });
-    }
-  });
-});
-
-/* ─── SCROLL REVEAL ──────────────── */
-const obs = new IntersectionObserver(en => {
-  en.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
-}, { threshold: .06, rootMargin: '0px 0px -20px 0px' });
-document.querySelectorAll('.rv').forEach(el => obs.observe(el));
-
-/* ─── MOBILE NAV ─────────────────── */
-const mob = document.getElementById('mobTrigger');
-let mobEl = null, mobOpen = false;
-mob.addEventListener('click', () => {
-  mobOpen = !mobOpen;
-  mob.setAttribute('aria-expanded', String(mobOpen));
-  mob.textContent = mobOpen ? 'Close ✕' : 'Menu ↓';
-  if (mobOpen) {
-    mobEl = document.createElement('div');
-    Object.assign(mobEl.style, {
-      position: 'fixed', top: document.querySelector('.masthead').offsetHeight + 'px',
-      left: '0', right: '0', bottom: '0',
-      background: 'rgba(240,232,213,.98)', zIndex: '800',
-      padding: '32px 28px', display: 'flex', flexDirection: 'column',
-      gap: '0', overflowY: 'auto',
-      borderTop: '2px solid var(--ink2)',
-      backdropFilter: 'blur(12px)'
-    });
-    [
-      ['#centers','Research Centers'], ['#observatories','Observatories'],
-      ['#priorities','Priorities'], ['#library','Digital Library'],
-      ['#publications','Publications'], ['#leadership','Leadership'],
-      ['#collaborate','Collaborate'], ['#contact','Get Involved']
-    ].forEach(([href, label]) => {
-      const a = document.createElement('a');
-      a.href = href; a.textContent = label;
-      Object.assign(a.style, {
-        fontFamily: "'Cormorant Garamond',serif",
-        fontSize: '1.8rem', fontWeight: '600',
-        color: '#19160E', display: 'block',
-        padding: '14px 0', borderBottom: '1px solid #C0B49A',
-        textDecoration: 'none', letterSpacing: '-.01em',
-        fontStyle: 'italic'
-      });
-      a.addEventListener('click', closeMob);
-      mobEl.appendChild(a);
-    });
-    document.body.appendChild(mobEl);
-    document.body.style.overflow = 'hidden';
-  } else closeMob();
-});
-function closeMob() {
-  mobOpen = false;
-  mob.setAttribute('aria-expanded', 'false');
-  mob.textContent = 'Menu ↓';
-  if (mobEl) { document.body.removeChild(mobEl); mobEl = null; }
-  document.body.style.overflow = '';
-}
+document.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('elevated',window.scrollY>10)});
+const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
